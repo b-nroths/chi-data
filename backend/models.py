@@ -27,47 +27,6 @@ class DynamoDB():
 			self.table.put_item(Key=item['name'], Item=item)
 		return True
 
-class Postgres():
-
-	def __init__(self, debug=False):
-		self.debug = debug
-		self.conn = psycopg2.connect(dbname="uchicago", 
-										user="bnroths", 
-										password="sF4fLshzyzfNgEC", 
-										host="uchicago.ctluqxmlzcvq.us-east-1.rds.amazonaws.com", 
-										port="5432",
-										)
-		self.conn.autocommit = True
-		self.cur = self.conn.cursor()
-
-	def list_tables(self):
-		query = """
-		SELECT tablename FROM pg_catalog.pg_tables WHERE tableowner='bnroths'
-		"""
-		return self.query_list(query)
-
-	def execute(self, query):
-		if self.debug:
-			print(query)
-		return self.cur.execute(query)
-
-	def query_list(self, query):
-		self.execute(query)
-		return self.cur.fetchall()
-
-	def delete_from_table(self, dataset_name):
-		query = """
-		DELETE FROM %s
-		""" % dataset_name
-		self.execute(query)
-		return True
-
-	def drop_table(self, table, schema="datasets"):
-		query = """
-		DROP TABLE IF EXISTS %s.%s 
-		""" % (schema, table)
-		self.cur.execute(query)
-
 class Data:
 
 	def __init__(self):
