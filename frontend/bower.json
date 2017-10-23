@@ -1,0 +1,24 @@
+{
+  "name": "hesaidshesaid",
+  "description": "",
+  "main": "index.js",
+  "directory": "./static/bower_components",
+  "authors": [
+    "b-nroths <bnroths@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/b-nroths/hesaidshesaid",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^15.5.4",
+    "bulma": "^0.4.1",
+    "fontawesome": "^4.7.0"
+  }
+}

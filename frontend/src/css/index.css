@@ -1,0 +1,181 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.panel-block.is-active {
+  border-left-width: 5px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.graph-container {
+  height: 300px;
+}
+
+.graph .card-content {
+  padding: 0px;
+}
+
+.graph {
+  margin-bottom: 1.5rem;
+}
+
+.graph-menu {
+  border-radius: 3px;
+}
+
+/* wrapper */
+.has-dropdown input[type="checkbox"] {
+  display: none;
+}
+
+.has-dropdown input[type="checkbox"]:checked ~ .dropdown {
+  display: block;
+}
+
+/* dropdown basic */
+.dropdown {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+}
+
+/* dropdown optional styling */
+.dropdown li:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+
+.icon-sup {
+  top: -5px;
+  position: relative;
+}
+
+.graph .icon {
+  height: 1rem;
+  width: 1rem;
+}
+
+.icon.is-xsmall .fa {
+  font-size: 11px;
+}
+
+.is-xsmall {
+  font-size: 11px;
+}
+.card-footer .title {
+  margin-bottom: 0px;
+}
+
+.icon-supp {
+  top: -10px;
+  left: 2px;
+  position: relative;
+}
+
+.graph .fa {
+  padding-left: 4px !important;
+}
+
+.data-nav {
+  /*position: fixed;
+  z-index: 999;
+  background-color: whitesmoke;*/
+}
+/*
+.tile {
+  border: 1px solid #000;
+}*/
+
+.tile .title {
+  font-size: 1.5rem;
+}
+.tile {
+  background-color: transparent;
+  color: #fff !important;
+}
+
+/*.tile .graph-container {
+  text-align: center;
+  display: flex;
+  align-items: center;
+}*/
+.tile .graph {
+  width: 100%;
+}
+.tile footer {
+  border-bottom: 1px solid #dbdbdb;
+}
+.tile .card-header-title {
+  color: #fff;
+}
+/*.tile .tile-number {
+  font-size: 4rem;
+  text-align: center;
+  margin: 0 auto;
+}*/
+
+.number-container {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+}
+
+.number-container .title {
+  font-size: 3rem !important;
+}
+
+.footer {
+  background-color: transparent;
+  position: fixed;
+}
+.tile.is-ancestor {
+  /* margin-left: -.75rem; */
+  /* margin-right: -.75rem; */
+  /* margin-top: -.75rem; */
+  margin: 0;
+}
+.tile .graph-container {
+  height: 350px;
+}
+.tile.is-ancestor:not(:last-child) {
+  margin-bottom: 0rem;
+}
+
+.footer {
+  background-color: none;
+  padding: 0;
+  bottom: 0;
+}
+.tile.is-ancestor:not(:last-child) {
+  margin-bottom: 0rem;
+}
