@@ -9,57 +9,23 @@ here = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(here, "./vendored")) 
 
 import requests, boto3
-
-datasets = {
-	'crimes': {
-		'dataset_name': 'crimes_2001_to_present',
-		'date_min': '2001-01-01',
-		'columns': ['id', 'date', 'latitude', 'longitude']
-	},
-	'graffiti_311': {
-		'dataset_name': '311_service_requests_graffiti_removal',
-		'date_min': '2011-01-01',
-		'columns': ['service_request_number', 'creation_date', 'latitude', 'longitude']
-	},
-	'vacant_311': {
-		'dataset_name': '311_service_requests_vacant_and_abandoned_building',
-		'date_min': '2008-01-18',
-		'columns': ['service_request_number', 'date_service_request_was_received', 'latitude', 'longitude']
-	},
-	'alley_lights_out_311': {
-		'dataset_name': '311_service_requests_alley_lights_out',
-		'date_min': '2011-01-01',
-		'columns': ['service_request_number', 'creation_date', 'latitude', 'longitude']
-	},
-	'sanitation_311': {
-		'dataset_name': '311_service_requests_sanitation_code_complaints',
-		'date_min': '2011-01-01',
-		'columns': [None, 'creation_date', 'latitude', 'longitude']
-	},
-	'food_inspections': {
-		'dataset_name': 'food_inspections',
-		'date_min': '2010-01-04',
-		'columns': ['inspection_id', 'inspection_date', 'latitude', 'longitude'],
-	},
-	'liquor_licenses': {
-		'dataset_name': 'business_licenses_current_liquor_and_public_places',
-		'date_min': '2013-05-06',
-		'columns': ['license_id', 'license_term_start_date', 'latitude', 'longitude'],
-	},
-	'building_violations': {
-		'dataset_name': 'building_violations',
-		'date_min': '2006-01-01',
-		'columns': ['id', 'violation_date', 'latitude', 'longitude']
-	},
-}
-
+from boto3.dynamodb.conditions import Key
+from dateutil import parser
+from datetime import datetime
 class Download():
 
 	def __init__(self):
 		self.name   = 'Ben'
 
-	def download_data(self, dataset_name=None):
-		url = 'http://plenar.io/v1/api/datadump?dataset_name=%s&data_type=json&obs_date__ge=2017-06-01' % datasets[dataset_name]['dataset_name']
+	def download_data(self, dataset_long_name, date_max):
+		print dataset_long_name
+		if not date_max:
+			url = 'http://plenar.io/v1/api/datadump?dataset_name=%s&data_type=json' % dataset_long_name
+		else:
+			print date_max
+			dt = date_max.strftime('%Y-%m-%d')
+			url = 'http://plenar.io/v1/api/datadump?dataset_name=%s&data_type=json&obs_date__ge=%s' % (dataset_long_name, dt)
+			
 		response = requests.get(url).text
 		# BUG need to replace quotes
 		response = response.replace("'type': 'FeatureCollection', 'features':", '"type": "FeatureCollection", "features":')
@@ -78,8 +44,6 @@ class kinesisConn():
 	def list_streams(self):
 		res = self.kinesis.list_delivery_streams(
 			Limit=100,
-			DeliveryStreamType='DirectPut',
-			ExclusiveStartDeliveryStreamName='string'
 		)
 		return res['DeliveryStreamNames']
 	#
@@ -88,6 +52,13 @@ class kinesisConn():
 			DeliveryStreamName=dataset,
 		)
 		return res['DeliveryStreamDescription']
+	#
+	def put_records(self, stream, records):
+		res = self.kinesis.put_record_batch(
+			DeliveryStreamName=stream,
+			Records=records
+		)
+		return True
 	#
 	def delete_stream(self, dataset):
 		res = self.kinesis.delete_delivery_stream(
@@ -104,7 +75,7 @@ class kinesisConn():
 				S3DestinationConfiguration={
 					'RoleARN': 'arn:aws:iam::617449064033:role/firehose_delivery_role',
 					'BucketARN': 'arn:aws:s3:::bnroths',
-					'Prefix': 'chicago-data/%s' % dataset,
+					'Prefix': 'chicago-data/%s/' % dataset,
 					'BufferingHints': {'SizeInMBs': 50, 'IntervalInSeconds': 60 },
 					'CompressionFormat': 'UNCOMPRESSED',
 					'EncryptionConfiguration': {'NoEncryptionConfig': 'NoEncryption',},
@@ -117,10 +88,19 @@ class dynamoConn():
 		self.dynamodb 	= boto3.resource('dynamodb')
 		self.table 		= self.dynamodb.Table('chicago-data')
 
-	def get_or_create(self, dataset):
-		res = self.get(dataset)
+	def put_item(self, json_data):
+		res = self.table.put_item(Item=json_data)
 		
-	
+	def get_all(self, data_source=None):
+		if data_source:
+			response = self.table.scan(
+				FilterExpression=Key('data_source').eq('plenario')
+			)
+		else:
+			response = table.scan()
+
+		return response['Items']
+
 	def get(self, dataset):
 		response = self.table.get_item(
 		   Key={
@@ -133,18 +113,55 @@ class dynamoConn():
 			return None
 
 
-k = kinesisConn()
-d = dynamoConn()
+k  = kinesisConn()
+db = dynamoConn()
+d  = Download()
+
 def handler(event, context):
-	d = Download()
 
-	for table in datasets:
-		if table not in k.list_streams():
-			k.get_or_create(table)
+	for dataset_item in db.get_all(data_source='plenario'):
+		dataset = dataset_item['dataset']
+		print 'a'
+		## add metadata to dynamo if new
+		if not db.get(dataset):
+			db.put_item(dataset_item)
+		print 'b'
+		## make streams id not exists
+		if dataset not in k.list_streams():
+			k.get_or_create(dataset)
+		print 'c'
+		## download data
+		# keep track of max date for data we see
+		date_max = datetime(1900, 1, 1)
+		if 'date_max' in dataset_item:
+			date_max = dataset_item['date_max']
+		res = d.download_data(dataset_long_name=dataset_item['dataset_long_name'], date_max=date_max)
+		print date_max
+		batch = []
+		for i, row in enumerate(res['features']):
+			## do anything to transform data
 
-		# res = d.download_data(table)
-		# pprint.pprint(res['features'][0]['properties'])
-		# exit(0)
-		# new_json = d.transform_json(res['features'])
+			## update date
+			print row
+			dt = parser.parse(row['properties']['date'])
+			if dt >= date_max or not date_max:
+				date_max = dt
+
+			kinesisRecord = {'Data': b'%s\n' % json.dumps(row)}
+			batch.append(kinesisRecord)
+			if i % 100 == 0:
+				k.put_records(stream=dataset, records=batch)
+				batch = []
+		k.put_records(stream=dataset, records=batch)
+
+		## add example datapoint if not there
+		if 'example_data' not in dataset:
+			dataset_item['example_data'] = json.dumps(res['features'][-1])
+			db.put_item(dataset_item)
+
+		if date_max:
+			dataset_item['date_max'] = date_max
+			db.put_item(dataset_item)
+		exit(0)
 	
 	return {"result": "GTG"}
