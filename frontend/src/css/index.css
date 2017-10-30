@@ -179,3 +179,19 @@ body {
 .tile.is-ancestor:not(:last-child) {
   margin-bottom: 0rem;
 }
+
+.map-panel {
+  position: fixed;
+  top: 75px;
+  width: 100% !important;
+  z-index: 999;
+  width: 300px !important;
+  left: 25px;
+  height: 400px;
+}
+
+.panel-heading,
+.panel-block,
+.panel-tabs {
+  background-color: #fff;
+}

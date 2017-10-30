@@ -11,21 +11,23 @@ sys.path.append(os.path.join(here, "./vendored"))
 import requests, boto3
 from boto3.dynamodb.conditions import Key
 from dateutil import parser
-from datetime import datetime
+from datetime import datetime, timedelta
 class Download():
 
 	def __init__(self):
 		self.name   = 'Ben'
 
 	def download_data(self, dataset_long_name, date_max):
-		print dataset_long_name
-		if not date_max:
-			url = 'http://plenar.io/v1/api/datadump?dataset_name=%s&data_type=json' % dataset_long_name
+		
+		print date_max
+		if ((datetime.now() - date_max).days) > 60:
+			dt1 = date_max.strftime('%Y-%m-%d')
+			dt2 = (date_max + timedelta(days=60)).strftime('%Y-%m-%d')
+			print(dt1, dt2)
+			url = 'http://plenar.io/v1/api/datadump?dataset_name=%s&data_type=json&obs_date__ge=%s&obs_date__le=%s' % (dataset_long_name, dt1, dt2)
 		else:
-			print date_max
-			dt = date_max.strftime('%Y-%m-%d')
-			url = 'http://plenar.io/v1/api/datadump?dataset_name=%s&data_type=json&obs_date__ge=%s' % (dataset_long_name, dt)
-			
+			url = 'http://plenar.io/v1/api/datadump?dataset_name=%s&data_type=json&obs_date__ge=%s' % (dataset_long_name, dt1)
+		print url	
 		response = requests.get(url).text
 		# BUG need to replace quotes
 		response = response.replace("'type': 'FeatureCollection', 'features':", '"type": "FeatureCollection", "features":')
@@ -132,17 +134,17 @@ def handler(event, context):
 		print 'c'
 		## download data
 		# keep track of max date for data we see
-		date_max = datetime(1900, 1, 1)
+		date_max = date_max = parser.parse(dataset_item['dataset_start'])
 		if 'date_max' in dataset_item:
 			date_max = dataset_item['date_max']
 		res = d.download_data(dataset_long_name=dataset_item['dataset_long_name'], date_max=date_max)
-		print date_max
+		
 		batch = []
 		for i, row in enumerate(res['features']):
 			## do anything to transform data
 
 			## update date
-			print row
+			# print i
 			dt = parser.parse(row['properties']['date'])
 			if dt >= date_max or not date_max:
 				date_max = dt
@@ -159,7 +161,9 @@ def handler(event, context):
 			dataset_item['example_data'] = json.dumps(res['features'][-1])
 			db.put_item(dataset_item)
 
+		print date_max
 		if date_max:
+			dataset_item.pop('date_min', None)
 			dataset_item['date_max'] = date_max
 			db.put_item(dataset_item)
 		exit(0)
