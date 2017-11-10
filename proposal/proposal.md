@@ -9,15 +9,15 @@
 
 ### Theory & Papers
 
-### 3 Most Recent and Influential scholars to respond to your question?  What have they argued, and waht are teh attractions in their positions?
+Most Recent and Influential scholars to respond to your question?  What have they argued, and waht are teh attractions in their positions?
 
-### What is your hypothesis or provisional answer to be explored?  How does it differe from teh writers in #2, and how might it push that existing scholarly debate in a newer and more promising direction?
+### Hypothesis
 
-### Suppose your hypothesis or provisional answer is confirmed, why should anyone care?
+What is your hypothesis or provisional answer to be explored?  How does it differe from teh writers in #2, and how might it push that existing scholarly debate in a newer and more promising direction?
 
+Suppose your hypothesis or provisional answer is confirmed, why should anyone care?
 
-
-###How will you make your argument or test your hypothesis?
+How will you make your argument or test your hypothesis?
 
 
 ### Datasets
@@ -25,13 +25,13 @@
 Data Acquisition phase: so far I have downloaded the data
 
 Origin-Destination 
-!(img/img1.png)
+![](img/img1.png)
 
 Workplace Area Characteristics
-!(img/img2.png)
+![](img/img2.png)
 
 Residential Level Characteristics
-!(img/img3.png)
+![](img/img3.png)
 
 
 2) Open Street Map Transportation Routes.  OSM is a collaborative project to create a free editable map of the world.  The OSM project began in 2004 and aggregates user generated and government map related data. In my analysis, I plan to use road and transportation related data such as bus and subway routes to build a map of how different blocks relate to each other.  One drawback of the data source is that you can’t see how data has changed over time (ie if a road was added or a bus route was added).
@@ -39,7 +39,7 @@ Data acquisition phase: I have downloaded the data and made a few maps (using th
 
 3) City of Chicago Open Data Portal and Plenario
 The City of Chicago publically releases many datasets.  Data I have from my previous work is below
-!(img/img4.png)
+![](img/img4.png)
 
 In addition, I have recently added the following datasets which provide more business data:
 
