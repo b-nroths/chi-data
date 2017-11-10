@@ -5,8 +5,9 @@
 - Are certain parts of the city “cut-off” from economic development?
 - What will determine if parts of a city are connected?
 - How do jobs & money flow from one part of a city to another?
+- Can we predict what neighborhoods will take off or fall behind?
 - Are economic development incentives worth it?  Do they deliver on the results they promise?  For example, job training centers, small business grants, etc.
-- Can the connectedness of employee-employer blocks also be used to predict other datapoints such as the health or longevity of a neighborhood. 
+- Can the connectedness of employee-employer blocks also be used to predict other datapoints such as the health or longevity of a neighborhood?
 
 
 ### Theory & Papers
