@@ -35,7 +35,8 @@ Data Acquisition phase: so far I have downloaded the data
 ![](img/img3.png)
 
 
-##### Open Street Map Transportation Routes.  OSM is a collaborative project to create a free editable map of the world.  The OSM project began in 2004 and aggregates user generated and government map related data. In my analysis, I plan to use road and transportation related data such as bus and subway routes to build a map of how different blocks relate to each other.  One drawback of the data source is that you can’t see how data has changed over time (ie if a road was added or a bus route was added).
+##### Open Street Map Transportation Routes.  
+OSM is a collaborative project to create a free editable map of the world.  The OSM project began in 2004 and aggregates user generated and government map related data. In my analysis, I plan to use road and transportation related data such as bus and subway routes to build a map of how different blocks relate to each other.  One drawback of the data source is that you can’t see how data has changed over time (ie if a road was added or a bus route was added).
 Data acquisition phase: I have downloaded the data and made a few maps (using the OSMNX package from Geoff Boeing)
 
 ##### City of Chicago Open Data Portal and Plenario
