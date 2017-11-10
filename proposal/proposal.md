@@ -20,12 +20,12 @@ Where is infrastructure investment best targeted to stimulate private sector inv
 - http://www.nature.com/news/physicists-make-weather-forecasts-for-economies-1.16963
 Testing Hidalgo, Hausmann and Pietronero’s theories on UK cities and regions and in this way automate the UK fitness landscape, which is composed of functional regions.
 
-Analyzing temporal changes in land-use–transportation relationships: A LEHD-based approach (Mark W.Horner & Daniel Schleith)
+- http://www.sciencedirect.com/science/article/pii/S0143622812000975 Analyzing temporal changes in land-use–transportation relationships: A LEHD-based approach (Mark W.Horner & Daniel Schleith)
 One prominent research area within this nexus has examined whether urban structural characteristics, such as the balance of jobs and housing, impacts broader transportation patterns, particularly commuting outcomes.
 
+- https://www.nature.com/articles/srep00723 A New Metrics for Countries' Fitness and Products' Complexity
+- https://arxiv.org/pdf/1601.05012.pdf A Simple Measure of Economic Complexity
 - https://en.wikipedia.org/wiki/Economic_Complexity_Index
-- https://www.nature.com/articles/srep00723
-- https://arxiv.org/pdf/1601.05012.pdf
 
 ### Datasets
 #### Longitudinal Employer-Household Dynamics
