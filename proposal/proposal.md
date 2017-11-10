@@ -4,21 +4,28 @@
 - Why do some parts of a city grow faster than others?
 - Are certain parts of the city “cut-off” from economic development?
 - What will determine if parts of a city are connected?
+- How do jobs & money flow from one part of a city to another?
 - Are economic development incentives worth it?  Do they deliver on the results they promise?  For example, job training centers, small business grants, etc.
+- Can the connectedness of employee-employer blocks also be used to predict other datapoints such as the health or longevity of a neighborhood. 
 
 
 ### Theory & Papers
+- https://atlas.media.mit.edu/static/pdf/LinkingEconomicComplexityInstitutionsAndIncomeInequality.pdf
+Economic complexity captures information about an economy’s level of development that is relevant to the ways an economy generates and distributes its income. Suggests that a country’s productive structure may limit its range of income inequality.  Can a method like this be applied to neighborhoods within a city?
 
-Most Recent and Influential scholars to respond to your question?  What have they argued, and waht are teh attractions in their positions?
+- https://www.ucl.ac.uk/bartlett/casa/research/current-projects/urban-dynamics-lab
+Interesting question:
+Where is infrastructure investment best targeted to stimulate private sector investment and third sector action? We will create a new diagnostic tool based on analysis of residuals between different kinds of infrastructure capacity and configuration, and economic activity.
 
-### Hypothesis
+- http://www.nature.com/news/physicists-make-weather-forecasts-for-economies-1.16963
+Testing Hidalgo, Hausmann and Pietronero’s theories on UK cities and regions and in this way automate the UK fitness landscape, which is composed of functional regions.
 
-What is your hypothesis or provisional answer to be explored?  How does it differe from teh writers in #2, and how might it push that existing scholarly debate in a newer and more promising direction?
+Analyzing temporal changes in land-use–transportation relationships: A LEHD-based approach (Mark W.Horner & Daniel Schleith)
+One prominent research area within this nexus has examined whether urban structural characteristics, such as the balance of jobs and housing, impacts broader transportation patterns, particularly commuting outcomes.
 
-Suppose your hypothesis or provisional answer is confirmed, why should anyone care?
-
-How will you make your argument or test your hypothesis?
-
+- https://en.wikipedia.org/wiki/Economic_Complexity_Index
+- https://www.nature.com/articles/srep00723
+- https://arxiv.org/pdf/1601.05012.pdf
 
 ### Datasets
 #### Longitudinal Employer-Household Dynamics
@@ -55,6 +62,13 @@ https://data.cityofchicago.org/Community-Economic-Development/Small-Business-Imp
 
 Data acquisition phase: I have all the data being downloaded into database daily.  Time spans on each dataset vary slightly
 
-###
+### Data Visualization and Web Interface
+As part of the project I will build some interactive visualizations published on the web.  Part of this data platform will include a way to continually refresh and publish more recent data and query across published datasets.  This code will be open sourced and feature extraction will be very transparent.
 
+Some tech I will use include:
+- http://uber.github.io/deck.gl/#/
+- https://uber.github.io/react-map-gl/
+- https://www.mapbox.com/
+
+![](img/img5.png)
 
