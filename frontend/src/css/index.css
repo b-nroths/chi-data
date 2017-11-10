@@ -181,13 +181,23 @@ body {
 }
 
 .map-panel {
-  position: fixed;
+/*  position: fixed;
   top: 75px;
   width: 100% !important;
   z-index: 999;
   width: 300px !important;
   left: 25px;
-  height: 400px;
+  height: 400px;*/
+}
+
+.map-timeline {
+/*  position: fixed;
+  top: 75px;
+  width: 100% !important;
+  z-index: 999;
+  width: 300px !important;
+  left: 325px;
+  height: 100px;*/
 }
 
 .panel-heading,

@@ -1,0 +1,26 @@
+====
+
+FACTUAL Dataset
+
+OSM in social sciences
+Google Places
+Yelp
+Foursquare
+
+Acessor Data
+
+Wessley Marshal - Civil Engineer University of Denver
+Data is Beautiful
+Longitudial Household Dynamics LEHD Loads Dataset (NYU Professor)
+Household Travel Survey
+
+Classification
+Spatial Signature -> Apply 
+LEED Environmental for Neighborhood
+
+What are neighborhoods
+	- Street Trees
+	- 
+
+Clarify what nature of neighborhood you are interested in.
+Government

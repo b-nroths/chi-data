@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Header = () =>
-	<div className="container">
-		<nav className="navbar" role="navigation" aria-label="main navigation">
+	
+		<nav className="navbar has-shadow" role="navigation" aria-label="main navigation">
+		<div className="container">
 			<div className="navbar-brand">
 				<a className="navbar-item" href="https://bulma.io">
 					CHICAGO DATA
@@ -22,7 +23,8 @@ const Header = () =>
 					Data
 				</Link>
 			</div>
-		</nav>
-	</div>;
+			</div>
+		</nav>;
+	
 
 export default Header;

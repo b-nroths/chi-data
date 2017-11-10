@@ -6,6 +6,7 @@
     "dateformat": "2.0.0",
     "deck.gl": "^4.1.5",
     "dotenv": "^4.0.0",
+    "geolib": "^2.0.24",
     "immutable": "^3.8.2",
     "luma.gl": "^4.0.5",
     "react": "^15.6.2",
