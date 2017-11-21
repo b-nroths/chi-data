@@ -7,6 +7,7 @@ Some topics I could cover in my paper include:
 - What is the network structure of Chicago's neighborhoods?
 - What parts of the city are closely connected and which ones are not?
 - How does power/money/etc flow from one part of the city to another?
+- How do investments in specific areas of a city spread to other areas?
 - Do these network structures have any connection to why some parts of a city grow faster than others, have less crime, etc.?
 - What will determine if parts of a city are connected?
 
