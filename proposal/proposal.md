@@ -1,7 +1,7 @@
 ## M.A. Thesis Proposal
 
 ### Research Topic
-In my paper I want to study how the network structure of Chicago's neighborhoods influence their economic development.  I will rely on theories of influence and power that have been developed and applied to subjects such as social networks, exchange networks, and even web links (PageRank).  Part of my paper will consider if these models of power and influence can be applied in this context.  I plan to test these models against emprical data from the Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) dataset as well as other datasets available at the census block level published by the City of Chicago and other sources.  
+In my paper, I want to study how the network structure of Chicago's neighborhoods influence their economic development.  I will rely on theories of influence and power that have been developed and applied to subjects such as social networks, exchange networks, and even web links (PageRank).  Part of my paper will consider if these models of power and influence can be applied in this context.  I plan to test these models against empirical data from the Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) dataset as well as other datasets available at the census block level published by the City of Chicago and other sources.  
 
 Some topics I could cover in my paper include:
 - What is the network structure of Chicago's neighborhoods?
@@ -14,7 +14,7 @@ Some topics I could cover in my paper include:
 ### Literature Review
 ### Theories
 #### The Distribution of Power in Exchange Networks: Theory and Experimental Results.
-This paper presents an analysis of the strcutural determinants of power in exchange networks though both experimental and simulation studies.  They show that power does not equal centrality in exchange networks which contradicts much social network research that assumes centrality is equivalent to power.
+This paper presents an analysis of the structural determinants of power in exchange networks though both experimental and simulation studies.  They show that power does not equal centrality in exchange networks which contradicts much social network research that assumes centrality is equivalent to power.
 - Cook, Karen S., et al. “The Distribution of Power in Exchange Networks: Theory and Experimental Results.” American Journal of Sociology, vol. 89, no. 2, 1983, pp. 275–305. JSTOR, JSTOR, www.jstor.org/stable/2779142.
 
 #### Power and Centrality: A Family of Measures
@@ -22,7 +22,7 @@ This paper looks at how, in bargaining situations, it is advantageous to be conn
 - Bonacich, Phillip. "Power and Centrality: A Family of Measures."" American Journal of Sociology, vol. 92, no. 5, 1987, pp. 1170–1182. JSTOR, JSTOR, www.jstor.org/stable/2780000.
 
 #### On the Geographical Interpretation of Eigenvalues.
-This paper outlines a few examples of how one can peroform matrix algebra on matricies produced by geographic relationships.  For example, it looks out the outline of a road network in Uganda in 1921 and produces a matrix of well-contected towns.  It shows how vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend to lie close to the principal axis of the matrix.  Looking at a road network in Syria Other while towns that are moderately well coneteced will not lie in the middle of so many dimensions as the well-connected towns and will form small culsters on their own.  These may lie close to oehter eigenvectors which aregeographic matricies
+This paper outlines a few examples of how one can perform matrix algebra on matrices produced by geographic relationships.  For example, it looks out the outline of a road network in Uganda in 1921 and produces a matrix of well-connected towns.  It shows how vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend to lie close to the principal axis of the matrix.  Looking at a road network in Syria Other while towns that are moderately well connected will not lie in the middle of so many dimensions as the well-connected towns and will form small clusters on their own.  These may lie close to other eigenvectors which are geographic matrices.
 - Gould, P. R. “On the Geographical Interpretation of Eigenvalues.” Transactions of the Institute of British Geographers, no. 42, 1967, pp. 53–86. JSTOR, JSTOR, www.jstor.org/stable/621372.
 
 #### Linking Economic Complexity, Institutions, and Income Inequality
@@ -107,4 +107,3 @@ Some tech I will use include:
 - https://www.mapbox.com/
 
 ![](img/img6.png)
-
