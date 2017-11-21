@@ -18,11 +18,11 @@ This paper presents an analysis of the structural determinants of power in excha
 - Cook, Karen S., et al. “The Distribution of Power in Exchange Networks: Theory and Experimental Results.” American Journal of Sociology, vol. 89, no. 2, 1983, pp. 275–305. JSTOR, JSTOR, www.jstor.org/stable/2779142.
 
 #### Power and Centrality: A Family of Measures
-This paper looks at how, in bargaining situations, it is advantageous to be connected to those who have few options because power comes from being connected to those who are powerless.  Being connected to powerful others who have many potential trading partners reduces one's bargaining power.  The author's develop a model for centrality to this end.
+This paper looks at how, in bargaining situations, it is advantageous to be connected to those who have few options because power comes from being connected to those who are powerless.  Being connected to powerful others who have many potential trading partners reduces one's bargaining power.  The author's develop a network model to this end.
 - Bonacich, Phillip. "Power and Centrality: A Family of Measures."" American Journal of Sociology, vol. 92, no. 5, 1987, pp. 1170–1182. JSTOR, JSTOR, www.jstor.org/stable/2780000.
 
 #### On the Geographical Interpretation of Eigenvalues.
-This paper outlines a few examples of how one can perform matrix algebra on matrices produced by geographic relationships.  For example, it looks out the outline of a road network in Uganda in 1921 and produces a matrix of well-connected towns.  It shows how vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend to lie close to the principal axis of the matrix.  Looking at a road network in Syria Other while towns that are moderately well connected will not lie in the middle of so many dimensions as the well-connected towns and will form small clusters on their own.  These may lie close to other eigenvectors which are geographic matrices.
+This paper outlines a few examples of how one can perform matrix algebra on matrices produced by geographic relationships.  For example, it looks out the outline of a road network in Uganda in 1921 and produces a matrix of well-connected towns.  It shows how vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend to lie close to the principal axis of the matrix.
 - Gould, P. R. “On the Geographical Interpretation of Eigenvalues.” Transactions of the Institute of British Geographers, no. 42, 1967, pp. 53–86. JSTOR, JSTOR, www.jstor.org/stable/621372.
 
 #### Linking Economic Complexity, Institutions, and Income Inequality
@@ -99,11 +99,13 @@ Data acquisition phase: I have all the data being downloaded into database daily
 
 ### Data Visualization
 As part of the project I will build some interactive visualizations published on the web.  For example I would like to display the networks of census blocks in the US and how they are connected via the LEHD Dataset.  An example of similar visualization I would like to create is below.  
-
-![](img/img5.png)
 Some tech I will use include:
 - http://uber.github.io/deck.gl/#/
 - https://uber.github.io/react-map-gl/
 - https://www.mapbox.com/
 
+![](img/img5.png)
 ![](img/img6.png)
+
+
+
