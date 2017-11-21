@@ -12,22 +12,22 @@ Some topics I could cover in my paper include:
 - What will determine if parts of a city are connected?
 
 ### Literature Review
-### Mathematical Theories
+### Theories
 #### The Distribution of Power in Exchange Networks: Theory and Experimental Results.
 This paper presents a theoretical analysis of the strcutural determinants of power in exchange networks and applies it to and applies this to Power does not equal centrality in exchange networks.  In a set of experimental and simulatiln studies, they showed those who were the most central were not the most successful in exercising baragaining power..  Others have thought that centrality is equivalent to power
 Cook, Karen S., et al. “The Distribution of Power in Exchange Networks: Theory and Experimental Results.” American Journal of Sociology, vol. 89, no. 2, 1983, pp. 275–305. JSTOR, JSTOR, www.jstor.org/stable/2779142.
 
 #### Power and Centrality: A Family of Measures
 This paper looks at how, in bargaining situations, centrality is advantageous to be connected to those who have few options because power comes from being connected to those who are powerless.  Being connected to powerful others who have many potential trading partners reduces one's bargaining power.  The author's develop a model for centrality c(alpha, beta) where beta reflects teh degree to which an individual's status is a function of the satuses of those whom he or she is connected model to 
-Bonacich, Phillip. "Power and Centrality: A Family of Measures."" American Journal of Sociology, vol. 92, no. 5, 1987, pp. 1170–1182. JSTOR, JSTOR, www.jstor.org/stable/2780000.
+- Bonacich, Phillip. "Power and Centrality: A Family of Measures."" American Journal of Sociology, vol. 92, no. 5, 1987, pp. 1170–1182. JSTOR, JSTOR, www.jstor.org/stable/2780000.
 
 #### Linking Economic Complexity, Institutions, and Income Inequality
 Economic complexity captures information about an economy’s level of development that is relevant to the ways an economy generates and distributes its income. Suggests that a country’s productive structure may limit its range of income inequality.  Do neighborhood networks capture information about a neighborhoods development?
-Dominik Hartman et al. "Linking Economic Complexity, Institutions, and Income Inequality" (2015), https://atlas.media.mit.edu/static/pdf/LinkingEconomicComplexityInstitutionsAndIncomeInequality.pdf
+- Dominik Hartman et al. "Linking Economic Complexity, Institutions, and Income Inequality" (2015), https://atlas.media.mit.edu/static/pdf/LinkingEconomicComplexityInstitutionsAndIncomeInequality.pdf
 
 #### On the Geographical Interpretation of Eigenvalues.
 This paper outlines a few examples of how one can peroform matrix algebra on matricies produced by geographic relationships.  For example, it looks out the outline of a road network in Uganda in 1921 and produces a matrix of well-contected towns.  It shows how vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend to lie close to the principal axis of the matrix.  Looking at a road network in Syria Other while towns that are moderately well coneteced will not lie in the middle of so many dimensions as the well-connected towns and will form small culsters on their own.  These may lie close to oehter eigenvectors which aregeographic matricies
-Gould, P. R. “On the Geographical Interpretation of Eigenvalues.” Transactions of the Institute of British Geographers, no. 42, 1967, pp. 53–86. JSTOR, JSTOR, www.jstor.org/stable/621372.
+- Gould, P. R. “On the Geographical Interpretation of Eigenvalues.” Transactions of the Institute of British Geographers, no. 42, 1967, pp. 53–86. JSTOR, JSTOR, www.jstor.org/stable/621372.
 
 Others
 - Phillip D. Straffin, "Linear Algebra in Geography: Eigenvectors of Networks," Mathematics Magazine, Vol. 53, No. 5 (Nov., 1980), pp. 269-276.
@@ -37,11 +37,11 @@ Others
 ### Papers Using LEHD Dataset
 #### Analyzing temporal changes in land-use–transportation relationships: A LEHD-based approach
 This paper looks at commuting-land-use relationship to study how jobs and housing impacts broader transportation patterns, particularly commuting outcomes. It estimates several commuting and jobs–housing metrics from the LEHD dataset and looks at how the 2007 recession affected travel and commuting patterns.
-Andrew Owen, David M. Levinson Modeling the commute mode share of transit using continuous accessibility to jobs Transportation Research Part A: Policy and Practice, Volume 74, 2015, pp. 110-122, http://www.sciencedirect.com/science/article/pii/S0143622812000975 
+- Andrew Owen, David M. Levinson Modeling the commute mode share of transit using continuous accessibility to jobs Transportation Research Part A: Policy and Practice, Volume 74, 2015, pp. 110-122, http://www.sciencedirect.com/science/article/pii/S0143622812000975 
 
 #### Multivariate spatio-temporal models for high-dimensional areal data with application to Longitudinal Employer-Household Dynamics
 This paper explains how to analyze spatio-temporal data in an extremely high dimensional setting.  Motivated by the LEHD dataset they introduce a multivariate spatio-temporal mixed effects model (MSTM), which can be used to efficiently model high-dimensional multivariate spatio-temporal areal data sets.
-Bradley, Jonathan R.; Holan, Scott H.; Wikle, Christopher K. Multivariate spatio-temporal models for high-dimensional areal data with application to Longitudinal Employer-Household Dynamics. Ann. Appl. Stat. 9 (2015), no. 4, 1761--1791. doi:10.1214/15-AOAS862. https://projecteuclid.org/euclid.aoas/1453993093
+- Bradley, Jonathan R.; Holan, Scott H.; Wikle, Christopher K. Multivariate spatio-temporal models for high-dimensional areal data with application to Longitudinal Employer-Household Dynamics. Ann. Appl. Stat. 9 (2015), no. 4, 1761--1791. doi:10.1214/15-AOAS862. https://projecteuclid.org/euclid.aoas/1453993093
 
 ### Other Interesting Papers Papers On Topic
 - http://www.nature.com/news/physicists-make-weather-forecasts-for-economies-1.16963
