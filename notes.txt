@@ -1,8 +1,0 @@
-https://medium.freecodecamp.org/escaping-lambda-function-hell-using-docker-40b187ec1e48
-
-docker run -v /Users/benjamin/Desktop/repos/bnroths-dash/backend:/working -it --rm ubuntu
-pip install pystan -t vendored
-pip install -r requirements.txt -t vendored
-
-# serverless invoke -f hello -l
-# pip install -t vendored/ -r requirements.txt

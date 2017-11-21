@@ -84,10 +84,10 @@ class S3():
 			exit(0)
 			return fnames
 
-	def save_file(self, filename, dataset_name, year, month):
+	def save_file(self, filename, dataset_name, year):
 		self.s3.upload_file(filename, 
 			'bnroths', 
-			'chicago-data/%s/year=%s/%s.parquet' % (dataset_name, year, month))
+			'chicago-data/%s/year=%s/%s.parquet' % (dataset_name, year, filename))
 		return True
 
 	def rec_s3_dynamo(self, dataset):

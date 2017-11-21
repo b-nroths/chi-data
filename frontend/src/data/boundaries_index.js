@@ -25,12 +25,13 @@ const boundaries = {
 	// 	"url": "Metra+Lines.json",
 	// 	"other": "not boundary"
 	// },
-	// "community_areas": {
-	// 	"file": "Boundaries - Community Areas (current).json",
-	// 	"name": "Community Areas",
-	// 	"url": "Boundaries+-+Community+Areas+(current).json",
-	// "other": "not working"
-	// },
+	"community_areas": {
+		"key": "community_areas",
+		"file": "Boundaries - Community Areas (current).json",
+		"name": "Community Areas",
+		"url": "Boundaries+-+Community+Areas+(current).json",
+	"other": "not working"
+	},
 	// "metra_stations": {
 	// 	"file": "Metra Stations.json",
 	// 	"name": "Metra Stations",
@@ -127,56 +128,66 @@ const boundaries = {
 	// }
 
 	// BOUNDARIES
-	// "state_congressional_districts_senate": {
-	// 	"file": "Boundaries - State Congressional Districts (Senate).json",
-	// 	"name": "State Congressional Districts (Senate)",
-	// 	"url": "Boundaries+-+State+Congressional+Districts+(Senate).json"
-	// },
-	// "state_congressional_districts_house": {
-	// 	"file": "Boundaries - State Congressional Districts (House).json",
-	// 	"name": "State Congressional Districts",
-	// 	"url": "State+Congressional+Districts+(Senate).json" // mabye wrong
-	// },
-	// "police_districts": {
-	// 	"file": "Boundaries - Police Districts.json",
-	// 	"name": "Police Districts",
-	// 	"url": "Boundaries+-+Police+Districts.json"
-	// },
-	// "police_beats": {
-	// 	"file": "Boundaries - Police Beats (current).json",
-	// 	"name": "Police Beats",
-	// 	"url": "Boundaries+-+Police+Beats+(current).json"
-	// },
-	// "us_congressional_districts": {
-	// 	"file": "Boundaries - U.S. Congressional Districts.json",
-	// 	"name": "US Congressional Districts",
-	// 	"url": "Boundaries+-+U.S.+Congressional+Districts.json"
-	// },
-	// "zip_codes": {
-	// 	"file": "Boundaries - ZIP Codes.json",
-	// 	"name": "Zip Codes",
-	// 	"url": "Boundaries+-+ZIP+Codes.json"
-	// },
-	// "census_tracts": {
-	// 	"file": "Boundaries - Census Tracts - 2010.json",
-	// 	"name": "Census Tracts",
-	// 	"url": "Boundaries+-+Census+Tracts+-+2010.json"
-	// },
-	// "city": {
-	// 	"file": "Boundaries - City.json",
-	// 	"name": "City",
-	// 	"url": "Boundaries+-+City.json"
-	// },
+	"state_congressional_districts_senate": {
+		"key": "state_congressional_districts_senate",
+		"file": "Boundaries - State Congressional Districts (Senate).json",
+		"name": "State Congressional Districts (Senate)",
+		"url": "Boundaries+-+State+Congressional+Districts+(Senate).json"
+	},
+	"state_congressional_districts_house": {
+		"key": "state_congressional_districts_house",
+		"file": "Boundaries - State Congressional Districts (House).json",
+		"name": "State Congressional Districts",
+		"url": "State+Congressional+Districts+(Senate).json" // mabye wrong
+	},
+	"police_districts": {
+		"key": "police_districts",
+		"file": "Boundaries - Police Districts.json",
+		"name": "Police Districts",
+		"url": "Boundaries+-+Police+Districts.json"
+	},
+	"police_beats": {
+		"key": "police_beats",
+		"file": "Boundaries - Police Beats (current).json",
+		"name": "Police Beats",
+		"url": "Boundaries+-+Police+Beats+(current).json"
+	},
+	"us_congressional_districts": {
+		"key": "us_congressional_districts",
+		"file": "Boundaries - U.S. Congressional Districts.json",
+		"name": "US Congressional Districts",
+		"url": "Boundaries+-+U.S.+Congressional+Districts.json"
+	},
+	"zip_codes": {
+		"key": "zip_codes",
+		"file": "Boundaries - ZIP Codes.json",
+		"name": "Zip Codes",
+		"url": "Boundaries+-+ZIP+Codes.json"
+	},
+	"census_tracts": {
+		"key": "census_tracts",
+		"file": "Boundaries - Census Tracts - 2010.json",
+		"name": "Census Tracts",
+		"url": "Boundaries+-+Census+Tracts+-+2010.json"
+	},
+	"city": {
+		"key": "city",
+		"file": "Boundaries - City.json",
+		"name": "City",
+		"url": "Boundaries+-+City.json"
+	},
 	"neighborhoods": {
+		"key": "neighborhoods",
 		"file": "Boundaries - Neighborhoods.json",
 		"name": "Neighborhoods",
 		"url": "Boundaries+-+Neighborhoods.json"
 	},
-	// "wards": {
-	// 	"file": "Boundaries - Wards (2015-).json",
-	// 	"name": "Wards",
-	// 	"url": "Boundaries+-+Wards+(2015-).json"
-	// },
+	"wards": {
+		"key": "wards",
+		"file": "Boundaries - Wards (2015-).json",
+		"name": "Wards",
+		"url": "Boundaries+-+Wards+(2015-).json"
+	},
 }
 
 export default boundaries
