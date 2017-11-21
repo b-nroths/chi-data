@@ -15,7 +15,7 @@ Some topics I could cover in my paper include:
 ### Theories
 #### The Distribution of Power in Exchange Networks: Theory and Experimental Results.
 This paper presents a theoretical analysis of the strcutural determinants of power in exchange networks and applies it to and applies this to Power does not equal centrality in exchange networks.  In a set of experimental and simulatiln studies, they showed those who were the most central were not the most successful in exercising baragaining power..  Others have thought that centrality is equivalent to power
-Cook, Karen S., et al. “The Distribution of Power in Exchange Networks: Theory and Experimental Results.” American Journal of Sociology, vol. 89, no. 2, 1983, pp. 275–305. JSTOR, JSTOR, www.jstor.org/stable/2779142.
+- Cook, Karen S., et al. “The Distribution of Power in Exchange Networks: Theory and Experimental Results.” American Journal of Sociology, vol. 89, no. 2, 1983, pp. 275–305. JSTOR, JSTOR, www.jstor.org/stable/2779142.
 
 #### Power and Centrality: A Family of Measures
 This paper looks at how, in bargaining situations, centrality is advantageous to be connected to those who have few options because power comes from being connected to those who are powerless.  Being connected to powerful others who have many potential trading partners reduces one's bargaining power.  The author's develop a model for centrality c(alpha, beta) where beta reflects teh degree to which an individual's status is a function of the satuses of those whom he or she is connected model to 
