@@ -1,0 +1,1 @@
+aws s3 sync data/ s3://chicago.bnroths.com/data

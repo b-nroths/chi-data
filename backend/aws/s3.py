@@ -9,7 +9,6 @@ from boto3.dynamodb.conditions import Key
 import s3fs
 import pyarrow as pa
 import pyarrow.parquet as pq
-from data import datas
 
 class S3():
 	def __init__(self):
@@ -54,7 +53,7 @@ class S3():
 	def get_df(self, dataset, columns='columns_short', year='2014'):
 		s3 = s3fs.S3FileSystem()
 		ds = pq.ParquetDataset(path_or_paths='bnroths/chicago-data/%s/year=%s' % (dataset, year), filesystem=s3, validate_schema=False)
-		table = ds.read(columns=datas[dataset][columns])
+		table = ds.read()#columns=datas[dataset][columns])
 		df = table.to_pandas()
 		return df
 

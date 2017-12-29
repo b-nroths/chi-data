@@ -234,7 +234,7 @@ class MapBoundaries extends React.Component {
           */
     return (
       <section className="main-content columns is-gapless is-fullheight">
-        <aside className="column is-3 is-narrow-mobile is-hidden-mobile">
+        <aside className="column is-3">
           <MapPanel
             didSelectKey={this.didSelectKey}
             key={this.state.current_boundary}
@@ -247,7 +247,7 @@ class MapBoundaries extends React.Component {
             onViewportChange={this._onViewportChange}
             mapboxApiAccessToken="pk.eyJ1IjoiYm5yb3RocyIsImEiOiJjajlkMzNqMmkxdzh2MzNucmswN2dwNnc1In0.auXBo3CxsUqpDEO0g_OmnQ"
           >
-            <DeckGL {...viewport} layers={[geosjsonLayer, layer]} />
+           {/* <DeckGL {...viewport} layers={[geosjsonLayer, layer]} /> */}
           </MapGL>
         </div>
       </section>

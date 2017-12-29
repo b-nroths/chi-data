@@ -1,0 +1,23 @@
+Subset of Question
+	Structural Analysis
+
+Research Project
+Timeline
+
+April 1st
+May 1st
+
+Eigenvalue Centrality
+
+Power and Centrality: A Family of Measures
+Phillip Bonacich
+(1987)
+
+Page Rank
+A few papers
+
+Social Influence
+
+Geographer
+PR Gould goegraphical interpretation of eigenvalues
+(1967)

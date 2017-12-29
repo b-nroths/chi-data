@@ -5,21 +5,19 @@ In my paper, I want to study how the network structure of Chicago's neighborhood
 
 Some topics I could cover in my paper include:
 - What is the network structure of Chicago's neighborhoods?
-- What parts of the city are closely connected and which ones are not?
+- What parts of the city are closely connected and why?
 - How does power/money/etc. flow from one part of the city to another?
-- How do investments in specific areas of a city spread to other areas?
 - Do these network structures have any connection to why some parts of a city grow faster than others, have less crime, etc.?
 - What will determine if parts of a city are connected?
 
 ### Literature Review
-### Theories
 #### The Distribution of Power in Exchange Networks: Theory and Experimental Results.
 This paper presents an analysis of the structural determinants of power in exchange networks though both experimental and simulation studies.  They show that power does not equal centrality in exchange networks which contradicts much social network research that assumes centrality is equivalent to power.
 - Cook, Karen S., et al. “The Distribution of Power in Exchange Networks: Theory and Experimental Results.” American Journal of Sociology, vol. 89, no. 2, 1983, pp. 275–305. JSTOR, JSTOR, www.jstor.org/stable/2779142.
 
 #### Power and Centrality: A Family of Measures
 This paper looks at how, in bargaining situations, it is advantageous to be connected to those who have few options because power comes from being connected to those who are powerless.  Being connected to powerful others who have many potential trading partners reduces one's bargaining power.  The authors develop a network model to this end.
-- Bonacich, Phillip. "Power and Centrality: A Family of Measures."" American Journal of Sociology, vol. 92, no. 5, 1987, pp. 1170–1182. JSTOR, JSTOR, www.jstor.org/stable/2780000.
+- Bonacich, Phillip. "Power and Centrality: A Family of Measures." American Journal of Sociology, vol. 92, no. 5, 1987, pp. 1170–1182. JSTOR, JSTOR, www.jstor.org/stable/2780000.
 
 #### On the Geographical Interpretation of Eigenvalues.
 This paper outlines a few examples of how one can perform matrix algebra on matrices produced by geographic relationships.  For example, it looks out the outline of a road network in Uganda in 1921 and produces a matrix of well-connected towns.  It shows how vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend to lie close to the principal axis of the matrix.

@@ -202,6 +202,8 @@ class MapTracts extends React.Component {
       "2011",
       "2012"
     ];
+
+    console.log(this.state.keys)
     return (
       <div>
         <MapTimeline

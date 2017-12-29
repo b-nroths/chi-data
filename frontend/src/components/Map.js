@@ -1,23 +1,18 @@
 import React from "react";
 import MapGL from "react-map-gl";
-import DeckGL, { GeoJsonLayer, ScatterplotLayer } from "deck.gl";
-import boundaries from "../data/boundaries_index";
-
-const LIGHT_SETTINGS = {
-  lightsPosition: [-125, 50.5, 5000, -122.8, 48.5, 8000],
-  ambientRatio: 0.2,
-  diffuseRatio: 0.5,
-  specularRatio: 0.3,
-  lightsStrength: [1.0, 0.0, 2.0, 0.0],
-  numberOfLights: 2
-};
+import MapPanel from "./MapPanel";
+import DeckGL, { ScatterplotLayer, GeoJsonLayer } from "deck.gl";
+import config from "./config";
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current_boundary: null,
+      dataset: "food_inspections",
+      dt: "2010-01",
+      datasets: null,
       data: null,
+      city: null,
       pointdata: [
         {
           position: [-87.9401140825, 41.6445431225],
@@ -50,22 +45,49 @@ class Map extends React.Component {
         height: 500
       }
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.refreshData = this.refreshData.bind(this);
   }
-  _getElevation = data => {
-    console.log(data);
-    console.log(this.state[data] * 10);
-    return this.state.hoods[data] * 10;
-  };
-  _getColor = data => {
-    console.log(data);
-    console.log();
-    var r = this.state[data] / 1477;
-    return [r * 255, 140, 200 * (1 - r)];
-  };
+
+  refreshData() {
+    var year = this.state.dt.split("-")[0];
+    var month = this.state.dt.split("-")[1];
+    console.log(year, month);
+    fetch(
+      "http://chicago.bnroths.com/data/" +
+        this.state.dataset +
+        "/" +
+        year +
+        "/" +
+        month +
+        ".json"
+    )
+      .then(response => response.json())
+      // .then(data => console.log(data))
+      .then(json => this.setState({ data: json }));
+  }
+  handleChange(event) {
+    this.setState(
+      {
+        [event.target.name]: event.target.value
+      },
+      this.refreshData()
+    );
+  }
+
   componentDidMount() {
-    window.addEventListener("resize", this._resize);
     this._resize();
-    this.didSelectBoundary("census_tracts");
+
+    fetch(config.datasets_url)
+      .then(response => response.json())
+      .then(data => this.setState({ datasets: data }));
+
+    fetch(
+      "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/Boundaries+-+City.json"
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ city: data }));
+    this.refreshData();
   }
 
   componentWillUnmount() {
@@ -73,20 +95,10 @@ class Map extends React.Component {
     // window.cancelAnimationFrame(animation);
   }
 
-  didSelectBoundary = boundary => {
-    fetch(
-      "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/" +
-        boundaries[boundary]["url"]
-    )
-      .then(resp => resp.json())
-      .then(data => {
-        this.setState({
-          data: data,
-          current_boundary: boundary
-        });
-      });
-
-    // this.setState({ data }));
+  _getElevation = data => {
+    console.log(data);
+    console.log(this.state[data] * 10);
+    return this.state.hoods[data] * 10;
   };
 
   _resize = () => {
@@ -100,38 +112,55 @@ class Map extends React.Component {
   };
   _onViewportChange = viewport => this.setState({ viewport });
   render() {
-    const { viewport, data, pointdata } = this.state;
+    const { viewport, data, city } = this.state;
     const geosjsonLayer = new GeoJsonLayer({
       id: "geojson-layer",
-      data,
-      opacity: 0.8,
-      stroked: false,
-      filled: true,
-      extruded: true,
-      wireframe: true,
-      fp64: true,
-      lightSettings: LIGHT_SETTINGS,
-      updateTriggers: {
-        getElevation: viewport
-      }
+      data: city,
+      filled: false,
+      stroked: true,
+      extruded: false,
+      // lineWidthScale: 10,
+      lineWidthMinPixels: 5
+      // updateTriggers: {
+      //   getElevation: viewport
+      // }
     });
-
+    // const pointLayer = new ScatterplotLayer({
+    //   id: "scatterplot-layer",
+    //   data: pointdata,
+    //   radiusScale: 10,
+    //   outline: false
+    // });
+    // console.log(city)
     const layer = new ScatterplotLayer({
       id: "scatterplot-layer",
-      data: pointdata,
+      data: data,
       radiusScale: 10,
-      outline: false
+      outline: false,
+      getPosition: d => [d[0], d[1], 0],
+      getRadius: d => 10,
+      getColor: d => [255, 0, 128]
     });
 
     return (
       <section className="main-content columns is-gapless is-fullheight">
-        <div className="container column is-12">
+        <aside className="column is-4">
+          {this.state.datasets &&
+            <MapPanel
+              handleChange={this.handleChange}
+              didSelectKey={this.didSelectKey}
+              datasets={this.state.datasets}
+              dataset={this.state.dataset}
+              dt={this.state.dt}
+            />}
+        </aside>
+        <div className="container column is-8">
           <MapGL
             {...viewport}
             onViewportChange={this._onViewportChange}
             mapboxApiAccessToken="pk.eyJ1IjoiYm5yb3RocyIsImEiOiJjajlkMzNqMmkxdzh2MzNucmswN2dwNnc1In0.auXBo3CxsUqpDEO0g_OmnQ"
           >
-            <DeckGL {...viewport} layers={[geosjsonLayer, layer]} />
+            <DeckGL {...viewport} layers={[layer, geosjsonLayer]} />
           </MapGL>
         </div>
       </section>

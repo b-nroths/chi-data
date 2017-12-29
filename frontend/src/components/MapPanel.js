@@ -1,56 +1,166 @@
-import React, { PureComponent } from "react";
+import React from "react";
+import {
+  BarChart,
+  Bar,
+  // XAxis,
+  // YAxis,
+  // CartesianGrid,
+  // Tooltip,
+  // Legend,
+  ResponsiveContainer
+} from "recharts";
 
-// const defaultContainer = ({ children }) =>
-//   <div className="control-panel">
-//     {children}
-//   </div>;
+class MapPanel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-export default class MapPanel extends PureComponent {
+  componentDidMount() {
+    this.setState({
+      dts: this.props.datasets[this.props.dataset]["dts"]
+    });
+  }
+
   render() {
-    // const Container = this.props.containerComponent || defaultContainer;
-
-    console.log(this.props.keys);
+    var data = this.props.datasets[this.props.dataset]["dts"].map(d => ({
+      dt: d,
+      cnt: this.props.datasets[this.props.dataset]["cnts"][d]
+    }));
+    // console.log(data)
+    const TinyBarChart = React.createClass({
+      render() {
+        return (
+          <ResponsiveContainer width="100%" height={100}>
+            <BarChart width={150} height={40} data={data}>
+              <Bar dataKey="cnt" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        );
+      }
+    });
 
     return (
-      // <div className="container is-fluid map-panel">
-      //   <div className="columns">
-      //     <div className="column is-one-quarter">
-      <nav className="panel map-panel">
-        <p className="panel-heading">Boundaries</p>
-        <div className="panel-block">
-          <p className="control has-icons-left">
-            <input
-              className="input is-small"
-              type="text"
-              placeholder="Search"
-            />
-            <span className="icon is-small is-left">
-              <i className="fa fa-search" />
-            </span>
-          </p>
+      <div>
+        <div className="section">
+          <div className="field is-horizontal">
+            <div className="field-label is-normal">
+              <label style={{ minWidth: "100px" }} className="label">
+                Datasets
+              </label>
+            </div>
+
+            <div className="field-body">
+              <div className="field">
+                <div className="control">
+                  <div className="select">
+                    <select
+                      name="dataset"
+                      value={this.props.dataset}
+                      onChange={this.props.handleChange}
+                    >
+                      {this.props.datasets &&
+                        Object.keys(this.props.datasets).map(d => {
+                          return (
+                            <option value={d} key={d}>
+                              {this.props.datasets[d]["name"]}
+                            </option>
+                          );
+                        })}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="field is-horizontal">
+            <div className="field-label is-normal">
+              <label style={{ minWidth: "100px" }} className="label">
+                Date
+              </label>
+            </div>
+
+            <div className="field-body">
+              <div className="field">
+                <div className="control">
+                  <div className="select">
+                    <select name="dt" onChange={this.props.handleChange}>
+                      {this.props.dataset &&
+                        this.props.datasets[this.props.dataset][
+                          "dts"
+                        ].map(d => {
+                          return (
+                            <option value={d} key={d}>
+                              {d}
+                            </option>
+                          );
+                        })}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="field is-horizontal">
+            <div className="field-label is-normal">
+              <label style={{ minWidth: "100px" }} className="label">
+                Start
+              </label>
+            </div>
+            <div
+              style={{ paddingTop: "0.375em" }}
+              className="field-body is-normal"
+            >
+              <div className="field">
+                {this.props.datasets[this.props.dataset]["dataset_start"]}
+              </div>
+            </div>
+          </div>
+
+          <div className="field is-horizontal">
+            <div className="field-label is-normal">
+              <label style={{ minWidth: "100px" }} className="label">
+                Source
+              </label>
+            </div>
+            <div
+              style={{ paddingTop: "0.375em" }}
+              className="field-body is-normal"
+            >
+              <div className="field">
+                {this.props.datasets[this.props.dataset]["data_source"]}
+              </div>
+            </div>
+          </div>
+
+          <div className="field is-horizontal">
+            <div className="field-label is-normal">
+              <label style={{ minWidth: "100px" }} className="label">
+                Description
+              </label>
+            </div>
+            <div
+              style={{ paddingTop: "0.375em" }}
+              className="field-body is-normal"
+            >
+              <div className="field">
+                {this.props.datasets[this.props.dataset]["description"]}
+              </div>
+            </div>
+          </div>
+          <TinyBarChart />
+          <strong>Example Data</strong>
+          <pre style={{ fontSize: "0.5em" }}>
+            {JSON.stringify(
+              this.props.datasets[this.props.dataset]["example_data"],
+              null,
+              2
+            )}
+          </pre>
         </div>
-        <p className="panel-tabs">
-          <a className="is-active">All</a>
-          <a>Political</a>
-          <a>Other</a>
-        </p>
-        {Object.keys(this.props.keys).map(key =>
-          <a
-            key={key}
-            className={
-              this.props.key === key ? " is-active panel-block" : "panel-block"
-            }
-            onClick={e => {
-              this.props.didSelectKey(this.props.keys[key]["key"]);
-            }}
-          >
-            {this.props.keys[key]["name"]}
-          </a>
-        )}
-      </nav>
-      //     </div>
-      //   </div>
-      // </div>
+      </div>
     );
   }
 }
+
+export default MapPanel;

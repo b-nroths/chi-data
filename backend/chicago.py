@@ -16,7 +16,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from dynamo import dynamoConn
+from aws.dynamo import DynamoConn
 
 class Download():
 
@@ -96,7 +96,7 @@ class S3():
 		'''
 		pass
 
-db = dynamoConn()
+db = DynamoConn()
 d  = Download()
 s3 = S3()
 
@@ -120,12 +120,7 @@ def handler(event, context):
 		today      = datetime.datetime.today().date()
 		num_days   = (today - min_dt).days
 		date_list  = sorted(list(set([(today - datetime.timedelta(days=x)).strftime('%Y-%m') for x in range(num_days)])))
-		# print len(date_list)
-		# print len(days)
-		# exit(0)
-		## download data
-		# print 'h', sorted((set(date_list) - days))
-		# exit(0)
+		
 		for dt in sorted((set(date_list) - days)):
 			year, month = dt.split('-')
 			# print 'hi', dt
@@ -151,4 +146,52 @@ def handler(event, context):
 	
 	return {"result": "GTG"}
 
-handler(None, None)
+def upload(event, context):
+
+	for dataset_item in db.get_all(data_source='plenario'):
+		dataset_name = dataset_item['dataset']
+		# print dataset_name
+		if 'cnts' not in dataset_item:
+			cnts = {}
+		else:
+			cnts = json.loads(dataset_item['cnts'])
+		days = set(cnts.keys())
+		
+		## add metadata to dynamo if new
+		if not db.get(dataset_name):
+			db.put_item(dataset_item)
+		
+		## get all possible year/month combos
+		min_dt     = parser.parse(dataset_item['dataset_start']).date()
+		today      = datetime.datetime.today().date()
+		num_days   = (today - min_dt).days
+		date_list  = sorted(list(set([(today - datetime.timedelta(days=x)).strftime('%Y-%m') for x in range(num_days)])))
+		
+		print sorted((set(date_list) - days))
+		exit(0)
+		for dt in sorted((set(date_list) - days)):
+			year, month = dt.split('-')
+			# print 'hi', dt
+			# exit(0)
+			table, cnt = d.download_data(dataset_long_name=dataset_item['dataset_long_name'], dt=dt)
+			
+			## save to s3
+			# write local
+			filename = '%s-%s-%s.parquet' % (dataset_name, year, month)
+			pq.write_table(table, filename)
+			s3.save_file(filename, dataset_name, year, month)
+			os.remove(filename)
+			# save cnt
+			cnts[dt] = cnt
+			dataset_item['cnts'] = json.dumps(cnts)
+			db.put_item(dataset_item)
+			
+		## add example datapoint if not there
+		if 'example_data' not in dataset_item:
+			dataset_item['example_data'] = json.dumps(res['features'][-1])
+			db.put_item(dataset_item)
+
+	
+	return {"result": "GTG"}
+
+upload(None, None)

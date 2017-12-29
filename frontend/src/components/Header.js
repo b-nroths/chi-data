@@ -19,9 +19,9 @@ const Header = () =>
 				<Link to="/map" className="navbar-item">
 					Map
 				</Link>
-				<Link to="/data" className="navbar-item">
+				{/*<Link to="/data" className="navbar-item">
 					Data
-				</Link>
+				</Link>*/}
 			</div>
 			</div>
 		</nav>;

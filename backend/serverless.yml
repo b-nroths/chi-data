@@ -4,13 +4,29 @@ provider:
   name: aws
   runtime: python2.7
   timeout: 300
+  # role: arn:aws:iam::617449064033:role/chi-data-dev-us-east-1-lambdaRole
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:*
+      Resource: "arn:aws:dynamodb:us-east-1:617449064033:table/chicago-data"
+  include:
+    - aws/**
 
 functions:
-  articles:
-    handler: articles.handler
-    events:
-        - schedule: 'rate(10 minutes)'
   chicago:
     handler: chicago.handler
     events:
-        - schedule: 'rate(24 hours)'
+      - schedule: 'rate(24 hours)'
+  datasets:
+    handler: datasets.handler
+    events:
+      - http:
+          path: datasets
+          method: get
+          cors: true
