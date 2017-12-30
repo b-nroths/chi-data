@@ -17,6 +17,7 @@ provider:
       Resource: "arn:aws:dynamodb:us-east-1:617449064033:table/chicago-data"
   include:
     - aws/**
+    - json2parquet
 
 functions:
   chicago:

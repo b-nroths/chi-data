@@ -13,7 +13,7 @@ class DynamoConn():
 	def get_all(self, data_source=None):
 		if data_source:
 			response = self.table.scan(
-				FilterExpression=Key('data_source').eq('plenario')
+				FilterExpression=Key('data_source').eq(data_source)
 			)
 		else:
 			response = self.table.scan()

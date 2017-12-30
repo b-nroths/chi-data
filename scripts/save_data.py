@@ -14,39 +14,34 @@ db = DynamoConn()
 dates = {}
 datasets = db.get_datasets()
 for dataset in datasets:
-	dataset = 'crimes'
+	# dataset = 'graffiti_311'
 	print dataset
 	ds = pq.ParquetDataset(
 		path_or_paths='bnroths/chicago-data/%s' % (dataset), 
 		filesystem=S3FS, 
-		validate_schema=False)
+		validate_schema=False
+		)
 
-	# print datasets[dataset]['columns']
-	# print type(datasets[dataset]['columns'])
 	columns = datasets[dataset]['columns']
-	# exit(0)
-	# try:
-	columns = ['longitude', 'latitude', 'date']
-	dt = columns[2]
-	table = ds.read()
-	# dt = columns[1]
-	df = table.to_pandas()
-	df['dt'] = df[dt].str[:7]
-	# df.set_index(dt)
-	# df.columns
-	# print df.head()
+	dt 		= columns[1]
+	table 	= ds.read()
+	df 		= table.to_pandas()
+	print df.columns
+	print df.head()
+	df['dt'] = df[dt].astype(str).str[:7]
+	
 	cnts = {}
 	dts = []
 	groups = dict(list(df.groupby('dt')))
+	print groups.keys()
 	for group in groups:
+		print group
 		year, month = group.split('-')
-		# print type(group)
-		# # groups.get_group(group)
+		
 		a = groups[group][['longitude', 'latitude']].to_json(orient='values')
-		# print a
 		cnts[group] = groups[group].count()[0]
 		dts.append(group)
-		# print groups[group].count()
+		
 		filename = '../data/%s/%s/%s.json' % (dataset, year, month)
 
 		if not os.path.exists(os.path.dirname(filename)):
@@ -59,14 +54,9 @@ for dataset in datasets:
 		with open(filename, 'w') as f:
 			f.write(a)
 				
-	# except:
-	# 	print "ERROR", dataset
-	# 	pass
-	# print df.describe()
-	db.update_col(dataset=dataset, col='cnts', update=json.dumps(cnts))
-	db.update_col(dataset=dataset, col='dts', update=json.dumps(sorted(dts)))
+		db.update_col(dataset=dataset, col='cnts', update=json.dumps(cnts))
+		db.update_col(dataset=dataset, col='dts', update=json.dumps(sorted(dts)))
+	
 	print cnts
 	print dts
 	# exit(0)	
-# with open('../data/%s/%s.json' % (dataset, year), 'w') as f:
-	# f.write(a)

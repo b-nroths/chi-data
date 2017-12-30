@@ -52,7 +52,7 @@ class Map extends React.Component {
   refreshData() {
     var year = this.state.dt.split("-")[0];
     var month = this.state.dt.split("-")[1];
-    console.log(year, month);
+    console.log(year, month, this.state.dataset);
     fetch(
       "http://chicago.bnroths.com/data/" +
         this.state.dataset +
@@ -66,12 +66,14 @@ class Map extends React.Component {
       // .then(data => console.log(data))
       .then(json => this.setState({ data: json }));
   }
+
   handleChange(event) {
+    console.log('set', event.target.name, event.target.value)
     this.setState(
       {
         [event.target.name]: event.target.value
       },
-      this.refreshData()
+      function() {this.refreshData()}
     );
   }
 
