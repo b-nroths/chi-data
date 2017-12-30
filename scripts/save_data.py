@@ -14,7 +14,7 @@ db = DynamoConn()
 dates = {}
 datasets = db.get_datasets()
 for dataset in datasets:
-	# dataset = 'graffiti_311'
+	dataset = 'vacant_311'
 	print dataset
 	ds = pq.ParquetDataset(
 		path_or_paths='bnroths/chicago-data/%s' % (dataset), 

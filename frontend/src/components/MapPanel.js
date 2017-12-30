@@ -18,12 +18,13 @@ class MapPanel extends React.Component {
 
   componentDidMount() {
     this.setState({
-      dts: this.props.datasets[this.props.dataset]["dts"]
+      dts: Object.keys(this.props.datasets[this.props.dataset]["cnts"])
     });
   }
 
   render() {
-    var data = this.props.datasets[this.props.dataset]["dts"].map(d => ({
+    // console.log('render map panel');
+    var data = Object.keys(this.props.datasets[this.props.dataset]["cnts"]).map(d => ({
       dt: d,
       cnt: this.props.datasets[this.props.dataset]["cnts"][d]
     }));
@@ -33,7 +34,7 @@ class MapPanel extends React.Component {
         return (
           <ResponsiveContainer width="100%" height={100}>
             <BarChart width={150} height={40} data={data}>
-              <Bar dataKey="cnt" fill="#8884d8" />
+              <Bar isAnimationActive={false} dataKey="cnt" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
         );
@@ -84,11 +85,15 @@ class MapPanel extends React.Component {
               <div className="field">
                 <div className="control">
                   <div className="select">
-                    <select name="dt" onChange={this.props.handleChange}>
+                    <select
+                      name="dt"
+                      value={this.props.dt}
+                      onChange={this.props.handleChange}
+                    >
                       {this.props.dataset &&
-                        this.props.datasets[this.props.dataset][
-                          "dts"
-                        ].map(d => {
+                        Object.keys(this.props.datasets[this.props.dataset][
+                          "cnts"
+                        ]).sort().map(d => {
                           return (
                             <option value={d} key={d}>
                               {d}

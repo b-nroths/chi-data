@@ -42,7 +42,7 @@ class DynamoConn():
 			row['data_source'] 		= dataset_item['data_source']
 			row['description'] 		= dataset_item['description']
 			row['cnts'] 			= json.loads(dataset_item['cnts'])
-			row['dts'] 				= json.loads(dataset_item['dts'])
+			# row['dts'] 				= json.loads(dataset_item['dts'])
 			res[dataset_item['dataset']] = row
 		return res
 

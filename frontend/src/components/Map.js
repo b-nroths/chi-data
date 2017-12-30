@@ -3,6 +3,7 @@ import MapGL from "react-map-gl";
 import MapPanel from "./MapPanel";
 import DeckGL, { ScatterplotLayer, GeoJsonLayer } from "deck.gl";
 import config from "./config";
+import "./Map.css";
 
 class Map extends React.Component {
   constructor(props) {
@@ -43,7 +44,8 @@ class Map extends React.Component {
         pitch: 45,
         width: 500,
         height: 500
-      }
+      },
+      loading: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.refreshData = this.refreshData.bind(this);
@@ -53,6 +55,7 @@ class Map extends React.Component {
     var year = this.state.dt.split("-")[0];
     var month = this.state.dt.split("-")[1];
     console.log(year, month, this.state.dataset);
+
     fetch(
       "http://chicago.bnroths.com/data/" +
         this.state.dataset +
@@ -64,17 +67,24 @@ class Map extends React.Component {
     )
       .then(response => response.json())
       // .then(data => console.log(data))
-      .then(json => this.setState({ data: json }));
+      .then(json => this.setState({ data: json, loading: false }));
   }
 
   handleChange(event) {
-    console.log('set', event.target.name, event.target.value)
-    this.setState(
-      {
-        [event.target.name]: event.target.value
-      },
-      function() {this.refreshData()}
-    );
+    console.log("set", event.target.name, event.target.value);
+
+    var update = {
+      [event.target.name]: event.target.value,
+      loading: true
+    };
+    console.log(update)
+    if (event.target.name === "dataset") {
+      update["dt"] = Object.keys(this.state.datasets[event.target.value]["cnts"])[0];
+    }
+    console.log(update);
+    this.setState(update, function() {
+      this.refreshData();
+    });
   }
 
   componentDidMount() {
@@ -114,6 +124,7 @@ class Map extends React.Component {
   };
   _onViewportChange = viewport => this.setState({ viewport });
   render() {
+    // console.log("render map");
     const { viewport, data, city } = this.state;
     const geosjsonLayer = new GeoJsonLayer({
       id: "geojson-layer",
@@ -157,6 +168,11 @@ class Map extends React.Component {
             />}
         </aside>
         <div className="container column is-8">
+          {this.state.loading &&
+            <div className="loading">
+              <a className="button is-loading">Loading</a>
+            </div>}
+
           <MapGL
             {...viewport}
             onViewportChange={this._onViewportChange}
