@@ -8,16 +8,14 @@ import Map from "./Map";
 import Data from "./Data";
 
 const Main = () =>
-	<main>
-		<Switch>
-			<Route path="/about" component={About} />
-			<Route path="/map" component={Map} />
-			{/*<Route path="/map/boundaries" component={MapBoundaries} />
+	<Switch>
+		<Route path="/about" component={About} />
+		<Route path="/map" component={Map} />
+		{/*<Route path="/map/boundaries" component={MapBoundaries} />
 			<Route path="/map/tracts" component={MapTracts} />*/}
-			
-			<Route path="/data" component={Data} />
-			<Route path="/" component={Home} />
-		</Switch>
-	</main>;
+
+		<Route path="/data" component={Data} />
+		<Route path="/" component={Home} />
+	</Switch>;
 
 export default Main;

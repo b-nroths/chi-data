@@ -1,0 +1,48 @@
+.legend {
+	width: 400px;
+	position: absolute;
+	z-index: 100;
+	right: 5%;
+	bottom: 5%;
+	background-color: #fff;
+	padding: 15px;
+}
+
+.one-fifth {
+	width: 20%;
+	text-align: center;
+}
+
+.layout {
+	width: 100%;
+	display: table;
+}
+
+.layout > * {
+	display: table-cell !important;
+}
+
+.filled {
+	width: 20%;
+	height: 15px;
+}
+
+.zero {
+	background: rgb(0, 140, 200);
+}
+
+.twenty {
+	background: rgb(51, 140, 160);
+}
+
+.forty {
+	background: rgb(102, 140, 120);
+}
+
+.sixty {
+	background: rgb(153, 140, 80);
+}
+
+.eighty {
+	background: rgb(204, 140, 40);
+}

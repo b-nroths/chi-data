@@ -1,0 +1,18 @@
+.loading 
+	width: 100px;
+	margin: 20px 0;
+	position: absolute;
+	z-index: 100;
+	left: 50%;
+
+
+$navbar-height: 3.25rem
+.columns
+  &.is-fullheight
+    min-height: calc(100vh - ( #{$navbar-height} - .75rem ) )
+    max-height: calc(100vh - ( #{$navbar-height} - .75rem ) )
+    display: flex
+    flex-direction: row
+    justify-content: stretch
+    .column
+      overflow-y: auto

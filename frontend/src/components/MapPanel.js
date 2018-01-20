@@ -9,26 +9,33 @@ import {
   // Legend,
   ResponsiveContainer
 } from "recharts";
-
+import "./MapPanel.css";
 class MapPanel extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      datasets: this.props.datasets,
+      dataset: this.props.dataset,
+      dt: this.props.dt,
+      sub_data: this.props.datasets[this.props.dataset]["sub_data"]
+    };
   }
 
   componentDidMount() {
-    this.setState({
-      dts: Object.keys(this.props.datasets[this.props.dataset]["cnts"])
-    });
+    // this.setState({
+    //   dts: Object.keys(this.props.datasets[this.props.dataset]["cnts"])
+    // });
   }
 
   render() {
-    // console.log('render map panel');
-    var data = Object.keys(this.props.datasets[this.props.dataset]["cnts"]).map(d => ({
+    
+    var data = Object.keys(
+      this.state.datasets[this.props.dataset]["cnts"]
+    ).sort().map(d => ({
       dt: d,
-      cnt: this.props.datasets[this.props.dataset]["cnts"][d]
+      cnt: this.state.datasets[this.props.dataset]["cnts"][d]
     }));
-    // console.log(data)
+    
     const TinyBarChart = React.createClass({
       render() {
         return (
@@ -41,6 +48,9 @@ class MapPanel extends React.Component {
       }
     });
 
+    // this.state.datasets[this.props.dataset].sub_data.map(d => {
+    //   console.log(d);
+    // });
     return (
       <div>
         <div className="section">
@@ -60,11 +70,11 @@ class MapPanel extends React.Component {
                       value={this.props.dataset}
                       onChange={this.props.handleChange}
                     >
-                      {this.props.datasets &&
-                        Object.keys(this.props.datasets).map(d => {
+                      {this.state.datasets &&
+                        Object.keys(this.state.datasets).map(d => {
                           return (
                             <option value={d} key={d}>
-                              {this.props.datasets[d]["name"]}
+                              {this.state.datasets[d]["name"]}
                             </option>
                           );
                         })}
@@ -74,6 +84,38 @@ class MapPanel extends React.Component {
               </div>
             </div>
           </div>
+          {this.state.datasets[this.props.dataset].sub_data.length > 0 &&
+            <div className="field is-horizontal">
+              <div className="field-label is-normal">
+                <label style={{ minWidth: "100px" }} className="label">
+                  Sub Data
+                </label>
+              </div>
+
+              <div className="field-body">
+                <div className="field">
+                  <div className="control">
+                    <div className="select">
+                      <select
+                        name="sub_data"
+                        value={this.props.sub_data}
+                        onChange={this.props.handleChange}
+                      >
+                        {this.state.datasets[
+                          this.props.dataset
+                        ].sub_data.map(d => {
+                          return (
+                            <option value={d["key"]} key={d["key"]}>
+                              {d["name"]}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>}
           <div className="field is-horizontal">
             <div className="field-label is-normal">
               <label style={{ minWidth: "100px" }} className="label">
@@ -91,15 +133,17 @@ class MapPanel extends React.Component {
                       onChange={this.props.handleChange}
                     >
                       {this.props.dataset &&
-                        Object.keys(this.props.datasets[this.props.dataset][
-                          "cnts"
-                        ]).sort().map(d => {
-                          return (
-                            <option value={d} key={d}>
-                              {d}
-                            </option>
-                          );
-                        })}
+                        Object.keys(
+                          this.state.datasets[this.props.dataset]["cnts"]
+                        )
+                          .sort()
+                          .map(d => {
+                            return (
+                              <option value={d} key={d}>
+                                {d}
+                              </option>
+                            );
+                          })}
                     </select>
                   </div>
                 </div>
@@ -121,6 +165,21 @@ class MapPanel extends React.Component {
               </div>
             </div>
           </div>
+          <div className="field is-horizontal">
+            <div className="field-label is-normal">
+              <label style={{ minWidth: "100px" }} className="label">
+                Updated
+              </label>
+            </div>
+            <div
+              style={{ paddingTop: "0.375em" }}
+              className="field-body is-normal"
+            >
+              <div className="field">
+                {this.props.datasets[this.props.dataset]["last_updated"]}
+              </div>
+            </div>
+          </div>
 
           <div className="field is-horizontal">
             <div className="field-label is-normal">
@@ -133,7 +192,7 @@ class MapPanel extends React.Component {
               className="field-body is-normal"
             >
               <div className="field">
-                {this.props.datasets[this.props.dataset]["data_source"]}
+                {this.props.datasets[this.props.dataset]["source"]}
               </div>
             </div>
           </div>
@@ -153,7 +212,8 @@ class MapPanel extends React.Component {
               </div>
             </div>
           </div>
-          <TinyBarChart />
+          {data.length > 0 &&
+            <TinyBarChart />}
           <strong>Example Data</strong>
           <pre style={{ fontSize: "0.5em" }}>
             {JSON.stringify(

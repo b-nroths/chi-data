@@ -3,17 +3,27 @@ import MapGL from "react-map-gl";
 import MapPanel from "./MapPanel";
 import DeckGL, { ScatterplotLayer, GeoJsonLayer } from "deck.gl";
 import config from "./config";
-import "./Map.css";
+import "./Map.sass";
+import NumberFormat from "react-number-format";
+import ArcOverlay from "./ArcOverlay.js";
+import _ from "lodash";
+import Legend from './Legend';
 
 class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: "food_inspections",
-      dt: "2010-01",
+      dataset: "wac",
+      dt: "2002",
+      sub_data: "C000",
       datasets: null,
       data: null,
       city: null,
+      tracts: null,
+      x: null,
+      y: null,
+      map_type: 'geojson',
+      hoveredObject: null,
       pointdata: [
         {
           position: [-87.9401140825, 41.6445431225],
@@ -45,46 +55,61 @@ class Map extends React.Component {
         width: 500,
         height: 500
       },
-      loading: true
+      loading: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.refreshData = this.refreshData.bind(this);
   }
 
-  refreshData() {
-    var year = this.state.dt.split("-")[0];
-    var month = this.state.dt.split("-")[1];
-    console.log(year, month, this.state.dataset);
-
-    fetch(
+  refreshData(update) {
+    var url =
       "http://chicago.bnroths.com/data/" +
-        this.state.dataset +
-        "/" +
-        year +
-        "/" +
-        month +
-        ".json"
-    )
-      .then(response => response.json())
-      // .then(data => console.log(data))
-      .then(json => this.setState({ data: json, loading: false }));
+      update.dataset +
+      "/" +
+      update.dt +
+      "/" +
+      update.sub_data +
+      ".json";
+
+    console.log(url, update);
+    fetch(url).then(response => response.json()).then(json =>
+      this.setState({...update,
+        data: json,
+        loading: false,
+      })
+    );
   }
 
   handleChange(event) {
-    console.log("set", event.target.name, event.target.value);
-
+    console.log(this.state.datasets, event)
     var update = {
-      [event.target.name]: event.target.value,
-      loading: true
+      dataset: this.state.dataset,
+      dt: this.state.dt,
+      sub_data: this.state.sub_data,
+      loading: true,
+      
     };
-    console.log(update)
+    console.log(this.state.datasets[event.target.value])
+    update[event.target.name] = event.target.value;
+
+    // set dt to deafult
     if (event.target.name === "dataset") {
-      update["dt"] = Object.keys(this.state.datasets[event.target.value]["cnts"])[0];
+      update["map_type"] = this.state.datasets[event.target.value]['map_type'];
+      update["dt"] = Object.keys(
+        this.state.datasets[event.target.value]["cnts"]
+      )[0];
+      // set subdata to default
+      if (this.state.datasets[event.target.value]["sub_data"].length > 0) {
+        update["sub_data"] = this.state.datasets[event.target.value][
+          "sub_data"
+        ][0]["key"];
+        update["dt"] = "2002";
+      } else {
+        update["sub_data"] = "all";
+      }
     }
-    console.log(update);
-    this.setState(update, function() {
-      this.refreshData();
-    });
+
+    this.refreshData(update);
   }
 
   componentDidMount() {
@@ -99,7 +124,14 @@ class Map extends React.Component {
     )
       .then(response => response.json())
       .then(data => this.setState({ city: data }));
-    this.refreshData();
+
+    fetch(
+      "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/tracts.json"
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ tracts: data }));
+
+    this.refreshData({dataset: this.state.dataset, sub_data: this.state.sub_data, dt: this.state.dt});
   }
 
   componentWillUnmount() {
@@ -108,8 +140,6 @@ class Map extends React.Component {
   }
 
   _getElevation = data => {
-    console.log(data);
-    console.log(this.state[data] * 10);
     return this.state.hoods[data] * 10;
   };
 
@@ -123,29 +153,83 @@ class Map extends React.Component {
     });
   };
   _onViewportChange = viewport => this.setState({ viewport });
+  _getColor = r => {
+    
+    return [r * 255, 140, 200 * (1 - r)];
+  };
+
+  _onHover = data => {
+    if (_.get(data, "object.properties.geoid10")) {
+      this.setState({
+        geoid10: data.object.properties.geoid10,
+        x: data.x,
+        y: data.y
+      });
+    }
+  };
+
+  _renderTooltip() {
+    const { x, y, geoid10 } = this.state;
+    if (!geoid10) {
+      return null;
+    }
+    const num = this.state.data.data[this.state.geoid10];
+    return (
+      <div className="tooltip" style={{ left: x, top: y }}>
+        <div>
+          <h6>Census Code</h6>
+          <NumberFormat
+            value={this.state.geoid10}
+            displayType={"text"}
+          />
+          <h6>Count</h6>
+          <NumberFormat
+            value={num}
+            displayType={"text"}
+            thousandSeparator={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   render() {
-    // console.log("render map");
-    const { viewport, data, city } = this.state;
-    const geosjsonLayer = new GeoJsonLayer({
-      id: "geojson-layer",
+    console.log(
+      "render map",
+      this.state.dataset,
+      this.state.sub_data,
+      this.state.dt,
+      this.state.map_type
+    );
+    const { viewport, data, city, tracts } = this.state;
+
+    const cityBoundaryLayer = new GeoJsonLayer({
+      id: "geojson-layer-city",
       data: city,
       filled: false,
       stroked: true,
       extruded: false,
-      // lineWidthScale: 10,
+      lineWidthScale: 10,
       lineWidthMinPixels: 5
-      // updateTriggers: {
-      //   getElevation: viewport
-      // }
     });
-    // const pointLayer = new ScatterplotLayer({
-    //   id: "scatterplot-layer",
-    //   data: pointdata,
-    //   radiusScale: 10,
-    //   outline: false
-    // });
-    // console.log(city)
-    const layer = new ScatterplotLayer({
+
+    const censusTractsLayer = new GeoJsonLayer({
+      id: "geojson-layer-tracts",
+      data: tracts,
+      filled: true,
+      stroked: true,
+      extruded: false,
+      lineWidthScale: 1,
+      pickable: true,
+      lineWidthMinPixels: 1,
+      onHover: d => this._onHover(d),
+      getFillColor: d => this._getColor(this.state.data.data[d.properties.geoid10] / this.state.data.meta.max),
+      updateTriggers: {
+        getFillColor: this.state.data
+      }
+    });
+
+    const scatterplotLayer = new ScatterplotLayer({
       id: "scatterplot-layer",
       data: data,
       radiusScale: 10,
@@ -155,30 +239,52 @@ class Map extends React.Component {
       getColor: d => [255, 0, 128]
     });
 
+    var layers;
+    if (this.state.map_type === "geojson") {
+      layers = [cityBoundaryLayer, censusTractsLayer];
+    } else if (this.state.map_type === "scatter") {
+      layers = [cityBoundaryLayer, scatterplotLayer];
+    } else if (this.state.map_type === "arc") {
+      layers = [cityBoundaryLayer, scatterplotLayer];
+    }
+
     return (
-      <section className="main-content columns is-gapless is-fullheight">
-        <aside className="column is-4">
+      <section className="columns is-fullheight">
+        <div className="column is-4 is-sidebar-menu is-hidden-mobile">
           {this.state.datasets &&
             <MapPanel
               handleChange={this.handleChange}
-              didSelectKey={this.didSelectKey}
               datasets={this.state.datasets}
               dataset={this.state.dataset}
               dt={this.state.dt}
             />}
-        </aside>
-        <div className="container column is-8">
+        </div>
+        <div className="column is-main-content">
           {this.state.loading &&
             <div className="loading">
               <a className="button is-loading">Loading</a>
             </div>}
+            {_.get(this.state, "data.meta.max") && 
+            <Legend colors={this._getColor} max={this.state.data.meta.max}/>}
 
           <MapGL
             {...viewport}
             onViewportChange={this._onViewportChange}
             mapboxApiAccessToken="pk.eyJ1IjoiYm5yb3RocyIsImEiOiJjajlkMzNqMmkxdzh2MzNucmswN2dwNnc1In0.auXBo3CxsUqpDEO0g_OmnQ"
           >
-            <DeckGL {...viewport} layers={[layer, geosjsonLayer]} />
+            {this.state.dataset !== "od_home" &&
+              <DeckGL {...viewport} layers={layers} />}
+            {this._renderTooltip()}
+            {this.state.map_type === "arc" &&
+              <ArcOverlay
+                viewport={viewport}
+                data={data}
+                dt={this.state.dt}
+                dataset={this.state.dataset}
+                // selectedFeature={selectedCounty}
+                // onClick={this._onClick.bind(this)}
+                strokeWidth={2}
+              />}
           </MapGL>
         </div>
       </section>

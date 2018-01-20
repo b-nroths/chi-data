@@ -34,16 +34,20 @@ class DynamoConn():
 	def get_datasets(self):
 		res = {}
 		for dataset_item in self.get_all():
-			row = {}
-			row['name'] 			= dataset_item['name']
-			row['columns'] 			= dataset_item['columns']
-			row['dataset_start'] 	= dataset_item['dataset_start']
-			row['example_data'] 	= json.loads(dataset_item['example_data'])
-			row['data_source'] 		= dataset_item['data_source']
-			row['description'] 		= dataset_item['description']
-			row['cnts'] 			= json.loads(dataset_item['cnts'])
-			# row['dts'] 				= json.loads(dataset_item['dts'])
-			res[dataset_item['dataset']] = row
+			if dataset_item['name'] != 'Vacant Lots':
+				row = {}
+				row['name'] 					= dataset_item['name']
+				row['columns'] 					= dataset_item['columns']
+				row['dataset_start'] 			= dataset_item['dataset_start']
+				row['example_data'] 			= json.loads(dataset_item['example_data'])
+				row['description'] 				= dataset_item['description']
+				row['cnts'] 					= json.loads(dataset_item['cnts'])
+				row['sub_data'] 				= json.loads(dataset_item['sub_data'])
+				row['last_updated'] 			= dataset_item['last_updated']
+				row['source'] 					= dataset_item['source']
+				row['map_type']					= dataset_item['map_type']
+				res[dataset_item['dataset']] 	= row
+
 		return res
 
 	def update_col(self, dataset, col, update):

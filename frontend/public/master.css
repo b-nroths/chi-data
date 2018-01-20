@@ -1,0 +1,27 @@
+/*div {
+	border: 1px solid #000;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}*/
+
+.tooltip {
+  position: absolute;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+  font-size: 10px;
+  z-index: 9;
+  pointer-events: none;
+}
+
+select {
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/*pre {
+  overflow: scroll;
+  max-height: 200px;
+}*/

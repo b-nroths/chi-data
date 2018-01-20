@@ -37,11 +37,26 @@ class S3():
 
 			return fnames
 
+	def save_file_lehd(self, filename, dataset_name, year):
+		# print filename, dataset_name, year
+		self.s3.upload_file(filename, 
+			'bnroths', 
+			'chicago-data/%s/year=%s/%s' % (dataset_name, year, filename))
+		return True
+
 	def save_file(self, filename, dataset_name, year, month):
 		# print filename, dataset_name, year
 		self.s3.upload_file(filename, 
 			'bnroths', 
 			'chicago-data/%s/year=%s/month=%s/%s.parquet' % (dataset_name, year, month, month))
+		return True
+
+	def save_file_public(self, local, dataset, dt, filename):
+		print local, dataset, dt, filename
+		# print filename, dataset_name, year
+		print self.s3.upload_file(local, 
+			'chicago.bnroths.com', 
+			'data/%s/%s/%s' % (dataset, dt, filename))
 		return True
 
 	def rec_s3_dynamo(self, dataset):
