@@ -16,18 +16,17 @@ class S3():
 		
 	def list_files(self, dataset):
 		get_files = True
-		marker = None
+		# marker = None
 		while get_files:
 
 			res = self.s3.list_objects(
 				Bucket='bnroths',
 				Prefix='chicago-data/%s' % dataset,
-				Marker=marker
+				# Marker=marker
 			)
 			fnames = []
 			for file in res['Contents']:
-				folder, dataset, year, month, day, minutes, fname = file['Key'].split('/')
-				fnames.append('%s-%s-%s' % (year.replace('year=',''), month.replace('month=', day)))
+				fnames.append(file['Key'].split('/')[-1].replace('.parquet', ''))
 
 			print res['Marker']
 			if res['Marker']:

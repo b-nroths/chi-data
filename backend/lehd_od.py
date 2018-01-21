@@ -43,7 +43,7 @@ def handler(event, context):
 	base_url = 'https://lehd.ces.census.gov/data/lodes'
 	versions = ['LODES7'] # 'LODES6', 'LODES5'
 	states	 = ['il']
-	files 	 = ['wac']#, 'wac', 'od']
+	files 	 = ['lehd_wac', 'lehc_wac', 'lehd_od']
 	print versions, states, files
 	for version in versions:
 		for state in states:
@@ -171,5 +171,5 @@ def save_data(dataset='od_work', year='2014', load_pickle=False):
 
 			s3.save_file_public(local='all.json', dataset=dataset, dt=year, filename='all.json')
 			s3.save_file_public(local='all_arcs.json', dataset=dataset, dt=year, filename='all_arcs.json')
-# handler(None, None)
-save_data()
+handler(None, None)
+# save_data()

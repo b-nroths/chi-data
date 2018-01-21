@@ -21,6 +21,8 @@ import pyarrow.parquet as pq
 
 from aws.dynamo import DynamoConn
 from aws.s3 import S3
+
+
 class Download():
 
 	def __init__(self):
@@ -63,6 +65,9 @@ class Download():
 			arr.append(row['properties'])
 		return arr
 
+##
+## this method gets data year-montho combos and then downloads data and updates counts
+##
 def handler(event, context):
 	
 	for dataset_item in db.get_all(data_source='Plenario'):
@@ -117,6 +122,10 @@ def handler(event, context):
 			# exit(0)
 	return {"result": "GTG"}
 
+##
+## this method formts the data and uploads it to the public endpoints for the web
+## run_all runs over all timestamps
+##
 def save_data(run_all=False):
 	S3FS = s3fs.S3FileSystem()
 
@@ -128,25 +137,29 @@ def save_data(run_all=False):
 	for dataset in datasets:
 		# print dataset
 		if datasets[dataset]['source'] == 'Plenario':
+			
 			today      = datetime.datetime.today().date()
 			date_list  = set([today.strftime('%Y-%m')]) 
 			date_list.add((today-datetime.timedelta(days=32)).strftime('%Y-%m'))
 			date_list  = sorted(list(set([(today - datetime.timedelta(days=x)).strftime('%Y-%m') for x in range(32)])))
 			paths = []
 
-
 			if run_all:
 				paths = ['bnroths/chicago-data/%s' % dataset]
+				cnts = {}
 
 			else:
 				for month in date_list:
 					year, month = month.split('-')
 					paths.append('bnroths/chicago-data/%s/year=%s/month=%s' % (dataset, year, month))
 				print paths
+				cnts = datasets[dataset]['cnts'] 
 				# exit(0)
+
+			print paths
 			for path in paths:
 				ds = pq.ParquetDataset(
-					path_or_paths=path,# 'bnroths/chicago-data/%s' % dataset,
+					path_or_paths=path,
 					filesystem=S3FS, 
 					validate_schema=False
 					)
@@ -159,10 +172,11 @@ def save_data(run_all=False):
 				print df.head()
 				df['dt'] = df[dt].astype(str).str[:7]
 				
-				cnts = datasets[dataset]['cnts'] 
+				
 				dts = []
 				groups = dict(list(df.groupby('dt')))
 				print groups.keys()
+				# exit(0)
 				for group in groups:
 					print group
 					year, month = group.split('-')
@@ -192,11 +206,11 @@ def save_data(run_all=False):
 					)
 					db.update_col(dataset=dataset, col='cnts', update=json.dumps(cnts))
 			
-			print cnts
-			print dts
-		# exit(0)
-# db = DynamoConn()
-# d  = Download()
-# s3 = S3()
-# upload(None, None)
+s3 = S3()
+d = Download()
+db = DynamoConn()
+## saves raw
+# handler(None, None)
+
+## saves public
 save_data(run_all=True)

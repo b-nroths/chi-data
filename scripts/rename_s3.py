@@ -20,11 +20,8 @@ class S3():
 
 s = S3()
 
-for file in s.list_files('crimes'):
+for file in s.list_files('rac'):
 	print file
-	folder, dataset, year, month, day = file.split('/')
-	print folder, dataset, year, month, day
-	
-	s.s3.copy_object(Bucket="bnroths", CopySource={'Bucket': 'bnroths', 'Key': file}, Key='%s/%s-day/year=%s/month=%s/%s' % (folder, dataset, year, month, day))
+	new_file = file.replace('rac', 'lehd_rac')
+	s.s3.copy_object(Bucket="bnroths", CopySource={'Bucket': 'bnroths', 'Key': file}, Key=new_file)
 	s.s3.delete_object(Bucket="bnroths", Key=file)
-	# exit(0)

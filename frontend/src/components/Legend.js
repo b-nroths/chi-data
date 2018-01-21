@@ -9,19 +9,90 @@ class Legend extends React.Component {
   }
 
   render() {
-    // console.log(this.props.colors(0));
-    // console.log(this.props.colors(0.2));
-    // console.log(this.props.colors(0.4));
-    // console.log(this.props.colors(0.6));
-    // console.log(this.props.colors(0.8));
+    var zero = this.props.colors(0.0);
+    var twenty = this.props.colors(0.2);
+    var fourty = this.props.colors(0.4);
+    var sixty = this.props.colors(0.6);
+    var eighty = this.props.colors(0.8);
+    
     return (
       <div className="legend">
         <div className="layout">
-          <div className="filled one-fifth zero" />
-          <div className="filled one-fifth twenty" />
-          <div className="filled one-fifth fourty" />
-          <div className="filled one-fifth sixty" />
-          <div className="filled one-fifth eighty" />
+          <div
+            className="filled one-fifth"
+            style={{
+              background:
+                "rgba(" +
+                zero[0] +
+                "," +
+                zero[1] +
+                "," +
+                zero[2] +
+                "," +
+                (zero[3] / 255).toFixed(2) +
+                ")"
+            }}
+          />
+          <div
+            className="filled one-fifth"
+            style={{
+              background:
+                "rgba(" +
+                twenty[0] +
+                "," +
+                twenty[1] +
+                "," +
+                twenty[2] +
+                "," +
+                (twenty[3] / 255).toFixed(2) +
+                ")"
+            }}
+          />
+          <div
+            className="filled one-fifth"
+            style={{
+              background:
+                "rgba(" +
+                fourty[0] +
+                "," +
+                fourty[1] +
+                "," +
+                fourty[2] +
+                "," +
+                (fourty[3] / 255).toFixed(2) +
+                ")"
+            }}
+          />
+          <div
+            className="filled one-fifth"
+            style={{
+              background:
+                "rgba(" +
+                sixty[0] +
+                "," +
+                sixty[1] +
+                "," +
+                sixty[2] +
+                "," +
+                (sixty[3] / 255).toFixed(2) +
+                ")"
+            }}
+          />
+          <div
+            className="filled one-fifth"
+            style={{
+              background:
+                "rgba(" +
+                eighty[0] +
+                "," +
+                eighty[1] +
+                "," +
+                eighty[2] +
+                "," +
+                (eighty[3] / 255).toFixed(2) +
+                ")"
+            }}
+          />
         </div>
         <div className="layout">
           <div className="one-fifth">

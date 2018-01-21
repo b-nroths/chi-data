@@ -13,7 +13,7 @@ class DynamoConn():
 	def get_all(self, data_source=None):
 		if data_source:
 			response = self.table.scan(
-				FilterExpression=Key('data_source').eq(data_source)
+				FilterExpression=Key('source').eq(data_source)
 			)
 		else:
 			response = self.table.scan()
@@ -47,7 +47,6 @@ class DynamoConn():
 				row['source'] 					= dataset_item['source']
 				row['map_type']					= dataset_item['map_type']
 				res[dataset_item['dataset']] 	= row
-
 		return res
 
 	def update_col(self, dataset, col, update):

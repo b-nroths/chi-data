@@ -16,7 +16,7 @@ def handler(event, context):
 		'headers': {
 			'Access-Control-Allow-Origin' : '*' # Required for CORS support to work
 		},
-		'body': json.dumps(db.get_datasets())
+		'body': json.dumps(db.get_datasets(), sort_keys=True)
 	}
 
 # print handler(None, None)

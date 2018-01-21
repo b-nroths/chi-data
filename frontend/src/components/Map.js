@@ -13,7 +13,7 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataset: "wac",
+      dataset: "lehd_rac",
       dt: "2002",
       sub_data: "C000",
       datasets: null,
@@ -71,7 +71,6 @@ class Map extends React.Component {
       update.sub_data +
       ".json";
 
-    console.log(url, update);
     fetch(url).then(response => response.json()).then(json =>
       this.setState({...update,
         data: json,
@@ -81,7 +80,6 @@ class Map extends React.Component {
   }
 
   handleChange(event) {
-    console.log(this.state.datasets, event)
     var update = {
       dataset: this.state.dataset,
       dt: this.state.dt,
@@ -89,7 +87,6 @@ class Map extends React.Component {
       loading: true,
       
     };
-    console.log(this.state.datasets[event.target.value])
     update[event.target.name] = event.target.value;
 
     // set dt to deafult
@@ -154,8 +151,7 @@ class Map extends React.Component {
   };
   _onViewportChange = viewport => this.setState({ viewport });
   _getColor = r => {
-    
-    return [r * 255, 140, 200 * (1 - r)];
+      return [255, 0, 0, Math.round(255*r)];
   };
 
   _onHover = data => {
@@ -223,7 +219,7 @@ class Map extends React.Component {
       pickable: true,
       lineWidthMinPixels: 1,
       onHover: d => this._onHover(d),
-      getFillColor: d => this._getColor(this.state.data.data[d.properties.geoid10] / this.state.data.meta.max),
+      getFillColor: d => this._getColor(this.state.data.data[d.properties.geoid10] / this.state.data.meta.top),
       updateTriggers: {
         getFillColor: this.state.data
       }
@@ -251,12 +247,13 @@ class Map extends React.Component {
     return (
       <section className="columns is-fullheight">
         <div className="column is-4 is-sidebar-menu is-hidden-mobile">
-          {this.state.datasets &&
+          {this.state.datasets && this.state.map_type &&
             <MapPanel
               handleChange={this.handleChange}
               datasets={this.state.datasets}
               dataset={this.state.dataset}
               dt={this.state.dt}
+              map_type={this.state.map_type}
             />}
         </div>
         <div className="column is-main-content">

@@ -1,4 +1,5 @@
 import React from "react";
+var createReactClass = require('create-react-class');
 import {
   BarChart,
   Bar,
@@ -28,15 +29,14 @@ class MapPanel extends React.Component {
   }
 
   render() {
-    
-    var data = Object.keys(
-      this.state.datasets[this.props.dataset]["cnts"]
-    ).sort().map(d => ({
-      dt: d,
-      cnt: this.state.datasets[this.props.dataset]["cnts"][d]
-    }));
-    
-    const TinyBarChart = React.createClass({
+    var data = Object.keys(this.state.datasets[this.props.dataset]["cnts"])
+      .sort()
+      .map(d => ({
+        dt: d,
+        cnt: this.state.datasets[this.props.dataset]["cnts"][d]
+      }));
+
+    const TinyBarChart = createReactClass({
       render() {
         return (
           <ResponsiveContainer width="100%" height={100}>
@@ -48,9 +48,25 @@ class MapPanel extends React.Component {
       }
     });
 
-    // this.state.datasets[this.props.dataset].sub_data.map(d => {
-    //   console.log(d);
-    // });
+    var example_data = this.props.datasets[this.props.dataset]["example_data"];
+    const ExampleData = createReactClass({
+
+      render() {
+        return (
+          <div>
+            <strong>Example Data</strong>
+            <pre style={{ fontSize: "0.5em" }}>
+              {JSON.stringify(
+                example_data,
+                null,
+                2
+              )}
+            </pre>
+          </div>
+        );
+      }
+    });
+    
     return (
       <div>
         <div className="section">
@@ -212,16 +228,8 @@ class MapPanel extends React.Component {
               </div>
             </div>
           </div>
-          {data.length > 0 &&
-            <TinyBarChart />}
-          <strong>Example Data</strong>
-          <pre style={{ fontSize: "0.5em" }}>
-            {JSON.stringify(
-              this.props.datasets[this.props.dataset]["example_data"],
-              null,
-              2
-            )}
-          </pre>
+          {data.length > 0 && this.props.map_type === "scatter" && <TinyBarChart />}
+          {this.props.map_type === "scatter" && this.props.datasets[this.props.dataset]["example_data"] && <ExampleData />}
         </div>
       </div>
     );
