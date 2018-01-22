@@ -41,7 +41,7 @@ def handler(event, context):
 	base_url = 'https://lehd.ces.census.gov/data/lodes'
 	versions = ['LODES7'] # 'LODES6', 'LODES5'
 	states	 = ['il']
-	files 	 = ['lehd_wac']#, 'lehd_rac', 'od']
+	files 	 = ['lehd_od']#, 'lehd_rac', 'lehd_wac']
 	print versions, states, files
 	for version in versions:
 		for state in states:

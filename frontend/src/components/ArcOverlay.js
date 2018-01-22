@@ -38,7 +38,8 @@ export default class ArcOverlay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arcs: null
+      arcs: null,
+      max_value: 1000
     };
     this._onClick = this._onClick.bind(this);
   }
@@ -82,26 +83,27 @@ export default class ArcOverlay extends Component {
     return arcs;
   }
 
-  _onClick = data => {
-    // Clicked a county
-    console.log("clicked");
-    console.log(data);
-    // this.setState({selectedCounty: info.object});
+  _getColor = r => {
+    return [255, 0, 0, Math.round(255 * r/this.state.max_value)];
   };
 
   render() {
-    const { viewport,data } = this.props;
+    const { viewport, data } = this.props;
     // const {arcs} = this.state;
-    // console.log(this.state.arcs);
+    // console.log(data);
     // console.log(data);
     if (!this.state.arcs) {
       var url =
-      "http://chicago.bnroths.com/data/"+this.props.dataset+"/"+this.props.dt+"/all_arcs.json";
+        "http://chicago.bnroths.com/data/" +
+        this.props.dataset +
+        "/" +
+        this.props.dt +
+        "/all_arcs.json";
       fetch(url).then(response => response.json()).then(json =>
-      this.setState({
-        arcs: json
-      })
-    );
+        this.setState({
+          arcs: json
+        })
+      );
       return null;
     }
 
@@ -115,17 +117,19 @@ export default class ArcOverlay extends Component {
         getFillColor: () => [0, 0, 0, 100],
         pickable: true,
         onClick: data => {
-          this.setState({ arcs: data.object.properties.arcs });
+          this.setState({ arcs: data.object.properties.arcs, max_value: data.object.properties.max_value });
         }
         // pickable: Boolean(this.props.onHover || this.props.onClick)
       }),
       new ArcLayer({
-        id: 'arc',
+        id: "arc",
         data: this.state.arcs,
         // getSourcePosition: d => d.source,
         // getTargetPosition: d => d.target,
-        // getSourceColor: d => (d.gain > 0 ? inFlowColors : outFlowColors)[d.quantile],
-        // getTargetColor: d => (d.gain > 0 ? outFlowColors : inFlowColors)[d.quantile],
+        getSourceColor: d =>
+          this._getColor(d.value),
+        getTargetColor: d =>
+          this._getColor(d.value),
         strokeWidth: 2
       })
     ];

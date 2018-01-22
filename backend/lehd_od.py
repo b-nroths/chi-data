@@ -39,81 +39,21 @@ d  = Download()
 s3 = S3()
 S3FS = s3fs.S3FileSystem()
 
-def handler(event, context):
-	base_url = 'https://lehd.ces.census.gov/data/lodes'
-	versions = ['LODES7'] # 'LODES6', 'LODES5'
-	states	 = ['il']
-	files 	 = ['lehd_wac', 'lehc_wac', 'lehd_od']
-	print versions, states, files
-	for version in versions:
-		for state in states:
-			for file in files:
-				example_data = [json.loads(db.get(dataset=file)['example_data'])]
-				schema = ingest_data(example_data).schema
-				# print schema
-				print example_data
-				url = '%s/%s/%s/%s' % (base_url, version, state, file)
-				print url
-				c = r.get(url).content
-				soup = BeautifulSoup(c, "html.parser")
-				for link in soup.findAll('a', attrs={'href': re.compile("gz")}):
-					print link.get('href').split('_')[4][:4]
-					if link.get('href').split('_')[4][:4] in ('2010', '2011', '2012', '2013', '2014', '2015'):
-						file_url = url + '/' + link.get('href')
-						print version, state, file, file_url
-						response = r.get(file_url).content
-						# print type(response)
-						df = pd.read_csv(file_url, compression='gzip')
-
-						if file in ('rac', 'od'):
-							df['h_tract'] = df['h_geocode'].astype(str).str[:11]
-						if file in ('wac', 'od'):
-							df['w_tract'] = df['w_geocode'].astype(str).str[:11]
-						print df.head()
-						# print df.iloc[0].to_json()
-						# db.update_col('wac', 'example_data', df.iloc[0].to_json())
-						try:
-							table = pa.Table.from_pandas(df, schema=schema)
-							print "\n"
-							print table.schema
-							print type(table.schema)
-							# exit(0)
-							last_part = file_url.split('/')[-1].split('.')[0]
-							# print last_part
-
-							state, file_type, part, job_type, year = last_part.split('_')
-							filename = '%s.parquet' % (last_part)
-							print df.head()
-							# exit(0)
-							table = pa.Table.from_pandas(df, schema=schema)
-							pq.write_table(table, filename)
-							s3.save_file_lehd(
-								filename=filename, 
-								dataset_name=file, 
-								year=year
-							)
-							os.remove(filename)
-						except:
-							pass
-					# print "bye"
-					# exit(0)
-
-	return {"result": "GTG"}
 
 
-def save_data(dataset='od_work', year='2014', load_pickle=False):
+def save_data(datasets=['lehd_od_home', 'lehd_od_work'], year='2014', load_pickle=False):
 	chi_tracts = r.get('https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/tracts.json').json()
 	centroids = {}
 	for tract in chi_tracts['features']:
 		poly = geometry.Polygon(tract['geometry']['coordinates'][0][0])
 		centroids[tract['properties']['geoid10']] = [poly.centroid.x, poly.centroid.y]
 		
-	for dataset in [dataset]:
+	for dataset in datasets:
 		for year in range(14):
 			year += 2002
 			# year += 2002
 			
-			path = 'bnroths/chicago-data/od/year=%s/il_od_main_JT00_%s.parquet' % (year, year)
+			path = 'bnroths/chicago-data/lehd_od/year=%s/il_lehd_od_main_JT00_%s.parquet' % (year, year)
 			print dataset, year, path
 			ds = pq.ParquetDataset(
 				path_or_paths=path,
@@ -136,19 +76,11 @@ def save_data(dataset='od_work', year='2014', load_pickle=False):
 				else:
 					final[h] = [{w: v}]
 				
-
-			# print final
-			
-
-			# {source: [-118.34921704225347, 33.8301492957746], 
-			#   target: [-95.38370214285715, 29.82417309523809], 
-			#   value: -3073, 
-			#   gain: -1, 
-			#   quantile: 3}
 			all_arcs = []
 			for tract in chi_tracts['features']:
 				h_tract = tract['properties']['geoid10']
 				arcs = []
+				values   = []
 				for arc in final[h_tract]:
 					w_tract  = arc.keys()[0] 
 					value    = arc.values()[0]
@@ -158,10 +90,17 @@ def save_data(dataset='od_work', year='2014', load_pickle=False):
 						'value': value
 					}
 					if value >= 25:
-						print this_arc
+						# print this_arc
+						values.append(value)
 						arcs.append(this_arc)
 						all_arcs.append(this_arc)
 				tract['properties']['arcs'] = arcs
+				# print values
+				try:
+					tract['properties']['max_value'] = max(values)
+				except:
+					tract['properties']['max_value'] = 0
+
 				# tract['properties']
 			with open('all.json', 'w') as f:
 				f.write(json.dumps(chi_tracts))
@@ -171,5 +110,5 @@ def save_data(dataset='od_work', year='2014', load_pickle=False):
 
 			s3.save_file_public(local='all.json', dataset=dataset, dt=year, filename='all.json')
 			s3.save_file_public(local='all_arcs.json', dataset=dataset, dt=year, filename='all_arcs.json')
-handler(None, None)
-# save_data()
+# handler(None, None)
+save_data()

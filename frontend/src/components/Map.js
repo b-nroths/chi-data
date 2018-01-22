@@ -70,7 +70,7 @@ class Map extends React.Component {
       "/" +
       update.sub_data +
       ".json";
-
+    // console.log(url)
     fetch(url).then(response => response.json()).then(json =>
       this.setState({...update,
         data: json,
@@ -190,13 +190,13 @@ class Map extends React.Component {
   }
 
   render() {
-    console.log(
-      "render map",
-      this.state.dataset,
-      this.state.sub_data,
-      this.state.dt,
-      this.state.map_type
-    );
+    // console.log(
+    //   "render map",
+    //   this.state.dataset,
+    //   this.state.sub_data,
+    //   this.state.dt,
+    //   this.state.map_type
+    // );
     const { viewport, data, city, tracts } = this.state;
 
     const cityBoundaryLayer = new GeoJsonLayer({
@@ -269,7 +269,7 @@ class Map extends React.Component {
             onViewportChange={this._onViewportChange}
             mapboxApiAccessToken="pk.eyJ1IjoiYm5yb3RocyIsImEiOiJjajlkMzNqMmkxdzh2MzNucmswN2dwNnc1In0.auXBo3CxsUqpDEO0g_OmnQ"
           >
-            {this.state.dataset !== "od_home" &&
+            {this.state.map_type !== "arc" &&
               <DeckGL {...viewport} layers={layers} />}
             {this._renderTooltip()}
             {this.state.map_type === "arc" &&
@@ -280,7 +280,7 @@ class Map extends React.Component {
                 dataset={this.state.dataset}
                 // selectedFeature={selectedCounty}
                 // onClick={this._onClick.bind(this)}
-                strokeWidth={2}
+                strokeWidth={3}
               />}
           </MapGL>
         </div>
