@@ -41,7 +41,7 @@ export default class ArcOverlay extends Component {
       arcs: null,
       max_value: 1000
     };
-    this._onClick = this._onClick.bind(this);
+    // this._onClick = this._onClick.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {

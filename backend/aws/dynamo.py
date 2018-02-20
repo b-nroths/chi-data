@@ -35,6 +35,7 @@ class DynamoConn():
 		res = {}
 		for dataset_item in self.get_all():
 			if dataset_item['name'] != 'Vacant Lots':
+				print dataset_item
 				row = {}
 				row['name'] 					= dataset_item['name']
 				row['columns'] 					= dataset_item['columns']
@@ -46,6 +47,7 @@ class DynamoConn():
 				row['last_updated'] 			= dataset_item['last_updated']
 				row['source'] 					= dataset_item['source']
 				row['map_type']					= dataset_item['map_type']
+				row['table'] 					= json.loads(dataset_item['table'])
 				res[dataset_item['dataset']] 	= row
 		return res
 

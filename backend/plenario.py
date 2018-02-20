@@ -66,7 +66,7 @@ class Download():
 		return arr
 
 ##
-## this method gets data year-montho combos and then downloads data and updates counts
+## this method gets data year-month combos and then downloads data and updates counts
 ##
 def handler(event, context):
 	

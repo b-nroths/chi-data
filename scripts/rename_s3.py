@@ -20,8 +20,11 @@ class S3():
 
 s = S3()
 
-for file in s.list_files('rac'):
-	print file
-	new_file = file.replace('rac', 'lehd_rac')
-	s.s3.copy_object(Bucket="bnroths", CopySource={'Bucket': 'bnroths', 'Key': file}, Key=new_file)
-	s.s3.delete_object(Bucket="bnroths", Key=file)
+for file in s.list_files('lehd_wac'):
+	# print file
+	if 'S000_JT00' in file:
+		print file
+	else:
+	# new_file = file.replace('rac', 'lehd_rac')
+	# s.s3.copy_object(Bucket="bnroths", CopySource={'Bucket': 'bnroths', 'Key': file}, Key=new_file)
+		s.s3.delete_object(Bucket="bnroths", Key=file)

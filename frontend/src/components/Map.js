@@ -1,6 +1,7 @@
 import React from "react";
 import MapGL from "react-map-gl";
 import MapPanel from "./MapPanel";
+import MapPanel2 from "./MapPanel2";
 import DeckGL, { ScatterplotLayer, GeoJsonLayer } from "deck.gl";
 import config from "./config";
 import "./Map.sass";
@@ -22,6 +23,7 @@ class Map extends React.Component {
       tracts: null,
       x: null,
       y: null,
+      panel2: false,
       map_type: 'geojson',
       hoveredObject: null,
       pointdata: [
@@ -247,13 +249,17 @@ class Map extends React.Component {
     return (
       <section className="columns is-fullheight">
         <div className="column is-4 is-sidebar-menu is-hidden-mobile">
-          {this.state.datasets && this.state.map_type &&
+          {this.state.datasets && this.state.map_type && !this.state.panel2 &&
             <MapPanel
               handleChange={this.handleChange}
               datasets={this.state.datasets}
               dataset={this.state.dataset}
               dt={this.state.dt}
               map_type={this.state.map_type}
+            />}
+            {this.state.datasets && this.state.map_type && this.state.panel2 &&
+            <MapPanel2
+              
             />}
         </div>
         <div className="column is-main-content">

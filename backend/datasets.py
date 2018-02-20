@@ -10,7 +10,7 @@ from aws.dynamo import DynamoConn
 db = DynamoConn()
 
 def handler(event, context):
-
+	
 	return {
 		'statusCode': 200,
 		'headers': {

@@ -41,14 +41,15 @@ def handler(event, context):
 	base_url = 'https://lehd.ces.census.gov/data/lodes'
 	versions = ['LODES7'] # 'LODES6', 'LODES5'
 	states	 = ['il']
-	files 	 = ['lehd_od']#, 'lehd_rac', 'lehd_wac']
+	files 	 = [ 'lehd_rac', 'lehd_wac']#'lehd_od']#,
 	print versions, states, files
 	for version in versions:
 		for state in states:
 			for file in files:
 				example_data = [json.loads(db.get(dataset=file)['example_data'])]
+				print example_data
 				schema = ingest_data(example_data).schema
-				# print schema
+				print schema
 				url = '%s/%s/%s/%s' % (base_url, version, state, file.replace('lehd_', ''))
 				c = requests.get(url).content
 				soup = BeautifulSoup(c, "html.parser")
@@ -79,6 +80,8 @@ def handler(event, context):
 							# exit(0)
 						print i, link.get('href').split('_')[4][:4], version, state, file, file_url
 						try:
+							print file_url
+							exit(0)
 							response = requests.get(file_url).content
 							# print type(response)
 							df = pd.read_csv(file_url, compression='gzip')
@@ -169,5 +172,5 @@ def save_data(datasets=['lehd_wac'], year='2014', load_pickle=False):
 
 
 
-# handler(None, None)
-save_data()
+handler(None, None)
+# save_data()
