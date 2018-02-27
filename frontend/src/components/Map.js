@@ -8,7 +8,7 @@ import "./Map.sass";
 import NumberFormat from "react-number-format";
 import ArcOverlay from "./ArcOverlay.js";
 import _ from "lodash";
-import Legend from './Legend';
+import Legend from "./Legend";
 
 class Map extends React.Component {
   constructor(props) {
@@ -24,7 +24,8 @@ class Map extends React.Component {
       x: null,
       y: null,
       panel2: false,
-      map_type: 'geojson',
+      boundary: null,
+      map_type: "geojson",
       hoveredObject: null,
       pointdata: [
         {
@@ -73,10 +74,22 @@ class Map extends React.Component {
       update.sub_data +
       ".json";
     // console.log(url)
+    if (update.boundary) {
+      fetch(
+        "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/tracts_" +
+          update.boundary +
+          ".json"
+      )
+        .then(response => response.json())
+        .then(data => this.setState({ tracts: data }));
+    }
+
+    // console.log(json);
     fetch(url).then(response => response.json()).then(json =>
-      this.setState({...update,
+      this.setState({
+        ...update,
         data: json,
-        loading: false,
+        loading: false
       })
     );
   }
@@ -86,14 +99,14 @@ class Map extends React.Component {
       dataset: this.state.dataset,
       dt: this.state.dt,
       sub_data: this.state.sub_data,
-      loading: true,
-      
+      loading: true
     };
     update[event.target.name] = event.target.value;
 
     // set dt to deafult
     if (event.target.name === "dataset") {
-      update["map_type"] = this.state.datasets[event.target.value]['map_type'];
+      update["map_type"] = this.state.datasets[event.target.value]["map_type"];
+      update["boundary"] = this.state.datasets[event.target.value]["boundary"];
       update["dt"] = Object.keys(
         this.state.datasets[event.target.value]["cnts"]
       )[0];
@@ -107,7 +120,7 @@ class Map extends React.Component {
         update["sub_data"] = "all";
       }
     }
-
+    console.log(update);
     this.refreshData(update);
   }
 
@@ -118,19 +131,24 @@ class Map extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({ datasets: data }));
 
-    fetch(
-      "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/Boundaries+-+City.json"
-    )
-      .then(response => response.json())
-      .then(data => this.setState({ city: data }));
+    // fetch(
+    //   "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/Boundaries+-+City.json"
+    // )
+    //   .then(response => response.json())
+    //   .then(data => this.setState({ city: data }));
 
-    fetch(
-      "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/tracts.json"
-    )
-      .then(response => response.json())
-      .then(data => this.setState({ tracts: data }));
+    // fetch(
+    //   "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/tracts_chicago.json"
+    // )
+    //   .then(response => response.json())
+    //   .then(data => this.setState({ tracts: data }));
 
-    this.refreshData({dataset: this.state.dataset, sub_data: this.state.sub_data, dt: this.state.dt});
+    this.refreshData({
+      dataset: this.state.dataset,
+      sub_data: this.state.sub_data,
+      dt: this.state.dt,
+      boundary: "chicago"
+    });
   }
 
   componentWillUnmount() {
@@ -153,10 +171,11 @@ class Map extends React.Component {
   };
   _onViewportChange = viewport => this.setState({ viewport });
   _getColor = r => {
-      return [255, 0, 0, Math.round(255*r)];
+    return [255, 0, 0, Math.round(255 * r)];
   };
 
   _onHover = data => {
+    console.log(data);
     if (_.get(data, "object.properties.geoid10")) {
       this.setState({
         geoid10: data.object.properties.geoid10,
@@ -168,6 +187,7 @@ class Map extends React.Component {
 
   _renderTooltip() {
     const { x, y, geoid10 } = this.state;
+    console.log(geoid10);
     if (!geoid10) {
       return null;
     }
@@ -176,10 +196,7 @@ class Map extends React.Component {
       <div className="tooltip" style={{ left: x, top: y }}>
         <div>
           <h6>Census Code</h6>
-          <NumberFormat
-            value={this.state.geoid10}
-            displayType={"text"}
-          />
+          <NumberFormat value={this.state.geoid10} displayType={"text"} />
           <h6>Count</h6>
           <NumberFormat
             value={num}
@@ -221,7 +238,10 @@ class Map extends React.Component {
       pickable: true,
       lineWidthMinPixels: 1,
       onHover: d => this._onHover(d),
-      getFillColor: d => this._getColor(this.state.data.data[d.properties.geoid10] / this.state.data.meta.top),
+      getFillColor: d =>
+        this._getColor(
+          this.state.data.data[d.properties.geoid10] / this.state.data.meta.top
+        ),
       updateTriggers: {
         getFillColor: this.state.data
       }
@@ -239,17 +259,19 @@ class Map extends React.Component {
 
     var layers;
     if (this.state.map_type === "geojson") {
-      layers = [cityBoundaryLayer, censusTractsLayer];
+      layers = [censusTractsLayer];
     } else if (this.state.map_type === "scatter") {
-      layers = [cityBoundaryLayer, scatterplotLayer];
+      layers = [scatterplotLayer];
     } else if (this.state.map_type === "arc") {
-      layers = [cityBoundaryLayer, scatterplotLayer];
+      layers = [scatterplotLayer];
     }
 
     return (
       <section className="columns is-fullheight">
         <div className="column is-4 is-sidebar-menu is-hidden-mobile">
-          {this.state.datasets && this.state.map_type && !this.state.panel2 &&
+          {this.state.datasets &&
+            this.state.map_type &&
+            !this.state.panel2 &&
             <MapPanel
               handleChange={this.handleChange}
               datasets={this.state.datasets}
@@ -257,18 +279,18 @@ class Map extends React.Component {
               dt={this.state.dt}
               map_type={this.state.map_type}
             />}
-            {this.state.datasets && this.state.map_type && this.state.panel2 &&
-            <MapPanel2
-              
-            />}
+          {this.state.datasets &&
+            this.state.map_type &&
+            this.state.panel2 &&
+            <MapPanel2 />}
         </div>
         <div className="column is-main-content">
           {this.state.loading &&
             <div className="loading">
               <a className="button is-loading">Loading</a>
             </div>}
-            {_.get(this.state, "data.meta.max") && 
-            <Legend colors={this._getColor} max={this.state.data.meta.max}/>}
+          {_.get(this.state, "data.meta.max") &&
+            <Legend colors={this._getColor} max={this.state.data.meta.max} />}
 
           <MapGL
             {...viewport}

@@ -77,6 +77,7 @@ class MapPanel extends React.Component {
     });
 
     var table = this.props.datasets[this.props.dataset]["table"][this.props.dt];
+    console.log('table', table)
     const Table = createReactClass({
       render() {
         return (
@@ -100,8 +101,8 @@ class MapPanel extends React.Component {
       }
     });
 
-    console.log(this.props.dataset);
-    console.log(this.props.datasets[this.props.dataset]["table"]);
+    // console.log(this.props.dataset);
+    // console.log(this.props.datasets[this.props.dataset]["table"]);
     return (
       <div>
         <div className="section">
@@ -269,7 +270,7 @@ class MapPanel extends React.Component {
           {this.props.map_type === "scatter" &&
             this.props.datasets[this.props.dataset]["example_data"] &&
             <ExampleData />}
-          {this.props.dataset === "eigs" &&
+          {this.props.dataset.indexOf("eigs") >= 0 &&
             this.props.datasets[this.props.dataset]["table"] &&
             <Table />}
         </div>

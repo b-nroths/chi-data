@@ -48,6 +48,7 @@ class DynamoConn():
 				row['source'] 					= dataset_item['source']
 				row['map_type']					= dataset_item['map_type']
 				row['table'] 					= json.loads(dataset_item['table'])
+				row['boundary'] 				= dataset_item['boundary']
 				res[dataset_item['dataset']] 	= row
 		return res
 

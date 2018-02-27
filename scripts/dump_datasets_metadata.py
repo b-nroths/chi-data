@@ -9,7 +9,8 @@ for a in d.get_all():
 	print a
 	print "\n"
 	print type(a)
-	# a['last_updated'] = '2018-01-01'
-	a['table'] = json.dumps({})
+	a['boundary'] = 'chicago'
+	a.pop('boundaries', None)
+	# a['table'] = json.dumps({})
 	# exit(0)
 	d.put_item(a)
