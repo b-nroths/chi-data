@@ -9,12 +9,31 @@ class Legend extends React.Component {
   }
 
   render() {
-    var zero = this.props.colors(0.0);
-    var twenty = this.props.colors(0.2);
-    var fourty = this.props.colors(0.4);
-    var sixty = this.props.colors(0.6);
-    var eighty = this.props.colors(0.8);
-    
+    var zero = this.props.colors(0, 10);
+    var twenty = this.props.colors(2, 10);
+    var fourty = this.props.colors(4, 10);
+    var sixty = this.props.colors(6, 10);
+    var eighty = this.props.colors(8, 10);
+
+    var zero_val
+    var twenty_val
+    var fourty_val
+    var sixty_val
+    var eighty_val
+    if (Object.keys(this.props.max).indexOf("real") >= 0) {
+      zero_val = 0;
+      twenty_val = 0.2 * this.props.max.real;
+      fourty_val = 0.4 * this.props.max.real;
+      sixty_val = 0.6 * this.props.max.real;
+      eighty_val = 0.8 * this.props.max.real;
+    } else {
+      zero_val = 0;
+      twenty_val = 0.2 * this.props.max;
+      fourty_val = 0.4 * this.props.max;
+      sixty_val = 0.6 * this.props.max;
+      eighty_val = 0.8 * this.props.max;
+    }
+
     return (
       <div className="legend">
         <div className="layout">
@@ -105,7 +124,7 @@ class Legend extends React.Component {
           </div>
           <div className="one-fifth">
             <NumberFormat
-              value={0.2 * this.props.max}
+              value={twenty_val}
               displayType={"text"}
               thousandSeparator={true}
               decimalScale={0}
@@ -113,7 +132,7 @@ class Legend extends React.Component {
           </div>
           <div className="one-fifth">
             <NumberFormat
-              value={0.4 * this.props.max}
+              value={fourty_val}
               displayType={"text"}
               thousandSeparator={true}
               decimalScale={0}
@@ -121,7 +140,7 @@ class Legend extends React.Component {
           </div>
           <div className="one-fifth">
             <NumberFormat
-              value={0.6 * this.props.max}
+              value={sixty_val}
               displayType={"text"}
               thousandSeparator={true}
               decimalScale={0}
@@ -129,7 +148,7 @@ class Legend extends React.Component {
           </div>
           <div className="one-fifth">
             <NumberFormat
-              value={0.8 * this.props.max}
+              value={eighty_val}
               displayType={"text"}
               thousandSeparator={true}
               decimalScale={0}

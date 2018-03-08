@@ -170,12 +170,37 @@ class Map extends React.Component {
     });
   };
   _onViewportChange = viewport => this.setState({ viewport });
-  _getColor = r => {
-    return [255, 0, 0, Math.round(255 * r)];
+  _getColor = (r, max) => {
+    if (r) {
+      if (Object.keys(r).indexOf("real") >= 0) {
+        // imaginary colors
+        var max = max.real;
+        // console.log(max)
+        if (max <= 10) {
+          max = 100;
+        }
+        // console.log(max)
+        if (r.has_img == 1) {
+          return [0, 0, 255, Math.round(255 * r.real / max)];
+        } else {
+          // real positive
+          if (r.real >= 0) {
+            return [255, 0, 0, Math.round(255 * r.real / max)];
+          } else {
+            // real negative
+            return [0, 0, 255, Math.round(-255 * r.real / max)];
+          }
+        }
+      } else {
+        return [255, 0, 0, Math.round(255 * r / max)];
+      }
+    } else {
+      return [255, 0, 0, 0];
+    }
   };
 
   _onHover = data => {
-    console.log(data);
+    // console.log(data);
     if (_.get(data, "object.properties.geoid10")) {
       this.setState({
         geoid10: data.object.properties.geoid10,
@@ -187,25 +212,40 @@ class Map extends React.Component {
 
   _renderTooltip() {
     const { x, y, geoid10 } = this.state;
-    console.log(geoid10);
+    // console.log(geoid10);
     if (!geoid10) {
       return null;
     }
     const num = this.state.data.data[this.state.geoid10];
-    return (
-      <div className="tooltip" style={{ left: x, top: y }}>
-        <div>
-          <h6>Census Code</h6>
-          <NumberFormat value={this.state.geoid10} displayType={"text"} />
-          <h6>Count</h6>
-          <NumberFormat
-            value={num}
-            displayType={"text"}
-            thousandSeparator={true}
-          />
+    // console.log(num);
+    if (Object.keys(num).indexOf("real") >= 0) {
+      return (
+        <div className="tooltip" style={{ left: x, top: y }}>
+          <div>
+            <h6>Census Code</h6>
+            <NumberFormat value={this.state.geoid10} displayType={"text"} />
+            <h6>Count</h6>
+            {num.real/1000}+{num.imag}i;
+            {num.real}+{num.imag}i;
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="tooltip" style={{ left: x, top: y }}>
+          <div>
+            <h6>Census Code</h6>
+            <NumberFormat value={this.state.geoid10} displayType={"text"} />
+            <h6>Count</h6>
+            <NumberFormat
+              value={num}
+              displayType={"text"}
+              thousandSeparator={true}
+            />
+          </div>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -240,7 +280,8 @@ class Map extends React.Component {
       onHover: d => this._onHover(d),
       getFillColor: d =>
         this._getColor(
-          this.state.data.data[d.properties.geoid10] / this.state.data.meta.top
+          this.state.data.data[d.properties.geoid10],
+          this.state.data.meta.top
         ),
       updateTriggers: {
         getFillColor: this.state.data

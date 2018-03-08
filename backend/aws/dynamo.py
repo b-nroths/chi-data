@@ -34,7 +34,7 @@ class DynamoConn():
 	def get_datasets(self):
 		res = {}
 		for dataset_item in self.get_all():
-			if dataset_item['name'] != 'Vacant Lots':
+			if dataset_item['name'] != 'Vacant Lots' and 'cook' not in dataset_item['boundary']:
 				print dataset_item
 				row = {}
 				row['name'] 					= dataset_item['name']

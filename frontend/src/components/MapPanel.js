@@ -77,7 +77,7 @@ class MapPanel extends React.Component {
     });
 
     var table = this.props.datasets[this.props.dataset]["table"][this.props.dt];
-    console.log('table', table)
+    // console.log('table', table)
     const Table = createReactClass({
       render() {
         return (

@@ -51,9 +51,9 @@ class S3():
 		return True
 
 	def save_file_public(self, local, dataset, dt, filename):
-		print local, dataset, dt, filename
+		# print local, dataset, dt, filename
 		# print filename, dataset_name, year
-		print self.s3.upload_file(local, 
+		self.s3.upload_file(local, 
 			'chicago.bnroths.com', 
 			'data/%s/%s/%s' % (dataset, dt, filename))
 		return True
