@@ -9,14 +9,16 @@ import numpy as np
 import s3fs
 import decimal
 from time import time
-from config import cook_tracts, chicago_tracts
+from config import cook_tracts, chicago_tracts, msa_tracts
 arrow_s3fs = s3fs.S3FileSystem()
 s3 = S3()
 d = DynamoConn()
 
 boundaries = {
 	# 'chicago': chicago_tracts,
-	'cook': cook_tracts
+	# 'cook': cook_tracts,
+	# 'msa': msa_tracts,
+	'msa-opposite': msa_tracts
 }
 
 stats = {
@@ -41,7 +43,7 @@ for boundary in boundaries:
 			'stat': stat,
 			'stat_name': stats[stat],
 			'boundaries': boundaries[boundary],
-			'boundary': boundary
+			'boundary': 'msa'
 		}
 
 # dataset_names = {
@@ -64,24 +66,37 @@ for dataset_name in dataset_names:
 
 	# 14 
 	for i in range(14):
+		print i
 		year = 2002 + i
+		# if year >= 2010:
 		timea = time()
 		print year, dataset_name
 		ds = pq.ParquetDataset(
-			path_or_paths='bnroths/chicago-data/lehd_od/year=%s/il_lehd_od_main_%s_%s.parquet' % (year, dataset_names[dataset_name]['dataset'], year), 
+			path_or_paths=[
+				'bnroths/chicago-data/lehd_od/year=%s/il_lehd_od_main_%s_%s.parquet' % (year, dataset_names[dataset_name]['dataset'], year), 
+				'bnroths/chicago-data/lehd_od/year=%s/il_lehd_od_aux_%s_%s.parquet' % (year, dataset_names[dataset_name]['dataset'], year), 
+				
+				'bnroths/chicago-data/lehd_od/year=%s/in_od_main_%s_%s.parquet' % (year, dataset_names[dataset_name]['dataset'], year), 
+				'bnroths/chicago-data/lehd_od/year=%s/in_od_aux_%s_%s.parquet' % (year, dataset_names[dataset_name]['dataset'], year), 
+				
+				'bnroths/chicago-data/lehd_od/year=%s/wi_od_main_%s_%s.parquet' % (year, dataset_names[dataset_name]['dataset'], year), 
+				'bnroths/chicago-data/lehd_od/year=%s/wi_od_aux_%s_%s.parquet' % (year, dataset_names[dataset_name]['dataset'], year), 
+			
+			],
 			filesystem=arrow_s3fs, 
 			validate_schema=False
 		)
 
-		table = ds.read()
+		table = ds.read(columns=['w_tract', 'h_tract', dataset_names[dataset_name]['stat']])
 		df = table.to_pandas()
 		# print 'dataset', dataset_names[dataset_name]
 		# print df.shape
 		# if dataset_names[dataset_name]['boundary'] in ('chicago', 'cook'):
 		# print len(dataset_names[dataset_name]['boundaries'])
-		df = df[df['h_tract'].isin(dataset_names[dataset_name]['boundaries'])]
-		df = df[df['w_tract'].isin(dataset_names[dataset_name]['boundaries'])]
+		# df = df[df['h_tract'].isin(dataset_names[dataset_name]['boundaries'])]
+		# df = df[df['w_tract'].isin(dataset_names[dataset_name]['boundaries'])]
 		# print df.shape
+		# print df.head()
 		# print (set(df.h_tract) - set(df.w_tract))
 		# print (set(df.w_tract) - set(df.h_tract))
 		diff1 = set(df.h_tract) - set(df.w_tract)
@@ -92,10 +107,19 @@ for dataset_name in dataset_names:
 		for tract in diff2:
 			df = df[df.w_tract != tract]
 
-		# print dataset_names[dataset_name]['stat']
-		pivot = pd.pivot_table(df, values=dataset_names[dataset_name]['stat'], columns=['w_tract'], index=['h_tract'], aggfunc=np.sum)
-
-		pivot = pivot.fillna(0)
+		# print df.head()
+		pivot = pd.pivot_table(df, 
+			values=dataset_names[dataset_name]['stat'], 
+			columns=['h_tract'], 
+			index=['w_tract'], 
+			aggfunc=np.sum,
+			fill_value=0)
+		# print pivot.shape
+		# print np.isnan(pivot).any()
+		# print np.isnan(pivot).any()
+		# pivot = pivot.fillna(0)
+		# print np.isnan(pivot).any()
+		# print np.isnan(pivot).any()
 		# print pivot.shape
 		# print pivot.head()
 		# column totals (w_tract)
@@ -103,7 +127,7 @@ for dataset_name in dataset_names:
 		# row totals (h_tracts)
 		h_tracts = pivot.transpose().sum()
 		A = pivot.transpose()/h_tracts
-
+		A = A.fillna(0).replace([np.inf, -np.inf], 0)
 
 		w, v = np.linalg.eig(A)
 
@@ -122,13 +146,22 @@ for dataset_name in dataset_names:
 				value = "%s+%si" % (round(eigenValues[i].real, 2), round(eigenValues[i].imag, 2))
 			else:
 				value = "%s" % (round(eigenValues[i].real, 2))
+			# if i == 0:
+			# 	print vector
+			# 	print vector.min()
+			# 	print vector.max()
+			
 
 			sub_data.append({
 				"name": "Eigenvalue %s" % eigenvalue_i,
 				"value": value,
 				"key": str(eigenvalue_i)
 			})
-			transformed = [round(1000*x.real, 1) for x in vector]
+
+			if abs(vector.min()) >= abs(vector.max()):
+				transformed = [round(-1000*x.real, 1) for x in vector]
+			else:
+				transformed = [round(1000*x.real, 1) for x in vector]
 			imag    	= [round(1000*x.imag, 1) for x in vector]
 			has_imag    = [1 if x.imag != 0 else 0 for x in vector]
 			# print transformed

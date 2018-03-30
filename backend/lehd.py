@@ -40,13 +40,14 @@ S3FS = s3fs.S3FileSystem()
 def handler(event, context):
 	base_url = 'https://lehd.ces.census.gov/data/lodes'
 	versions = ['LODES7'] # 'LODES6', 'LODES5'
-	states	 = ['il']
-	files 	 = [ 'lehd_rac', 'lehd_wac']#'lehd_od']#,
+	states	 = ['in', 'wi']
+	files 	 = [ 'lehd_od']#,'lehd_rac', 'lehd_wac']#
 	print versions, states, files
 	for version in versions:
 		for state in states:
 			for file in files:
-				example_data = [json.loads(db.get(dataset=file)['example_data'])]
+				print file
+				example_data = [json.loads(db.get(dataset='lehd_od_home')['example_data'])]
 				print example_data
 				schema = ingest_data(example_data).schema
 				print schema
@@ -81,7 +82,7 @@ def handler(event, context):
 						print i, link.get('href').split('_')[4][:4], version, state, file, file_url
 						try:
 							print file_url
-							exit(0)
+							# exit(0)
 							response = requests.get(file_url).content
 							# print type(response)
 							df = pd.read_csv(file_url, compression='gzip')
@@ -103,7 +104,7 @@ def handler(event, context):
 							pq.write_table(table, filename)
 							s3.save_file_lehd(
 								filename=filename, 
-								dataset_name=file, 
+								dataset_name='%s' % file, 
 								year=year
 							)
 							os.remove(filename)

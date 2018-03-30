@@ -120,7 +120,7 @@ class Map extends React.Component {
         update["sub_data"] = "all";
       }
     }
-    console.log(update);
+    // console.log(update);
     this.refreshData(update);
   }
 
@@ -175,20 +175,27 @@ class Map extends React.Component {
       if (Object.keys(r).indexOf("real") >= 0) {
         // imaginary colors
         var max = max.real;
-        // console.log(max)
-        if (max <= 10) {
-          max = 100;
+        if (r.real >= 0 ) {
+            var val = Math.log10(r.real)/3
         }
+        else {
+           var val = Math.log10(-1*r.real)/3
+        }
+       
+        // console.log(val, r.real)
         // console.log(max)
         if (r.has_img == 1) {
-          return [0, 0, 255, Math.round(255 * r.real / max)];
+          return [0, 0, 255, Math.round(255 * val)];
         } else {
           // real positive
-          if (r.real >= 0) {
-            return [255, 0, 0, Math.round(255 * r.real / max)];
-          } else {
+          if (r.real > 0) {
+            return [255, 0, 0, Math.round(255 * val)];
+          } else if (r.real < 0) {
             // real negative
-            return [0, 0, 255, Math.round(-255 * r.real / max)];
+            return [0, 0, 255, Math.round(-1 * 255 * val)];
+          }// val is 0
+          else {
+            return [255, 0, 0, 0.01];
           }
         }
       } else {
@@ -225,8 +232,18 @@ class Map extends React.Component {
             <h6>Census Code</h6>
             <NumberFormat value={this.state.geoid10} displayType={"text"} />
             <h6>Count</h6>
-            {num.real/1000}+{num.imag}i;
-            {num.real}+{num.imag}i;
+            <NumberFormat
+              value={num.real/1000}
+              displayType={"text"}
+              thousandSeparator={true}
+              decimalScale={4}
+            />+<NumberFormat
+              value={num.imag}
+              displayType={"text"}
+              thousandSeparator={true}
+              decimalScale={4}
+            />
+            i;
           </div>
         </div>
       );

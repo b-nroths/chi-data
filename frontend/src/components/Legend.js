@@ -22,10 +22,10 @@ class Legend extends React.Component {
     var eighty_val
     if (Object.keys(this.props.max).indexOf("real") >= 0) {
       zero_val = 0;
-      twenty_val = 0.2 * this.props.max.real;
-      fourty_val = 0.4 * this.props.max.real;
-      sixty_val = 0.6 * this.props.max.real;
-      eighty_val = 0.8 * this.props.max.real;
+      twenty_val = 0.2 * this.props.max.real/1000;
+      fourty_val = 0.4 * this.props.max.real/1000;
+      sixty_val = 0.6 * this.props.max.real/1000;
+      eighty_val = 0.8 * this.props.max.real/1000;
     } else {
       zero_val = 0;
       twenty_val = 0.2 * this.props.max;
@@ -33,7 +33,7 @@ class Legend extends React.Component {
       sixty_val = 0.6 * this.props.max;
       eighty_val = 0.8 * this.props.max;
     }
-
+    // console.log(eighty_val)
     return (
       <div className="legend">
         <div className="layout">
@@ -119,7 +119,7 @@ class Legend extends React.Component {
               value={0}
               displayType={"text"}
               thousandSeparator={true}
-              decimalScale={0}
+              decimalScale={2}
             />
           </div>
           <div className="one-fifth">
@@ -127,7 +127,7 @@ class Legend extends React.Component {
               value={twenty_val}
               displayType={"text"}
               thousandSeparator={true}
-              decimalScale={0}
+              decimalScale={2}
             />
           </div>
           <div className="one-fifth">
@@ -135,7 +135,7 @@ class Legend extends React.Component {
               value={fourty_val}
               displayType={"text"}
               thousandSeparator={true}
-              decimalScale={0}
+              decimalScale={2}
             />
           </div>
           <div className="one-fifth">
@@ -143,7 +143,7 @@ class Legend extends React.Component {
               value={sixty_val}
               displayType={"text"}
               thousandSeparator={true}
-              decimalScale={0}
+              decimalScale={2}
             />
           </div>
           <div className="one-fifth">
@@ -151,7 +151,7 @@ class Legend extends React.Component {
               value={eighty_val}
               displayType={"text"}
               thousandSeparator={true}
-              decimalScale={0}
+              decimalScale={2}
             />
           </div>
         </div>
