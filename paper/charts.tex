@@ -12,6 +12,20 @@
 \usepackage{graphicx}
 \usepackage{float}
 
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+ 
+\usepackage{amsthm}
+ 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+ 
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+
 \usepackage{hyperref}
 \newcommand\fnurl[2]{%
 \href{#2}{#1}%
@@ -54,19 +68,19 @@ The main dataset I am using in my analysis is the Longitudinal Employer-Househol
 
 Jobs are broken down among job categories, employee age brackets, and employee monthly salary as follows:
 \begin{enumerate}
-\item Job Categories:
+\item Job Category:
     \begin{enumerate}
         \item Goods Producing
-        \item Trade, Transportation, and Utilities.
+        \item Trade, Transportation, and Utilities
         \item Other
     \end{enumerate}
-\item Age Brackets:
+\item Age:
     \begin{enumerate}
         \item 29 and younger
-        \item 30-45
+        \item 30 - 45
         \item 55 and older
     \end{enumerate}
-\item Monthly Salary Ranges:
+\item Monthly Salary:
     \begin{enumerate}
         \item under \$1,250
         \item \$1,251 - \$3,333
@@ -95,32 +109,54 @@ In my analysis I focus on data within the Chicago Metropolitan Statistical Area 
 \end{tabular}
 \end{center}
 
-The basis of my analysis is based off of the eigenvector centrality of the live-work commuting matrix between census tracts in Chicago.  Though the LEHD dataset provides census tract level statistics I found that interpretability improves at a slightly larger area so decided to use census blocks, of which there are 2215 in the Chicago metropolitan statistical area. To visualize the dataset, I first created a connectivity graph between all census tracts with more than 25 people commuting between them shown below.\\
+The basis of my analysis is based off of the eigenvector centrality of the live-work commuting matrix between census tracts in Chicago.  Though the LEHD dataset provides census tract level statistics I found that interpretability improves at a slightly larger area so decided to use census blocks, of which there are 2,215 in the Chicago metropolitan statistical area. To visualize the dataset, I first created a connectivity graph between all census tracts with more than 25 people commuting between them shown below.\\
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{arc-1}
+    \includegraphics[width=1.0\textwidth]{arc-1}
     \caption{This map shows all the connections between where people live and work in Chicago.}
     \label{fig:arc-1}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{arc-2}
+    \includegraphics[width=1.0\textwidth]{arc-2}
     \caption{This map shows the connections between a people living Hyde Park who either commute to the University of Chicago or the The Loop}
     \label{fig:arc-2}
-\end{figure}
+\end{figure} \\
 
 I use data from Zillow to measure housing values.  Zillow produces data at the neighborhood level for a number of statistics.  The datasets I look at are produced monthly from .  I look at two measures \% of houses increasing in value and median home value per square foot.
 [Insert additional description of Zillow dataset including a table or a graph…]\\
+
 I use the building permits and building licenses dataset published by the City of Chicago Department of Buildings in order to measure investments in business properties in the city.  This dataset is available from 2006 to the present.  Along with each permit application are the following fields Permit type, Date, Estimated Cost, Street Address, Work Description.  A visualization of the dataset for data in 2005 is below.
 
 
 \section{Methods}
 In order to find the employment centers of a city I will use a setup based on eigenvector centrality that has been used in studying networks such as trade routes, social networks, and webpages.  The goal of the method is to take a network of linked entities and to output the most influential nodes in the network graph.  The definition of influential varies depending on the context of how the problem is set up and what the nodes and edges represent.  For example, in a social network, the most important node is the person who is connected to the most important people or in the “center”.  In a network of cities that trade with each other, the edges might represent the distance between cities.  The edges can either represent a connection, in which case the matrix is called an adjacency matrix and is filled with 1 and 0’s depending on if two nodes are connected to each other or the matrix could represent the strength of connection between two nodes, for example in the trading routes example it could be the distance between two cities.  In this case it is common to normalize the distances to the sum of each column is equal to one. \\
 
-A simplified example of the network I will explore in my paper is a city of 110 people, 100 of whom live Downtown and 10 of whom live in Hyde Park.  Of the 100 people who live downtown, 90 works downtown and 10 works in Hyde Park while of the 10 people, 5 work downtown and 5 work in Hyde Park.  This network can be represented by the following matrices. 
+Before I demonstrate how the network matrix is built in the context of this paper, it is important to understand why we are guaranteed a positive eigenvalue from the following theorem proven by Oskar Perron and Georg Forbenius.
+
+\theoremstyle{definition}
+\begin{theorem}[Perron-Frobenius Theorem]
+\label{pythagorean}
+Let $C$ $\in$ $\mathbb{R}^{nxn}$ represent a nonnegative primitive matrix (i.e. $C$: $C_{i,j}$ $>$ 0).  There exists a positive real number $\lambda_{max}$, such that:
+\begin{enumerate}
+\item $\lambda_{max}$ $>$ 0
+\item $\lambda_{max}$ has a unique (up to a constant) eigenvector $v$ which has all positive entries
+\item $\lambda_{max}$ $>$ $|\lambda|$ for any eigvenvalue $\lambda$ $\neq$ $\lambda_{max}$
+\end{enumerate}
+
+\end{theorem}
+
+
+\begin{corollary}
+A column stochastic matrix will always has an eigenvalue 1. All other eigenvalues are in absolute
+value smaller or equal to 1.
+\end{corollary}
+\\ 
+
+To illustrate the network I will explore in my paper, consider a simplified example of a city of 110 people, 100 of whom live Downtown and 10 of whom live in Hyde Park.  Of the 100 people who live downtown, 90 works downtown and 10 works in Hyde Park while of the 10 people, 5 work downtown and 5 work in Hyde Park.  This network can be represented by the following matrices. 
 
 \begin{equation}
       C
@@ -163,7 +199,7 @@ A simplified example of the network I will explore in my paper is a city of 110 
   \end{bmatrix}
 \end{equation}
 
-From this information we can create a commuting matrix which normalizes the flow between nodes of the graph and transforms the “live” matrix (2) into the “work” matrix (3).  This transforms the above matrices into the following equation.
+From this information we can create a commuting matrix which normalizes the flow between regions of the city and transforms the “live” matrix (2) into the “work” matrix (3).  This transforms the above matrices into the following equation.
 
 \begin{equation}C w = l\end{equation}
 \begin{equation} 
@@ -182,7 +218,7 @@ From this information we can create a commuting matrix which normalizes the flow
   \end{bmatrix}
 \end{equation}
 
-We can also calculate write out the commuting flow from work to home like
+We can also calculate write out the commuting flow from work to home as
 
 \begin{center}C $l$ = $w$\end{center}
 \begin{equation} 
@@ -201,42 +237,28 @@ We can also calculate write out the commuting flow from work to home like
   \end{bmatrix}
 \end{equation}
 
-
-
-
-$\lambda_{1}$ = 1.0 \& $v$ = [-0.07870249, -0.99689815]\\
-$\lambda_{2}$ = 0.28 \& $v$ = [-0.70710678  0.70710678]
-
-
-
-$\lambda_{1}$ = 1.0 \& $v$ = [0.19611614, 0.98058068]\\
-$\lambda_{2}$ = 0.4 \& $v$ = [-0.70710678,  0.70710678]
-
-
+Lastly, I will create a network from the dataset which represents a theoretical economy within the city.  Instead of people, I consider the flow of money between regions modeled by the salary of workers that commute between regions.  The first model will be the total flow of money between regions represented by the sum of the salaries of all the workers who commute between regions.  For example, if 10 people commute from Hyde Park to Downtown and they each make an average of \$2,500 per month I will consider the money flow between Hyde Park and downtown to be \$25,000.  In my dataset, salaries are broken down into three ranges less than \$1,250, \$1,250-\$3,333 and over \$3,333.  To simplify the problem, I will represent the buckets as \$1,250, \$2,500, and \$5,000.  Consider the same commuting flows as above but now with income added according to the following breakout.\\
 
 \begin{adjustbox}{center}
  \begin{tabular}{||c | c c c | c | c | c||} 
  \hline
- & \$1,250 & \$2,500 & \$5,000 & Total People & Total Salaries & Avg Salary\\[0.5ex] 
+ & \$1,250 & \$2,500 & \$5,000 & Total People & Total Salaries\\[0.5ex] 
  \hline\hline
- $Hyde Park -> Hyde Park$ & 1 & 2 & 2 & 5 & \$16,250 & \$3,250\\ 
- $Hyde Park -> Downtown$ & 2 & 3 & 5 & 10 & \$35,000 & \$3,500\\
- $Downtown -> Hyde Park$ & 0 & 1 & 4 & 5 & \$22,500 & \$4,500\\ 
- $Downtown -> Downtown$ & 10 & 20 & 60 & 90 & \$362,500 & \$4,027\\ 
+ $Hyde Park -> Hyde Park$ & 1 & 2 & 2 & 5 & \$16,250 \\ 
+ $Hyde Park -> Downtown$ & 2 & 3 & 5 & 10 & \$35,000 \\
+ $Downtown -> Hyde Park$ & 0 & 1 & 4 & 5 & \$22,500 \\ 
+ $Downtown -> Downtown$ & 10 & 20 & 60 & 90 & \$362,500 \\ 
  \hline
  \end{tabular}
-\end{adjustbox}
+\end{adjustbox}\\ \\
 
-$\lambda_{1}$ = 1.0 \& $v$ = [-0.14992818, -0.98869689]\\
-$\lambda_{2}$ = 0.33 \& $v$ = [-0.70710678,  0.70710678]
-
+This is represented by the following matrix.\\
 
 \begin{equation}
-      C
-   =
+  C =
   \begin{bmatrix}
-    Total Salaries_{HP->HP}  & Total Salaries_{HP->DT}\\
-    Total Salaries_{DT->HP}  & Total Salaries_{DT->DT}
+   Salaries_{HP->HP}  & Salaries_{HP->D}\\
+   Salaries_{D->HP}  & Salaries_{D->D}
     
   \end{bmatrix} = 
   \begin{bmatrix}
@@ -248,43 +270,97 @@ $\lambda_{2}$ = 0.33 \& $v$ = [-0.70710678,  0.70710678]
     .580 & .912
   \end{bmatrix}
 \end{equation}
+\\
+Next, I take the $C$ matrix in (5), (6), \& (7) and computing the corresponding eigenvectors and eigenvalues.\\
 
+\begin{center}
+Eigenvalue and Eigenvector for (5) \\
+\begin{tabular}{||c | c c ||} 
+ \hline
+ & $\lambda_1$ = 1.0 & $\lambda_2$ = 0.28\\[0.5ex] 
+ \hline\hline
+ $Downtown$ & 0.99689815 & 0.07870249 \\
+ $Hyde Park$ & 0.70710678 & -0.70710678  \\ 
+ \hline
+ \end{tabular} \\ 
+Eigenvalue and Eigenvector for (6) \\
+\begin{tabular}{||c | c c ||} 
+ \hline
+ & $\lambda_1$ = 1.0 & $\lambda_2$ = 0.4\\[0.5ex] 
+ \hline\hline
+ $Downtown$ & 0.98058068 & 0.19611614 \\
+ $Hyde Park$ & 0.70710678 & -0.70710678  \\ 
+ \hline
+ \end{tabular} \\ 
+Eigenvalue and Eigenvector for (7) \\
+\begin{tabular}{||c | c c ||} 
+ \hline
+ & $\lambda_1$ = 1.0 & $\lambda_2$ = 0.33\\[0.5ex] 
+ \hline\hline
+ $Downtown$ & 0.98869689 & 0.14992818 \\
+ $Hyde Park$ & 0.70710678 & -0.70710678  \\ 
+ \hline
+ \end{tabular}
+ \end{center}
 
-Let $C$ $\in$ $\mathbb{R}^{nxn}$ represent the commuting matrix with $C$: $C_{i,j}$ $>$ 0 (i.e. a positive n x n matrix).  There exists a positive real number (Perron-Frobenius eigenvalue) $\lambda_{max}$, such that $\lambda_{max}$ is an eigenvalue of $C$ and any other eigenvalue of $C$ is strictly smaller than $\lambda_{max}$.  Furthermore, there exists a corresponding eigenvector $v$ of $C$ such that $\forall$ $v_i$ $>$ 0.
-
-A column stochastic matrix will always has an eigenvalue 1. All other eigenvalues are in absolute
-value smaller or equal to 1.\\ 
+These results will demonstrate a few things.  First note that the principle eigenvalue is 1.0 as expected from the corollary above.  The vector that corresponds to the principle eigenvalue is the Gould Index of Accessiblity in the network and represents the relative strength of each node in the principle network.  In the three examples above you can see that the Downtown area dominates this vector.  The second eigenvalue represents a "pull out" of the principle network.  It is important to remember that the second eigenvector will be orthogonal to the principle eigenvector and represents a completely different sub-network.  In the system in equation 5 and 7 the second eigenvalue is lower which indicates the dominance of the first eigenvalue compared to the network examined in the 6 equation.  These results have a similar interpretation to the previous example where the principle eigenvector show the most dominant network of living regions.  The eigenvector that corresponds to the principle eigenvalue are the relative ranking of regions in this setting.  Next I will use this same set up to analyze the neighborhoods of Chicago using the LEHD dataset.
 
 \section{Results}
 
-\begin{adjustbox}{center}
+First, I will study what neighborhoods are the most important for different job sectors, income ranges, and age profiles.  I will use the commuting matrix described in equation 6 to rank the neighborhoods according to the eigenvector that corresponds to the principle eigenvalue.  Answering the question \textit{How important is a neighborhood to jobs in a specific industry, age group or salary range?}  To do this, I create a connectivity matrix over all neighborhoods in the Chicago MSA and rank them from the years 2002 - 2015.  Below I list the top 10 neighborhoods. \\
 
- \begin{tabular}{||c | c c c c c c c c c c c c c c ||} 
+All Jobs \\
+\begin{adjustbox}{center}
+\begin{tabular}{||c | c c c c c c c c c c c c c c ||} 
  \hline
  & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015\\[0.5ex] 
  \hline\hline
-The Loop & 0.958 & 0.952 & 0.954 & 0.939 & 0.947 & 0.955 & 0.947 & 0.96 & 0.961 & 0.962 & 0.962 & 0.964 & 0.962 & 0.964 \\
-
-Streeterville & 0.162 & 0.176 & 0.18 & 0.203 & 0.206 & 0.168 & 0.174 & 0.157 & 0.146 & 0.144 & 0.134 & 0.131 & 0.115 & 0.129 \\
-
-O'Hare International Airport & 0.121 & 0.084 & 0.079 & 0.078 & 0.057 & 0.079 & 0.12 & 0.063 & 0.077 & 0.07 & 0.09 & 0.074 & 0.095 & 0.082 \\
-
-South Loop & 0.102 & 0.124 & 0.113 & 0.125 & 0.115 & 0.11 & 0.114 & 0.109 & 0.075 & 0.081 & 0.086 & 0.089 & 0.09 & 0.065 \\
-
-River North & 0.074 & 0.07 & 0.076 & 0.084 & 0.083 & 0.082 & 0.085 & 0.079 & 0.097 & 0.091 & 0.098 & 0.094 & 0.099 & 0.116 \\
-
-Bronzeville & 0.041 & 0.036 & 0.049 & 0.056 & 0.016 & 0.044 & 0.05 & 0.048 & 0.037 & 0.034 & 0.011 & 0.014 & 0.013 & 0.011 \\
-
-Near North & 0.074 & 0.098 & 0.085 & 0.101 & 0.098 & 0.091 & 0.088 & 0.088 & 0.085 & 0.086 & 0.073 & 0.07 & 0.073 & 0.074 \\
-
+The Loop & 0.958 & 0.952 & 0.954 & 0.939 & 0.947 & 0.955 & 0.947 & 0.960 & 0.961 & 0.962 & 0.962 & 0.964 & 0.962 & 0.964 \\
+Streeterville & 0.162 & 0.176 & 0.180 & 0.203 & 0.206 & 0.168 & 0.174 & 0.157 & 0.146 & 0.144 & 0.134 & 0.131 & 0.115 & 0.129 \\
+O'Hare Airport & 0.121 & 0.084 & 0.079 & 0.078 & 0.057 & 0.079 & 0.120 & 0.063 & 0.077 & 0.070 & 0.090 & 0.074 & 0.095 & 0.082 \\
+South Loop & 0.102 & 0.124 & 0.113 & 0.125 & 0.115 & 0.110 & 0.114 & 0.109 & 0.075 & 0.081 & 0.086 & 0.089 & 0.090 & 0.065 \\
+River North & 0.074 & 0.070 & 0.076 & 0.084 & 0.083 & 0.082 & 0.085 & 0.079 & 0.097 & 0.091 & 0.098 & 0.094 & 0.099 & 0.116 \\
+Bronzeville & 0.041 & 0.036 & 0.049 & 0.056 & 0.016 & 0.044 & 0.050 & 0.048 & 0.037 & 0.034 & 0.011 & 0.014 & 0.013 & 0.011 \\
+Near North & 0.074 & 0.098 & 0.085 & 0.101 & 0.098 & 0.091 & 0.088 & 0.088 & 0.085 & 0.086 & 0.073 & 0.070 & 0.073 & 0.074 \\
 West Loop Gate & 0.073 & 0.084 & 0.083 & 0.097 & 0.085 & 0.087 & 0.087 & 0.085 & 0.083 & 0.094 & 0.089 & 0.094 & 0.099 & 0.105 \\
-
 West Town & 0.039 & 0.052 & 0.049 & 0.052 & 0.054 & 0.048 & 0.049 & 0.049 & 0.041 & 0.045 & 0.046 & 0.042 & 0.047 & 0.053 \\
-
 Archer Heights & 0.034 & 0.039 & 0.032 & 0.033 & 0.034 & 0.027 & 0.031 & 0.025 & 0.028 & 0.019 & 0.014 & 0.013 & 0.022 & 0.019  \\
-
-Hyde Park & 0.049 & 0.043 & 0.063 & 0.092 & 0.077 & 0.08 & 0.1 & 0.067 & 0.096 & 0.087 & 0.094 & 0.088 & 0.088 & 0.053  \\
+Hyde Park & 0.049 & 0.043 & 0.063 & 0.092 & 0.077 & 0.080 & 0.100 & 0.067 & 0.096 & 0.087 & 0.094 & 0.088 & 0.088 & 0.053  \\
  \hline
+ \end{tabular}
+\end{adjustbox}
+\\
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.31\textwidth]{Jobs-S000-2002}
+    \includegraphics[width=0.31\textwidth]{Jobs-S000-2008}
+    \includegraphics[width=0.31\textwidth]{Jobs-S000-2015}
+
+        
+    \caption{This map shows the eigenvector corresponding to the principle eigenvalue for 2002, 2008, and 2015}
+    \label{fig:Jobs-S000-2008}
+\end{figure}
+
+As can be seen in the map and table employment is Chicago is highly concentrated in the downtown loop area which consistently is ranked above .95.  Other consistently important neighborhoods include 
+SE01 \\
+\begin{adjustbox}{center}
+\begin{tabular}{||c | c c c c c c c c c c c c c c ||} 
+ \hline
+ & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015\\[0.5ex] 
+ \hline\hline
+The Loop & 0.958 & 0.952 & 0.954 & 0.939 & 0.947 & 0.955 & 0.947 & 0.960 & 0.961 & 0.962 & 0.962 & 0.964 & 0.962 & 0.964 \\
+Streeterville & 0.162 & 0.176 & 0.180 & 0.203 & 0.206 & 0.168 & 0.174 & 0.157 & 0.146 & 0.144 & 0.134 & 0.131 & 0.115 & 0.129 \\
+O'Hare Airport & 0.121 & 0.084 & 0.079 & 0.078 & 0.057 & 0.079 & 0.120 & 0.063 & 0.077 & 0.070 & 0.090 & 0.074 & 0.095 & 0.082 \\
+South Loop & 0.102 & 0.124 & 0.113 & 0.125 & 0.115 & 0.110 & 0.114 & 0.109 & 0.075 & 0.081 & 0.086 & 0.089 & 0.090 & 0.065 \\
+River North & 0.074 & 0.070 & 0.076 & 0.084 & 0.083 & 0.082 & 0.085 & 0.079 & 0.097 & 0.091 & 0.098 & 0.094 & 0.099 & 0.116 \\
+Bronzeville & 0.041 & 0.036 & 0.049 & 0.056 & 0.016 & 0.044 & 0.050 & 0.048 & 0.037 & 0.034 & 0.011 & 0.014 & 0.013 & 0.011 \\
+Near North & 0.074 & 0.098 & 0.085 & 0.101 & 0.098 & 0.091 & 0.088 & 0.088 & 0.085 & 0.086 & 0.073 & 0.070 & 0.073 & 0.074 \\
+West Loop Gate & 0.073 & 0.084 & 0.083 & 0.097 & 0.085 & 0.087 & 0.087 & 0.085 & 0.083 & 0.094 & 0.089 & 0.094 & 0.099 & 0.105 \\
+West Town & 0.039 & 0.052 & 0.049 & 0.052 & 0.054 & 0.048 & 0.049 & 0.049 & 0.041 & 0.045 & 0.046 & 0.042 & 0.047 & 0.053 \\
+Archer Heights & 0.034 & 0.039 & 0.032 & 0.033 & 0.034 & 0.027 & 0.031 & 0.025 & 0.028 & 0.019 & 0.014 & 0.013 & 0.022 & 0.019 \\
+Hyde Park & 0.049 & 0.043 & 0.063 & 0.092 & 0.077 & 0.080 & 0.100 & 0.067 & 0.096 & 0.087 & 0.094 & 0.088 & 0.088 & 0.053  \\
+\hline
  \end{tabular}
 \end{adjustbox}
 

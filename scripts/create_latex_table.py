@@ -13,14 +13,23 @@ top_ten = ['The Loop',
 	'Hyde Park']
 
 datasets = [
-	'final-jobs-eigs-chicago-S000'
+	# 'final-jobs-eigs-chicago-S000'
+	'final-jobs-eigs-chicago-SE01',
+	'final-jobs-eigs-chicago-SE02',
+	'final-jobs-eigs-chicago-SE03',
+	# 'SE01': 'salary_group_1',
+	# 'SE02': 'salary_group_2',
+	# 'SE03': 'salary_group_3',
 ]
 
 # 
-for neighborhood in top_ten:
-	line = neighborhood + " & "
-	for i in range(14):
-		for dataset in datasets:
+
+for dataset in datasets:
+	print dataset
+	line = ""
+	for neighborhood in top_ten:
+		line += neighborhood + " & "
+		for i in range(14):
 			year = i + 2002
 			url = 'http://chicago.bnroths.com/data/%s/%s/1.json' % (dataset, year)
 			res = r.get(url).json()
@@ -28,5 +37,7 @@ for neighborhood in top_ten:
 			# print num
 			# print type(num)
 			# print 0.01*num
-			line += "%s & " % str(round(0.001*num, 3))
+			# float(("%0.2f"%a))
+			line += "%0.3f & " % round(0.001*num, 3)
+		line += "\n"
 	print line + "\\\\ \n"
