@@ -12,11 +12,23 @@ top_ten = ['The Loop',
 	'Archer Heights',
 	'Hyde Park']
 
+top_ten = [
+	'Logan Square',	
+	'Englewood',	
+	'Gresham',
+	'West Rogers Park',
+	'Little Village',
+	'Albany Park',
+	'Portage Park',
+	'Archer Heights',
+	'Brighton Park',
+	'Back of the Yards'
+]
 datasets = [
-	# 'final-jobs-eigs-chicago-S000'
-	'final-jobs-eigs-chicago-SE01',
-	'final-jobs-eigs-chicago-SE02',
-	'final-jobs-eigs-chicago-SE03',
+	'final-homes-eigs-chicago-S000'
+	# 'final-jobs-eigs-chicago-SE01',
+	# 'final-jobs-eigs-chicago-SE02',
+	# 'final-jobs-eigs-chicago-SE03',
 	# 'SE01': 'salary_group_1',
 	# 'SE02': 'salary_group_2',
 	# 'SE03': 'salary_group_3',
@@ -33,7 +45,11 @@ for dataset in datasets:
 			year = i + 2002
 			url = 'http://chicago.bnroths.com/data/%s/%s/1.json' % (dataset, year)
 			res = r.get(url).json()
-			num = res['data'][neighborhood]['real']
+			
+			try:
+				num = res['data'][neighborhood]['real']
+			except:
+				num = 0
 			# print num
 			# print type(num)
 			# print 0.01*num
