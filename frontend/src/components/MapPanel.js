@@ -85,6 +85,7 @@ class MapPanel extends React.Component {
             <strong>Eigenvalues</strong>
             <table className="table is-fullwidth">
               <tbody>
+              {/*}
                 {table.map(row => {
                   return (
                     <tr key={row.key}>
@@ -93,6 +94,7 @@ class MapPanel extends React.Component {
                     </tr>
                   );
                 })}
+              */}
               </tbody>
             </table>
             

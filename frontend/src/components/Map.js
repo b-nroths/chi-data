@@ -175,13 +175,12 @@ class Map extends React.Component {
       if (Object.keys(r).indexOf("real") >= 0) {
         // imaginary colors
         var max = max.real;
-        if (r.real >= 0 ) {
-            var val = Math.log10(r.real)/3
+        if (r.real >= 0) {
+          var val = Math.log10(r.real) / 3;
+        } else {
+          var val = Math.log10(-1 * r.real) / 3;
         }
-        else {
-           var val = Math.log10(-1*r.real)/3
-        }
-       
+
         // console.log(val, r.real)
         // console.log(max)
         if (r.has_img == 1) {
@@ -193,8 +192,8 @@ class Map extends React.Component {
           } else if (r.real < 0) {
             // real negative
             return [0, 0, 255, Math.round(-1 * 255 * val)];
-          }// val is 0
-          else {
+          } else {
+            // val is 0
             return [255, 0, 0, 0.01];
           }
         }
@@ -219,11 +218,16 @@ class Map extends React.Component {
 
   _renderTooltip() {
     const { x, y, geoid10 } = this.state;
-    // console.log(geoid10);
+    console.log(geoid10);
     if (!geoid10) {
       return null;
     }
-    const num = this.state.data.data[this.state.geoid10];
+    var num = 0;
+    try {
+      num = this.state.data.data[this.state.geoid10];
+    } catch (err) {
+      return null;
+    }
     // console.log(num);
     if (Object.keys(num).indexOf("real") >= 0) {
       return (
@@ -233,7 +237,7 @@ class Map extends React.Component {
             <NumberFormat value={this.state.geoid10} displayType={"text"} />
             <h6>Count</h6>
             <NumberFormat
-              value={num.real/1000}
+              value={num.real / 1000}
               displayType={"text"}
               thousandSeparator={true}
               decimalScale={4}

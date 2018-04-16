@@ -30,21 +30,21 @@ stats = {
 	'SE01': 'salary_group_1',
 	'SE02': 'salary_group_2',
 	'SE03': 'salary_group_3',
-	'SI01': 'industry_group_1',
-	'SI02': 'industry_group_2',
-	'SI03': 'industry_group_3'
+	# 'SI01': 'industry_group_1',
+	# 'SI02': 'industry_group_2',
+	# 'SI03': 'industry_group_3'
 }
 
 dataset_names = {}
 
 for boundary in boundaries:
 	for stat in stats:
-		dataset_names['final-eigs-%s-%s' % (boundary, stat)] = {
+		dataset_names['final-homes-eigs-%s-%s' % (boundary, stat)] = {
 			'dataset': 'JT00',
 			'stat': stat,
 			'stat_name': stats[stat],
 			'boundaries': boundaries[boundary],
-			'boundary': 'chicago'
+			'boundary': 'zillow'
 		}
 
 
@@ -70,7 +70,9 @@ for dataset_name in dataset_names:
 	# 14 
 	for i in range(14):
 		year = 2002 + i
+		# year = 2003
 		# if year >= 2010:
+		stat = dataset_names[dataset_name]['stat']
 		timea = time()
 		print i, year, dataset_name
 		ds = pq.ParquetDataset(
@@ -89,20 +91,10 @@ for dataset_name in dataset_names:
 			validate_schema=False
 		)
 
-		table = ds.read(columns=['w_tract', 'h_tract', 'S000'])
+		table = ds.read(columns=['w_tract', 'h_tract', stat])
 		df = table.to_pandas()
 
 
-		# print 'dataset', dataset_names[dataset_name]
-		# print df.shape
-		# if dataset_names[dataset_name]['boundary'] in ('chicago', 'cook'):
-		# print len(dataset_names[dataset_name]['boundaries'])
-		# df = df[df['h_tract'].isin(dataset_names[dataset_name]['boundaries'])]
-		# df = df[df['w_tract'].isin(dataset_names[dataset_name]['boundaries'])]
-		# print df.shape
-		# print df.head()
-		# print (set(df.h_tract) - set(df.w_tract))
-		# print (set(df.w_tract) - set(df.h_tract))
 		final_df = df.set_index('w_tract').join(neighborhoods_w_tracts_small).rename(columns={'Name': 'w_hood'})
 		final_df = final_df.set_index('h_tract').join(neighborhoods_w_tracts_small, lsuffix='left').rename(columns={'Name': 'h_hood'})
 		
@@ -116,24 +108,18 @@ for dataset_name in dataset_names:
 			final_df = final_df[final_df.w_hood != tract]
 
 		# print final_df.shape
+		print stat
+		print final_df.columns
+		print final_df.head()
 		pivot = pd.pivot_table(
 			final_df, 
-			values='S000', 
+			values=stat, 
 			columns=['h_hood'], 
 			index=['w_hood'], 
 			aggfunc=np.sum, 
 			fill_value=0)
 
-		# print pivot.shape
-		# print np.isnan(pivot).any()
-		# print np.isnan(pivot).any()
-		# pivot = pivot.fillna(0)
-		# print np.isnan(pivot).any()
-		# print np.isnan(pivot).any()
-		# print pivot.shape
-		# print pivot.head()
-		# exit(0)
-		# column totals (w_tract)
+		
 		w_tracts = pivot.sum()
 		# row totals (h_tracts)
 		h_tracts = pivot.transpose().sum()
@@ -157,11 +143,6 @@ for dataset_name in dataset_names:
 				value = "%s+%si" % (round(eigenValues[i].real, 2), round(eigenValues[i].imag, 2))
 			else:
 				value = "%s" % (round(eigenValues[i].real, 2))
-			# if i == 0:
-			# 	print vector
-			# 	print vector.min()
-			# 	print vector.max()
-			
 
 			sub_data.append({
 				"name": "Eigenvalue %s" % eigenvalue_i,
@@ -199,18 +180,19 @@ for dataset_name in dataset_names:
 				}
 			}
 		
-			stat = eigenvalue_i
+			#stat = eigenvalue_i
 
-			with open('%s.json' % stat, 'w') as f:
+			with open('%s.json' % eigenvalue_i, 'w') as f:
 				f.write(json.dumps(final))
 
+			print dataset_name
 			s3.save_file_public(
-				local='%s.json' % stat,
+				local='%s.json' % eigenvalue_i,
 				dataset=dataset_name, 
 				dt=year, 
-				filename='%s.json' % stat
+				filename='%s.json' % eigenvalue_i
 			)
-			os.remove('%s.json' % stat)
+			os.remove('%s.json' % eigenvalue_i)
 
 			all_of_the_keys["%s" % year] = sub_data
 
