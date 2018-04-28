@@ -131,11 +131,11 @@ class Map extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({ datasets: data }));
 
-    // fetch(
-    //   "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/Boundaries+-+City.json"
-    // )
-    //   .then(response => response.json())
-    //   .then(data => this.setState({ city: data }));
+    fetch(
+      "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/Boundaries+-+City.json"
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ city: data }));
 
     // fetch(
     //   "https://s3.amazonaws.com/chicago.bnroths.com/data/boundaries/tracts_chicago.json"
@@ -285,7 +285,7 @@ class Map extends React.Component {
       filled: false,
       stroked: true,
       extruded: false,
-      lineWidthScale: 10,
+      lineWidthScale: 5,
       lineWidthMinPixels: 5
     });
 
@@ -320,12 +320,13 @@ class Map extends React.Component {
     });
 
     var layers;
+    console.log(cityBoundaryLayer)
     if (this.state.map_type === "geojson") {
       layers = [censusTractsLayer];
     } else if (this.state.map_type === "scatter") {
-      layers = [scatterplotLayer];
+      layers = [scatterplotLayer, cityBoundaryLayer];
     } else if (this.state.map_type === "arc") {
-      layers = [scatterplotLayer];
+      layers = [scatterplotLayer, cityBoundaryLayer];
     }
 
     return (

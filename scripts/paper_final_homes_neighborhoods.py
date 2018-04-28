@@ -23,13 +23,13 @@ boundaries = {
 }
 
 stats = {
-	# 'S000': 'total_jobs',
-	'SA01': 'age_group_1',
-	'SA02': 'age_group_2',
-	'SA03': 'age_group_3',
-	'SE01': 'salary_group_1',
-	'SE02': 'salary_group_2',
-	'SE03': 'salary_group_3',
+	'S000': 'total_jobs',
+	# 'SA01': 'age_group_1',
+	# 'SA02': 'age_group_2',
+	# 'SA03': 'age_group_3',
+	# 'SE01': 'salary_group_1',
+	# 'SE02': 'salary_group_2',
+	# 'SE03': 'salary_group_3',
 	# 'SI01': 'industry_group_1',
 	# 'SI02': 'industry_group_2',
 	# 'SI03': 'industry_group_3'
@@ -69,7 +69,8 @@ for dataset_name in dataset_names:
 
 	# 14 
 	for i in range(14):
-		year = 2002 + i
+		# year = 2002 + i
+		year = '2004'
 		# year = 2003
 		# if year >= 2010:
 		stat = dataset_names[dataset_name]['stat']
@@ -93,7 +94,8 @@ for dataset_name in dataset_names:
 
 		table = ds.read(columns=['w_tract', 'h_tract', stat])
 		df = table.to_pandas()
-
+		print df
+		# exit(0)
 
 		final_df = df.set_index('w_tract').join(neighborhoods_w_tracts_small).rename(columns={'Name': 'w_hood'})
 		final_df = final_df.set_index('h_tract').join(neighborhoods_w_tracts_small, lsuffix='left').rename(columns={'Name': 'h_hood'})
@@ -119,7 +121,7 @@ for dataset_name in dataset_names:
 			aggfunc=np.sum, 
 			fill_value=0)
 
-		
+		print pivot
 		w_tracts = pivot.sum()
 		# row totals (h_tracts)
 		h_tracts = pivot.transpose().sum()
@@ -138,7 +140,12 @@ for dataset_name in dataset_names:
 			# print i
 			eigenvalue_i = i+1
 			# val = round(eigenValues[i], 4)
+			if year == '2004':
+				i = i+1
+			
 			vector = eigenVectors[:, i]
+			print 
+			print vector
 			if eigenValues[i].imag != 0:
 				value = "%s+%si" % (round(eigenValues[i].real, 2), round(eigenValues[i].imag, 2))
 			else:
@@ -195,7 +202,7 @@ for dataset_name in dataset_names:
 			os.remove('%s.json' % eigenvalue_i)
 
 			all_of_the_keys["%s" % year] = sub_data
-
+		exit(0)
 
 		## update dynamo metadata
 		metadata = d.get(dataset=dataset_name)

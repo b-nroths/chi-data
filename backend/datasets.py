@@ -19,4 +19,4 @@ def handler(event, context):
 		'body': json.dumps(db.get_datasets(), sort_keys=True)
 	}
 
-# print handler(None, None)
+print handler(None, None)

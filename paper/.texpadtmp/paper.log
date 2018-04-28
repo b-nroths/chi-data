@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  16 APR 2018 01:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  28 APR 2018 00:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1091,6 +1091,18 @@ LaTeX Warning: Label `fig:Jobs-S000-2008' multiply defined.
 
 LaTeX Warning: Label `fig:Jobs-S000-2008' multiply defined.
 
+
+LaTeX Warning: Label `thelabel' multiply defined.
+
+
+LaTeX Warning: Label `thelabel' multiply defined.
+
+
+LaTeX Warning: Label `thelabel' multiply defined.
+
+
+LaTeX Warning: Label `thelabel' multiply defined.
+
 )
 \openout1 = `paper.aux'.
 
@@ -1178,249 +1190,305 @@ Underfull \hbox (badness 10000) in paragraph at lines 56--57
 
  []
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.57 
-      [1]
+
 Underfull \hbox (badness 10000) in paragraph at lines 58--59
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 60--61
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 62--63
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.59 
+      [1]
+Underfull \hbox (badness 10000) in paragraph at lines 65--67
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 67--68
+Underfull \hbox (badness 10000) in paragraph at lines 68--69
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--71
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 72--73
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 103--104
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--113
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
 
  []
 
-[4] <images/arc-1.png, id=102, 216.3282pt x 193.6836pt>
+[5] <images/arc-1.png, id=107, 216.3282pt x 193.6836pt>
 File: images/arc-1.png Graphic file (type png)
  <use images/arc-1.png>
-Package pdftex.def Info: images/arc-1.png used on input line 117.
+Package pdftex.def Info: images/arc-1.png used on input line 126.
 (pdftex.def)             Requested size: 345.0pt x 308.90704pt.
 
-<images/arc-2.png, id=104, 216.3282pt x 193.6836pt>
+<images/arc-2.png, id=109, 216.3282pt x 193.6836pt>
 File: images/arc-2.png Graphic file (type png)
  <use images/arc-2.png>
-Package pdftex.def Info: images/arc-2.png used on input line 124.
+Package pdftex.def Info: images/arc-2.png used on input line 133.
 (pdftex.def)             Requested size: 345.0pt x 308.90704pt.
 
 
-./paper.tex:128: LaTeX Error: There's no line here to end.
+./paper.tex:137: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.128 
+l.137 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[5 <./images/arc-1.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 129--130
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 135--136
-
- []
-
-[6 <./images/arc-2.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 156--158
-
- []
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 240--241
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 253--254
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 253--254
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
-
- []
-
-
-Overfull \hbox (22.56265pt too wide) detected at line 272
-[]\OML/cmm/m/it/10 C \OT1/cmr/m/n/10 = [] = [] = []
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 272--275
+[6 <./images/arc-1.png>] [7 <./images/arc-2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 151--152
 
  []
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 310--311
+
+./paper.tex:173: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.173 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--255
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--268
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 267--268
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 330--332
+Underfull \hbox (badness 10000) in paragraph at lines 269--270
 
  []
 
-<images/Jobs-S000-2002.png, id=148, 536.0025pt x 644.4075pt>
+
+Overfull \hbox (22.56265pt too wide) detected at line 286
+[]\OML/cmm/m/it/10 C \OT1/cmr/m/n/10 = [] = [] = []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 286--289
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 322--323
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 360--361
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 380--382
+
+ []
+
+<images/Jobs-S000-2002.png, id=160, 536.0025pt x 644.4075pt>
 File: images/Jobs-S000-2002.png Graphic file (type png)
 
 <use images/Jobs-S000-2002.png>
-Package pdftex.def Info: images/Jobs-S000-2002.png used on input line 335.
+Package pdftex.def Info: images/Jobs-S000-2002.png used on input line 385.
 (pdftex.def)             Requested size: 106.94916pt x 128.57439pt.
 
-<images/Jobs-S000-2008.png, id=149, 538.01pt x 646.415pt>
+<images/Jobs-S000-2008.png, id=161, 538.01pt x 646.415pt>
 File: images/Jobs-S000-2008.png Graphic file (type png)
 
 <use images/Jobs-S000-2008.png>
-Package pdftex.def Info: images/Jobs-S000-2008.png used on input line 336.
+Package pdftex.def Info: images/Jobs-S000-2008.png used on input line 386.
 (pdftex.def)             Requested size: 106.94916pt x 128.49162pt.
 
-<images/Jobs-S000-2015.png, id=150, 530.98375pt x 645.41125pt>
+<images/Jobs-S000-2015.png, id=162, 530.98375pt x 645.41125pt>
 File: images/Jobs-S000-2015.png Graphic file (type png)
 
 <use images/Jobs-S000-2015.png>
-Package pdftex.def Info: images/Jobs-S000-2015.png used on input line 337.
+Package pdftex.def Info: images/Jobs-S000-2015.png used on input line 387.
 (pdftex.def)             Requested size: 106.94916pt x 129.99583pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 344--344
+ [11]
+Underfull \hbox (badness 10000) in paragraph at lines 394--394
 [][][]\OT1/cmr/m/n/8 https://www.builtinchicago.org/2014/09/18/meet-neighbors-4
 -tech-companies-sign-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 344--345
+Underfull \hbox (badness 10000) in paragraph at lines 394--395
 
  []
 
-[10 <./images/Jobs-S000-2002.png> <./images/Jobs-S000-2008.png> <./images/Jobs-
-S000-2015.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 346--347
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
 
  []
 
-<images/Jobs-SI001-2015.png, id=164, 612.2875pt x 807.015pt>
+[12 <./images/Jobs-S000-2002.png> <./images/Jobs-S000-2008.png> <./images/Jobs-
+S000-2015.png>] <images/Jobs-SI001-2015.png, id=183, 612.2875pt x 807.015pt>
 File: images/Jobs-SI001-2015.png Graphic file (type png)
 
 <use images/Jobs-SI001-2015.png>
-Package pdftex.def Info: images/Jobs-SI001-2015.png used on input line 391.
+Package pdftex.def Info: images/Jobs-SI001-2015.png used on input line 441.
 (pdftex.def)             Requested size: 106.94916pt x 140.95883pt.
 
-<images/Jobs-SI002-2015.png, id=165, 613.29124pt x 829.0975pt>
+<images/Jobs-SI002-2015.png, id=184, 613.29124pt x 829.0975pt>
 File: images/Jobs-SI002-2015.png Graphic file (type png)
 
 <use images/Jobs-SI002-2015.png>
-Package pdftex.def Info: images/Jobs-SI002-2015.png used on input line 392.
+Package pdftex.def Info: images/Jobs-SI002-2015.png used on input line 442.
 (pdftex.def)             Requested size: 106.94916pt x 144.57555pt.
 
-<images/Jobs-SI003-2015.png, id=166, 628.3475pt x 815.045pt>
+<images/Jobs-SI003-2015.png, id=185, 628.3475pt x 815.045pt>
 File: images/Jobs-SI003-2015.png Graphic file (type png)
 
 <use images/Jobs-SI003-2015.png>
-Package pdftex.def Info: images/Jobs-SI003-2015.png used on input line 393.
+Package pdftex.def Info: images/Jobs-SI003-2015.png used on input line 443.
 (pdftex.def)             Requested size: 106.94916pt x 138.71748pt.
- [11]
-Underfull \hbox (badness 10000) in paragraph at lines 398--399
+ [13]
+Underfull \hbox (badness 10000) in paragraph at lines 448--449
 
  []
 
-<images/Jobs-SE001-2015.png, id=173, 615.29875pt x 754.82pt>
+<images/Jobs-SE001-2015.png, id=190, 615.29875pt x 754.82pt>
 File: images/Jobs-SE001-2015.png Graphic file (type png)
 
 <use images/Jobs-SE001-2015.png>
-Package pdftex.def Info: images/Jobs-SE001-2015.png used on input line 404.
+Package pdftex.def Info: images/Jobs-SE001-2015.png used on input line 454.
 (pdftex.def)             Requested size: 106.94916pt x 131.1971pt.
 
-<images/Jobs-SE002-2015.png, id=174, 619.31375pt x 749.80125pt>
+<images/Jobs-SE002-2015.png, id=191, 619.31375pt x 749.80125pt>
 File: images/Jobs-SE002-2015.png Graphic file (type png)
 
 <use images/Jobs-SE002-2015.png>
-Package pdftex.def Info: images/Jobs-SE002-2015.png used on input line 405.
+Package pdftex.def Info: images/Jobs-SE002-2015.png used on input line 455.
 (pdftex.def)             Requested size: 106.94916pt x 129.47815pt.
 
-<images/Jobs-SE003-2015.png, id=175, 617.30624pt x 752.8125pt>
+<images/Jobs-SE003-2015.png, id=192, 617.30624pt x 752.8125pt>
 File: images/Jobs-SE003-2015.png Graphic file (type png)
 
 <use images/Jobs-SE003-2015.png>
-Package pdftex.def Info: images/Jobs-SE003-2015.png used on input line 406.
+Package pdftex.def Info: images/Jobs-SE003-2015.png used on input line 456.
 (pdftex.def)             Requested size: 106.94916pt x 130.42316pt.
- [12 <./images/Jobs-SI001-2015.png> <./images/Jobs-SI002-2015.png> <./images/Jo
-bs-SI003-2015.png> <./images/Jobs-SE001-2015.png> <./images/Jobs-SE002-2015.png
-> <./images/Jobs-SE003-2015.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 416--417
+
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
 
  []
 
+[14 <./images/Jobs-SI001-2015.png> <./images/Jobs-SI002-2015.png> <./images/Job
+s-SI003-2015.png> <./images/Jobs-SE001-2015.png> <./images/Jobs-SE002-2015.png>
+ <./images/Jobs-SE003-2015.png>]
 
-Underfull \hbox (badness 10000) in paragraph at lines 435--437
+./paper.tex:488: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.488 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 489--490
 
  []
 
-<images/Houses-S000-2015.png, id=189, 627.34375pt x 762.85pt>
+<images/Houses-S000-2015.png, id=205, 627.34375pt x 762.85pt>
 File: images/Houses-S000-2015.png Graphic file (type png)
 
 <use images/Houses-S000-2015.png>
-Package pdftex.def Info: images/Houses-S000-2015.png used on input line 442.
+Package pdftex.def Info: images/Houses-S000-2015.png used on input line 493.
 (pdftex.def)             Requested size: 345.0pt x 419.53387pt.
- [13] [14 <./images/Houses-S000-2015.png>]
-[15]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 464.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 464.
+ [15]
+Underfull \hbox (badness 10000) in paragraph at lines 498--499
+
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 592--593
+
+ []
+
+[16 <./images/Houses-S000-2015.png>] [17]
+(/Users/benjamin/Desktop/repos/chi-data/paper/.texpadtmp/paper.bbl [18])
+[19]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 604.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 604.
  (/Users/benjamin/Desktop/repos/chi-data/paper/.texpadtmp/paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 464.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 464.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 604.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 604.
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 464.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 604.
  ) 
 Here is how much of TeX's memory you used:
- 27389 strings out of 493014
- 654023 string characters out of 6133351
- 821118 words of memory out of 5000000
- 30360 multiletter control sequences out of 15000+600000
- 11541 words of font info for 45 fonts, out of 8000000 for 9000
+ 27413 strings out of 493014
+ 654546 string characters out of 6133351
+ 851095 words of memory out of 5000000
+ 30372 multiletter control sequences out of 15000+600000
+ 11709 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,9n,77p,1986b,1811s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,9n,77p,2311b,1811s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -1434,12 +1502,13 @@ live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2
 016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/20
-16/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+16/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/201
+6/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 Output written on /Users/benjamin/Desktop/repos/chi-data/paper/.texpadtmp/paper
-.pdf (16 pages, 2112408 bytes).
+.pdf (20 pages, 2137127 bytes).
 PDF statistics:
- 278 PDF objects out of 1000 (max. 8388607)
- 219 compressed objects within 3 object streams
- 74 named destinations out of 1000 (max. 500000)
- 161 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 305 PDF objects out of 1000 (max. 8388607)
+ 241 compressed objects within 3 object streams
+ 82 named destinations out of 1000 (max. 500000)
+ 145 words of extra memory for PDF output out of 10000 (max. 10000000)
 

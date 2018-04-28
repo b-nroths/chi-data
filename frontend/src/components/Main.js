@@ -9,13 +9,18 @@ import Data from "./Data";
 
 const Main = () =>
 	<Switch>
-		<Route path="/about" component={About} />
-		<Route path="/map" component={Map} />
-		{/*<Route path="/map/boundaries" component={MapBoundaries} />
-			<Route path="/map/tracts" component={MapTracts} />*/}
+		
+		
+		{/*
+			<Route path="/map" component={Map} />
+			<Route path="/map/boundaries" component={MapBoundaries} />
+			<Route path="/map/tracts" component={MapTracts} />
+			<Route path="/about" component={About} />
+			<Route path="/data" component={Data} />
+		*/}
 
-		<Route path="/data" component={Data} />
-		<Route path="/" component={Home} />
+		
+		<Route path="/" component={Map} />
 	</Switch>;
 
 export default Main;

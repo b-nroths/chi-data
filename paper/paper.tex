@@ -35,7 +35,7 @@
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
 
-\title{An Analysis of Growth and Connection in Chicago’s Neighborhoods using Eigenvector Centrality}
+\title{An Analysis of Neighborhood Attributes in Chicago using Eigenvector Centrality}
 
 \author{Benjamin Rothschild}
 
@@ -53,15 +53,26 @@ There have been many approaches to analyze job and neighborhood growth in cities
 
 \section{Literature Review}
 
-The first researcher to apply the mathematics of eigenvectors to geography was P.R. Gould.  In his paper On the Geographical Interpretation of Eigenvalues his goal was less motivated by a specific hypothesis but more of a curiosity to determine if this mathematical structure could uncover a pattern and order in very complex situations.\footnote{add citation}  His hope, which many computational social scientists share, was that underlying complex phenomena might be a mathematical idea that could provide a meaningful geographic interpretation.  To explore this idea, he maps out the road network of Uganda and creates a connectivity matrix of this network on a binary scale, 1 indicating if two cities are connected and 0 if they are not.  He calculated the first four eigenvectors of these matrices in 1921 and 1935 and compared the results.  He found the first eigenvalue, which is centered around the city of Kampala, was by far the most connected town owning to the number of direct linkages and its central location.  The city with the next highest value, Entebbe, was also very connected.  He then examines a new connectivity matrix of the cities in 1935 and describes how several structural characteristics have been strengthened as new cities are added to the network and also notes that the successive eigenvectors and eigenvalues are a “pull out” of small regional networks within the trading structure.  Gould makes an attempt, though vague, to describe the meaning of this calculation.  He says “vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend, in turn, to lie close to the principal eigenvalue.  Towns that are moderately well connected will not lie in the middle of so many dimensions as the well-connected towns and will tend to form small structural clusters on their own” .  This interpretation has been named the “Gould Index of Accessibility”.\\
+Network centrality measures have been studied as a way to study how networks are ordered, evolve, and interact.  Several measures of centrality have been studied in order to address a central question \textit{Who is the most important actor in a network}?  While there is no agreement on one measure of centrality, many have been proposed to to address how different networks are structured and what the researcher means by a node's \textit{importance}.  For example, "degree centrality" is a classic measure of centrality and counts how many connections a node has.  A node is more important if it has many neighbors and less important if it has fewer neighbors.  "Closeness centrality" measures the degree to which an individual is near all other individuals in the network and is the inverse of the sum of the shortest distances between each node and every other node in the network.  It has been used to study how long it would take to spread information from a point to all other nodes sequentially.  "Betweenness centrality" quantifies the number of times a node acts as a bridge along the shortest path between two nodes and has been used to quantify the control of information in a social network. \\
 
-Other researchers have since offered definitions of eigenvalues of the connectivity matrix in geographic and social networks.  Tinkler described these eigenvalues in the context of a social network.  If there is a social network of with a rumor teller at some vertex $i$ at time 0, as time progresses, the rumor will be spread throughout the network according to the connections between people in the social network.  The distribution of the rumor by time $t$ is the equilibrium distribution after a large number of time periods will also be given by Gould’s index.   In other words, after time progresses the eigenvector is the chance that the rumor has spread to a specific node in the network. \\
+In this paper I will focus on "Eigenvector centrality" which is a measure of influence of a node in a network and corresponds to the first eigenvector in the connectivity matrix of a network.  The first researcher to apply the mathematics of eigenvectors to geography was P.R. Gould.  In his paper, On the Geographical Interpretation of Eigenvalues, his goal was less motivated by a specific hypothesis but more of a curiosity to determine if this mathematical structure could uncover a pattern and order in very complex situations.\cite{gould1967geographical}  His hope, which many computational social scientists share, was that underlying complex phenomena might be a mathematical idea that could provide a meaningful geographic interpretation.  To explore this idea, he mapped the road network of Uganda and created a connectivity matrix of this network on a binary scale, 1 indicating if two cities were connected and 0 if they were not.  He calculated the first four eigenvectors of these matrices in 1921 and 1935 and compared the results between the two years.  He found the first eigenvalue, which is centered around the city of Kampala, was by far the most connected town owning to the number of direct linkages and its central location.  He noticed the city with the next highest value, Entebbe, was also very connected.  He then examines a new connectivity matrix of the cities in 1935 and describes how several structural characteristics have been strengthened as new cities are added to the network and routes between other cities were built.  He notes that the successive eigenvectors and eigenvalues are a “pull out” of small regional networks within the trading structure of the region.  Gould makes an initial attempt, though vague, to describe the meaning of his eigenvector derivation.  He explains that vectors representing well-connected towns will not only lie in the middle of a large number of dimensions but will tend, in turn, to lie close to the principal eigenvalue.  On the other hand, towns that are moderately well connected will not lie in the middle of so many dimensions as the well-connected towns and will tend to form small structural clusters on their own.  This interpretation has been named the “Gould Index of Accessibility”.\\
 
-Another interpretation of eigenvector centrality was given by J.W. Moon who described the eigenvalues in terms of an iterative round-robin competition between teams.  In his example, a player gets a ranking by beating another player, however if they beat a stronger player they will get a higher rating boost than if they beat a weaker player.  After the tournament has elapsed after a certain amount of turns the ranking of the player will be the same as Gould’s index.\footnote{add citation}\\
+In a social network represented by an adjacency matrix, Bonacich suggested that eigenvector centrality makes a good centrality measure\cite{bonacich2007some}.  Unlike degree centrality, which weighs every contact equally, eigenvector centrality takes into account the centrality of the neighboring node, so if a node is connected to a more important node it's eigenvector centrality will be higher than if it connected to a less important node.  Because of this, eigenvector centrality takes into account the entire pattern in the network.  Eigenvector centrality also has other benefits such as it can be used for signed graphs, adjacency graphs, or value based graphs.  This measure can also be applied to graphs with negatively connections though I will not explore those in this paper. \\
 
-Another interesting application of eigenvector centrality was developed by Sergey Brin and Lawrence Page in creating a web search engine which served as the basis of the first version of Google’s search engine.  They created a database of the hyperlink network of over 24 million pages and a PageRank algorithm to order results of a query.  Pages are arranged in a network based on their hyperlinks to other pages.  PageRank does not count all links equally though, but normalized the weighting by the number of links on the page.  The PageRank of a webpage was calculated using an iterative algorithm that corresponded to the principal eigenvector of the normalized link matrix of the web.  They give a few intuitive justifications why this ranking works.  One was imagining a “random surfer” who is given a web page at random and keeps clicking links.  The PageRank of a page is the probability the random surfer will land on a page.  Another interpretation was that a page will have a high PageRank if there are many pages that point to it, or if there are some pages that point to it and also have a high PageRank so it was a way to combine a ranking that measured reputation and ubiquity.\\
+The importance of centrality has been studied to explain a lot of phenomena in the social sciences and some results have given unique new insights.  For example, Cook et al. have shown that power does not equal centrality in exchange networks.  In negotiations, being in a central position (connected to the most number of people) does not mean an actor is the most powerful in bargaining situations.\cite{cook1983distribution}  Thus, typical centrality measures applied to this type of networks failed to predict power distributions in this type of network and thus display how for some measures their generality is limited.  Through theoretical and simulated results, they were able to show that in bargaining situations, it is advantageous to be connected to those who have few options.  One is more powerful if they are connected to those who are powerless because being connected to other powerful actors reduces ones bargaining power.  In situations where degree centrality fails, other social scientists have proposed other measures.  Two different principals of connection in social networks suggests that current measures of centrality might predict power in one type of network but not another and it offers a step towards a fusion of power-dependence theory and structural centrality in a way which might be general across networks of mboth tyupes\cite{bonacich1987power}
 
-Another important and related area of research is studying the secondary eigenvector in the network.  For example, in Gould’s analysis the second eigenvector was able to pick out significant geographic subsystems.  Often there remains further information about the network structure that subsequent eigenvectors can explain. For example, where the first eigenvector is likely to reflect volumes and strengths of connections among the actors, a second or third eigenvector can delineate those in separate groups within the network who behave in somewhat equivalent manners, or other elements of network structure that can be informative in understanding the actors and the patterns that link them. Iaocobucci et al demonstrate that the extraction of only the first eigenvector can be, and in even modest-sized networks insufficient for a more comprehensive understanding of the network.\footnote{cite this}  The example they give is from a communication network between researchers.  While the first eigenvector retrieves the principal structure of the social network it is often similar to common measures of centrality.  By extracting the second and third eigenvector several classes of network structures and actor attributes were clearly pulled out and interpreted.  This is because if the first eigenvector the second eigenvector by necessity will be uncorrelated with the previous eigenvectors and therefore uncorrelated with the traditional degree of centrality.  This lack of redundancy indicates the supplemental information that the eigenvector can bring to the network modeler.  In my analysis I will also try to explain the interpretation of the first and second eigenvectors.
+
+
+
+Other researchers have since attempted to derived and explain this phenomena across a number of fields and applications.  For example, Tinkler described these eigenvalues in the context of a rumor spreading through a social network.  He described a social network where people were connected through social ties (1 indicating two people know each other and 0 indicating they do not) and a rumor starting at some vertex $i$ at time 0.  As time progresses, the rumor will be spread throughout the network according to the connections between people in the social network.  If someone knows the rumor they tell it as many times as they heard it to all the people they are in direct contact with.  In his example, a person can also start an "anti-rumor" which is denoted by a negative value which can also propagate through the network.  As this process repeats after a large number of periods, the distribution of the rumor will also be given by the principal eigenvector.   In other words, after time progresses the eigenvector is the chance that the rumor has spread to a specific node in the network.\cite{tinkler1972physical} \\
+
+Another interpretation of eigenvector centrality was given by J.W. Moon who described the eigenvalues as the same as ranking players in terms of an iterative round-robin competition.  In his example, a tournament between n players is played and the win-lost outcomes create a square matrix with 1 if a player beat their opponent and 0 if they lost to their opponent.  A player gets a ranking by beating another player, however if they beat a stronger player they will get a higher rating boost than if they beat a weaker player.  As the round After the tournament has elapsed into an equilibrium where rankings are consistent, the player's rankings will correspond to the ranking of the principal eigenvector of the win-loss matrix.\cite{moon1970generalized}\\
+
+One last interesting application of eigenvector I will describe was implemented by Sergey Brin and Lawrence Page in creating a web search engine which served as the basis of the first version of Google’s search engine.  They created a database with the hyperlink network of over 24 million pages and a PageRank algorithm to order results of a query.  Pages are arranged in a network based on their hyperlinks to other pages.  PageRank does not count all links equally though, but normalized the weighting by the number of links on the page.  The PageRank of a webpage was calculated using an iterative algorithm that corresponded to the principal eigenvector of the normalized link matrix of the web.  They give a few intuitive justifications why this ranking works.  One was imagining a “random surfer” who is given a web page at random and keeps clicking links.  The PageRank of a page is the probability the random surfer will land on a page.  Another interpretation was that a page will have a high PageRank if there are many pages that point to it, or if there are some pages that point to it and also have a high PageRank so it was a way to combine a ranking that measured reputation and ubiquity.\cite{page1999pagerank}\\
+
+While there have been several explanations of eigenvector centrality in networks across many fields, it is often difficult to interpret the meaning of exactly what an eigenvector corresponds to in the real world.  For example, many of the examples explain how an eigenvector as a measurement of a flow or ranking in equilibrium.  However, what does a future equilibrium state say about the current state.  How long will it take to reach the equilibrium state?  What would happen if there is a shock to the network, how would this equilibrium change?  \\
+
+Another important and related area of research is studying the secondary eigenvector in the network.  For example, in Gould’s analysis, the second eigenvector was able to pick out significant geographic subsystems in the transportation network of Uganda.  Often there remains further information about the network structure that subsequent eigenvectors can explain. For example, while the first eigenvector reflects volumes and strengths of connections among the actors, a second or third eigenvector can delineate those in separate groups within the network who behave in somewhat equivalent manners, or other elements of network structure that can be informative in understanding the actors and the patterns that link them.  Iaocobucci et al demonstrate that the extraction of only the first eigenvector can be, and in even modest-sized networks insufficient for a more comprehensive understanding of the network.\cite{iacobucci2017eigenvector}  The example they give is from a communication network between researchers.  While the first eigenvector retrieves the principal structure of the social network it is often similar to common measures of centrality.  By extracting the second and third eigenvector several classes of network structures and actor attributes were clearly pulled out and interpreted.  This is because if the first eigenvector the second eigenvector by necessity will be uncorrelated with the previous eigenvectors and therefore uncorrelated with the traditional degree of centrality.  This lack of redundancy indicates the supplemental information that the eigenvector can bring to the network modeler.  Another example is given by Bonacich \cite{bonacich1972factoring} in analyzing cliques in a social network.  Consider a social network that is made up of many cliques where each clique has zero communalities between another clique and all individuals within the clique are connected to each other.  In this case each clique will be represented as an eigenvalue with the largest clique being the principal (largest eigenvalue) and the magnitude of the eigenvalue will be a measure of how well the eigenvector is at summarizing the relationships within the clique.  The eigenvector for each eigenvalue will be the popularity score of individuals within the clique.  In my analysis, I will also try to explain the interpretation of the first and second eigenvectors.
 
 \section{Data}
 The main dataset I am using in my analysis is the Longitudinal Employer-Household Dynamics Dataset (LEHD) that is published by the United States Census Bureau.  This is a synthetic dataset that joins firm employment data and census demographic data on the census block level and provides a fine-grained view of the connections between where people live and work.  This is an innovative way for a government to release data and has many benefits as it creates an interesting dataset at a low cost since it leverages existing datasets and there is no additional burden on respondents such filling out additional surveys.  The datasets that are used to produce the LEHD dataset include, Unemployment Insurance wage records, the Quarterly Census of Employment and Wages, and the Statistical Administrative Records System.  Some of the data sources that are used to produce the LEHD dataset are confidential and not themselves made public.  The current coverage of employment data is limited to jobs covered by the Unemployment Insurance Program which is approximately 95\% of jobs in the United States.  \\
@@ -88,7 +99,7 @@ Jobs are broken down among job categories, employee age brackets, and employee m
     \end{enumerate}
 \end{enumerate}
 
-The data is published every year from 2002 to 2015.\footnote{Data is available for almost all State-Year combinations except around 9 which the Census department notes there are data integrity issues.  Illinois was not noted on this list, so my study is unaffected by missing data.}  The data that is published shows the number of people who live and work between each census block in the United States.  Census blocks are currently the smallest geographic units used in the US Census Bureau statistics.  The number of census blocks in the 2010 Census was 11,155,486 with an average size of 1,500 people so the resultant dataset provides a very fine-grained view of the relationship between places of work and employment.  Since the data is so fine-grained the Census Bureau employs a few techniques to protect confidentiality of the users such as noise infusion and other synthetic methods using probabilistic differential privacy. \footnote{More information about noise infusion and confidentially protection can be found on the \fnurl{census website}{https://www2.census.gov/ces/wp/2014/CES-WP-14-30.pdf}}.\\
+The data is published every year from 2002 to 2015.\footnote{Data is available for almost all State-Year combinations except around 9 which the Census department notes there are data integrity issues.  Illinois was not noted on this list, so my study is unaffected by missing data.}  The data that is published shows the number of people who live and work between each census block in the United States.  Census blocks are currently the smallest geographic units used in the US Census Bureau statistics.  The number of census blocks in the 2010 Census was 11,155,486 with an average size of 1,500 people so the resultant dataset provides a very fine-grained view of the relationship between places of work and employment.  Since the data is highly specified, the Census Bureau employs a few techniques to protect confidentiality of citizens such as noise infusion and synthetic data creation using probabilistic differential privacy. \footnote{More information about noise infusion and confidentially protection can be found on the \fnurl{census website}{https://www2.census.gov/ces/wp/2014/CES-WP-14-30.pdf}}.\\
 
 In my analysis I focus on data within the Chicago Metropolitan Statistical Area and a summary of the employment data for the 2002 is below. \\
 \begin{center}
@@ -109,8 +120,7 @@ In my analysis I focus on data within the Chicago Metropolitan Statistical Area 
 \end{tabular}
 \end{center}
 
-The basis of my analysis is based off of the eigenvector centrality of the live-work commuting matrix between census tracts in Chicago.  Though the LEHD dataset provides census tract level statistics I found that interpretability improves at a slightly larger area so decided to use census blocks and neighborhoods of which there are 2,215 and 190 respectively in the Chicago metropolitan statistical area. To visualize the dataset, I first created a connectivity graph between all census tracts with more than 25 people commuting between them shown below.\\
-
+Much of my analysis is based off of the eigenvector centrality of the live-work commuting matrix between census tracts in Chicago broken down by different job and demographic characteristics.  Though the LEHD dataset provides census tract level statistics I found that interpretability improves at a slightly larger area so decided to use census blocks and neighborhoods of which there are 2,215 and 190 respectively in the Chicago metropolitan statistical area.  To visualize the dataset, I first created a connectivity graph between all census tracts with more than 25 people commuting between them shown below.\\
 
 \begin{figure}[H]
     \centering
@@ -126,10 +136,17 @@ The basis of my analysis is based off of the eigenvector centrality of the live-
     \label{fig:arc-2}
 \end{figure} \\
 
-I use data from Zillow to measure housing values.  Zillow produces data at the neighborhood level for a number of statistics.  The datasets I look at are produced monthly from .  I look at two measures \% of houses increasing in value and median home value per square foot.\\
+In order to correlate the LEHD calculated centrality measures to other datasets I use the following considerations.  When comparing eigenvector centrality to home values, I calculate centrality on the neighborhood level as this is the most fine-grained data level that is available through Zillow.  When comparing centrality with data that is only available from the City of Chicago such as Business Licenses and Crime, I calculate centrality on the census block level for the entire Chicago MSA which includes many tracts outside of the City of Chicago Boundary and counties in Wisconsin and Indiana but restrict my analysis to census blocks within the City of Chicago boundary.
 
-I use the building permits and building licenses dataset published by the City of Chicago Department of Buildings in order to measure investments in business properties in the city.  This dataset is available from 2006 to the present.  Along with each permit application are the following fields Permit type, Date, Estimated Cost, Street Address, Work Description.  A visualization of the dataset for data in 2005 is below. TODO
-
+Real estate listing data is provided by Zillow, an online real estate database company that tracks detailed listing data of home sales throughout the US starting in 1994.  They publish data of home sales for the top 50 markets on the neighborhood level.  In my paper I use the following statistics they publish:
+\begin{enumerate}
+\item Median List Price Per Square Foot (\$)
+\item Monthly Home Sales (Number, Seasonably Adjusted)
+\item Age of Inventory (Days)
+\item Median Rent List Price (\$), 1-Bedroom
+\end{enumerate}
+Since I am comparing real estate prices to neighborhood rankings, I make the following adjustments to be able to compare the data.  First I normalize each neighborhood to it's initial value to get an index of the statistic over time.  Next I divide by the median value for all neighborhoods in Chicago for the given time period.  The result is a statistic that shows how the neighborhood compares to other neighborhoods in Chicago over time.  If the value is less than 1, then it is below average whereas if it is greater than 1 it is above average. \\
+For a complete overview of how data was collected, cleaned, visualized, and calculated, I provide the scripts and programs I used on github at \url{https://github.com/b-nroths/chi-data}. 
 
 \section{Methods}
 In order to find the employment centers of a city I will use a setup based on eigenvector centrality that has been used in studying networks such as trade routes, social networks, and webpages.  The goal of the method is to take a network of linked entities and to output the most influential nodes in the network graph.  The definition of influential varies depending on the context of how the problem is set up and what the nodes and edges represent.  For example, in a social network, the most important node is the person who is connected to the most important people or in the “center”.  In a network of cities that trade with each other, the edges might represent the distance between cities.  The edges can either represent a connection, in which case the matrix is called an adjacency matrix and is filled with 1 and 0’s depending on if two nodes are connected to each other or the matrix could represent the strength of connection between two nodes, for example in the trading routes example it could be the distance between two cities.  In this case it is common to normalize the distances to the sum of each column is equal to one. \\
@@ -147,13 +164,12 @@ Let $C$ $\in$ $\mathbb{R}^{nxn}$ represent a nonnegative primitive matrix (i.e. 
 \end{enumerate}
 
 \end{theorem}
-TODO: proof?
 
 \begin{theorem}
 A column stochastic matrix will always has an eigenvalue 1. All other eigenvalues are in absolute
 value smaller or equal to 1.
 \end{theorem}
-TODO: proof?
+
 \\ 
 
 To illustrate the network I will explore in my paper, consider a simplified example of a city of 110 people, 100 of whom live Downtown and 10 of whom live in Hyde Park.  Of the 100 people who live downtown, 90 works downtown and 10 works in Hyde Park while of the 10 people, 5 work downtown and 5 work in Hyde Park.  This network can be represented by the following matrices. 
@@ -164,7 +180,6 @@ To illustrate the network I will explore in my paper, consider a simplified exam
   \begin{bmatrix}
     hyde park->hyde park  & hyde park->downtown\\
     downtown->hyde park  & downtown->downtown
-    
   \end{bmatrix} = 
   \begin{bmatrix}
     5 & 10\\
@@ -279,31 +294,67 @@ Eigenvalue and Eigenvector for (5) \\
  \hline
  & $\lambda_1$ = 1.0 & $\lambda_2$ = 0.28\\[0.5ex] 
  \hline\hline
- $Downtown$ & 0.99689815 & 0.07870249 \\
- $Hyde Park$ & 0.70710678 & -0.70710678  \\ 
+ $Downtown$ & 0.99689815 & 0.70710678\\
+ $Hyde Park$ & 0.07870249 & -0.70710678  \\ 
  \hline
  \end{tabular} \\ 
+ 
 Eigenvalue and Eigenvector for (6) \\
 \begin{tabular}{||c | c c ||} 
  \hline
  & $\lambda_1$ = 1.0 & $\lambda_2$ = 0.4\\[0.5ex] 
  \hline\hline
- $Downtown$ & 0.98058068 & 0.19611614 \\
- $Hyde Park$ & 0.70710678 & -0.70710678  \\ 
+ $Downtown$ & 0.98058068 & 0.70710678 \\
+ $Hyde Park$ & 0.19611614 & -0.70710678  \\ 
  \hline
  \end{tabular} \\ 
+ 
 Eigenvalue and Eigenvector for (7) \\
 \begin{tabular}{||c | c c ||} 
  \hline
  & $\lambda_1$ = 1.0 & $\lambda_2$ = 0.33\\[0.5ex] 
  \hline\hline
- $Downtown$ & 0.98869689 & 0.14992818 \\
- $Hyde Park$ & 0.70710678 & -0.70710678  \\ 
+ $Downtown$ & 0.98869689 & 0.70710678 \\
+ $Hyde Park$ & 0.14992818 & -0.70710678  \\ 
  \hline
  \end{tabular}
  \end{center}
 
-These results will demonstrate a few things.  First note that the principle eigenvalue is 1.0 as expected from the theorem above.  The vector that corresponds to the principle eigenvalue is the Gould Index of Accessibility in the network and represents the relative strength of each node in the principle network.  In the three examples above you can see that the Downtown area dominates this vector.  The second eigenvalue represents a "pull out" of the principle network.  It is important to remember that the second eigenvector will be orthogonal to the principle eigenvector and represents a completely different sub-network.  In the system in equation 5 and 7 the second eigenvalue is lower which indicates the dominance of the first eigenvalue compared to the network examined in the 6 equation.  These results have a similar interpretation to the previous example where the principle eigenvector show the most dominant network of living regions.  The eigenvector that corresponds to the principle eigenvalue are the relative ranking of regions in this setting.  Next I will use this same set up to analyze the neighborhoods of Chicago using the LEHD dataset.
+These results will demonstrate a few things.  First, note that the principle eigenvalue is 1.0 as expected from the theorem above.  The vector that corresponds to the principle eigenvalue is the Gould Index of Accessibility in the network and represents the relative strength of each node in the principle network.  In the three examples above you can see that the Downtown area dominates this vector.  The second eigenvalue represents a "pull out" of the principle network.  It is important to remember that the second eigenvector will be orthogonal to the principle eigenvector and represents a completely different sub-network.  In the system in equation 5 and 7 the second eigenvalue is lower which indicates the dominance of the first eigenvalue compared to the network examined in the 6 equation.  These results have a similar interpretation to the previous example where the principle eigenvector show the most dominant network of living regions.  The eigenvector that corresponds to the principle eigenvalue are the relative ranking of regions in this setting.  \\
+
+Also, consider a more balanced commuting flow with it's corresponding eigenvalues.
+
+\begin{center}C $l$ = $w$\end{center}
+\begin{equation} 
+  \begin{bmatrix}
+    0.60 & 0.55\\
+    0.40 & 0.45
+  \end{bmatrix}
+  \begin{bmatrix}
+    50\\
+    50
+  \end{bmatrix}
+  = 
+  \begin{bmatrix}
+    57.5\\
+    42.5
+  \end{bmatrix}
+\end{equation}
+
+\begin{center} 
+Eigenvalue and Eigenvector for (8) \\
+\begin{tabular}{||c | c c ||} 
+ \hline
+ & $\lambda_1$ = 1.0 & $\lambda_2$ = 0.05\\[0.5ex] 
+ \hline\hline
+ $Downtown$ & 0.8087 & 0.70710678 \\
+ $Hyde Park$ & 0.5882 & -0.70710678  \\ 
+ \hline
+ \end{tabular}
+ \end{center}
+
+Here not only is the primary eigenvector more equal across neighborhoods with values of $0.8087$ and $0.5882$, the value of the second eigenvalue is also very small compared to the first $\lambda_2$ = 0.05.  This means that the majority of the network is explained by it's primary eigenvalue. \\
+ Next I will use this same set up to analyze the neighborhoods of Chicago using the LEHD dataset.
 
 \section{Results}
 \subsection{Centrality for Employment}
@@ -408,34 +459,35 @@ Lastly I will look at the centrality importance of jobs at different income leve
     \label{fig:Jobs-S000-2008}
 \end{figure}
 
-Note:  It is interesting that these three maps look very similar however I'm not sure that this is the best way to analyze the data.  It might be better to compare the values for the eigenvector in a neighborhood between the three income bracket?  For example, is a neighborhood more prominent for high income jobs vs low income jobs?  Look into this more...
-
 Above I used the theory of eigenvector centrality to rank the most important neighborhoods of employment for neighborhoods in Chicago.  This perspective gives us a rich view of the composition of a neighborhood as well as how it changes over time in comparision to other neighborhoods in the city.
 
 \subsection{Centrality for Housing}
 Similar to how we calculated centrality for employment we can use the same setup to calculate the centrality for housing, answering the question \textit{What neighborhoods are the most important for housing?}.  We can also break down the neighborhoods by most important for High/Middle/and Low income earners based off of the LEHD Dataset.  The top neighborhoods 10 neighborhoods based on their centrality from 2002 are listed below. \\
+
+\begin{table}[h]\centering
+\caption{Top Neighborhoods}\label{thelabel}
 
 \begin{adjustbox}{center}
 \begin{tabular}{||c | c c c c c c c c c c c c c | c ||} 
  \hline
  & 2002 & 2003 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & | \%\\[0.5ex] 
  \hline\hline
-Logan Square      & 0.303 & 0.307 & 0.296 & 0.287 & 0.207 & 0.296 & 0.201 & 0.313 & 0.316 & 0.323 & 0.333 & 0.340 & 0.322 & +6.27\% \\
-Englewood         & 0.247 & 0.244 & 0.236 & 0.239 & 0.258 & 0.223 & 0.252 & 0.197 & 0.185 & 0.178 & 0.172 & 0.177 & 0.179 & -27.6\% \\
-Gresham           & 0.238 & 0.239 & 0.233 & 0.231 & 0.245 & 0.242 & 0.254 & 0.202 & 0.205 & 0.213 & 0.193 & 0.201 & 0.215 & -10.7\% \\
-West Rogers Park  & 0.220 & 0.221 & 0.224 & 0.230 & 0.201 & 0.221 & 0.209 & 0.246 & 0.260 & 0.261 & 0.254 & 0.245 & 0.239 & +8.63\% \\
-Little Village    & 0.208 & 0.200 & 0.196 & 0.193 & 0.201 & 0.176 & 0.201 & 0.178 & 0.171 & 0.183 & 0.187 & 0.197 & 0.188 & -9.70\% \\
-Albany Park       & 0.189 & 0.195 & 0.179 & 0.172 & 0.144 & 0.181 & 0.133 & 0.186 & 0.198 & 0.201 & 0.193 & 0.183 & 0.179 & -5.30\% \\
-Portage Park      & 0.188 & 0.185 & 0.181 & 0.182 & 0.214 & 0.191 & 0.220 & 0.201 & 0.203 & 0.190 & 0.198 & 0.188 & 0.189 & +0.50\% \\
-Archer Heights    & 0.181 & 0.178 & 0.186 & 0.182 & 0.187 & 0.173 & 0.185 & 0.198 & 0.173 & 0.175 & 0.184 & 0.186 & 0.188 & +3.86\% \\
-Brighton Park     & 0.165 & 0.170 & 0.167 & 0.166 & 0.141 & 0.157 & 0.135 & 0.151 & 0.149 & 0.148 & 0.159 & 0.165 & 0.162 & -1.90\% \\
-Back of the Yards & 0.159 & 0.153 & 0.165 & 0.166 & 0.152 & 0.156 & 0.150 & 0.159 & 0.140 & 0.144 & 0.149 & 0.149 & 0.148 & +7.00\% \\
- \hline
+Logan Square     & 0.303 & 0.307 & 0.296 & 0.287 & 0.207 & 0.296 & 0.201 & 0.313 & 0.316 & 0.323 & 0.333 & 0.340 & 0.322 & 6.271\% \\
+West Rogers Park & 0.220 & 0.221 & 0.224 & 0.230 & 0.201 & 0.221 & 0.209 & 0.246 & 0.260 & 0.261 & 0.254 & 0.245 & 0.239 & 8.636\% \\
+Gresham          & 0.238 & 0.239 & 0.233 & 0.231 & 0.245 & 0.242 & 0.254 & 0.202 & 0.205 & 0.213 & 0.193 & 0.201 & 0.215 & -9.664\% \\
+Portage Park     & 0.188 & 0.185 & 0.181 & 0.182 & 0.214 & 0.191 & 0.220 & 0.201 & 0.203 & 0.190 & 0.198 & 0.188 & 0.189 & 0.532\% \\
+Archer Heights   & 0.181 & 0.178 & 0.186 & 0.182 & 0.187 & 0.173 & 0.185 & 0.198 & 0.173 & 0.175 & 0.184 & 0.186 & 0.188 & 3.867\% \\
+Little Village   & 0.208 & 0.200 & 0.196 & 0.193 & 0.201 & 0.176 & 0.201 & 0.178 & 0.171 & 0.183 & 0.187 & 0.197 & 0.188 & -9.615\% \\
+Albany Park      & 0.189 & 0.195 & 0.179 & 0.172 & 0.144 & 0.181 & 0.133 & 0.186 & 0.198 & 0.201 & 0.193 & 0.183 & 0.179 & -5.291\% \\
+Englewood        & 0.247 & 0.244 & 0.236 & 0.239 & 0.258 & 0.223 & 0.252 & 0.197 & 0.185 & 0.178 & 0.172 & 0.177 & 0.179 & -27.530\% \\
+Bridgeport       & 0.139 & 0.147 & 0.146 & 0.157 & 0.171 & 0.165 & 0.181 & 0.189 & 0.171 & 0.176 & 0.175 & 0.171 & 0.174 & 25.180\% \\
+Rogers Park      & 0.154 & 0.151 & 0.150 & 0.159 & 0.133 & 0.155 & 0.127 & 0.158 & 0.172 & 0.175 & 0.177 & 0.175 & 0.174 & 12.987\% \\ \hline
  \end{tabular}
 \end{adjustbox}
+\end{table}
 \\
 
-Some things to notice right away are that the rankings are much more stable than they were for the employment dataset, most neighborhoods only increasing or decreasing in the single digits over the 14 year timespan.  Also, the distributions of the rankings are a lot more even across neighborhoods compared to the employment dataset which was dominated by The Loop neighborhood. 
+Some things to notice right away are that the rankings are much more stable than they were for the employment dataset as most neighborhoods only increasing or decreasing in the single digits over the 14 year timespan.  Also, the distributions of the rankings are a lot more even across neighborhoods compared to the employment dataset which was dominated by The Loop neighborhood. \\
 
 \begin{figure}[H]
     \centering
@@ -444,22 +496,111 @@ Some things to notice right away are that the rankings are much more stable than
     \label{fig:Houses-S000-2015}
 \end{figure}
 
-\subsection{Centrality for Money Flow}
-I am currently working on the computation for this section.  The idea is outlined in the methods section where I will calculate neighborhood importance based off of the money that flow between neighborhoods (this is based on salary * number of workers).  I will also add outside data from construction permits etc to help with this analysis.
+After the centrality measurements are created we can start to ask interesting questions such as how neighborhoods are changing overtime in comparison to each other.  The main dimensions I will look at are how the age and income are affecting neighborhoods in Chicago.  Below are tables of the top 10 neighborhoods by centrality ranking for Young/Old workers and Low-Income/High Income workers.\\
+
+\begin{table}[h]\centering
+\caption{Top Neighborhoods for Young Workers (Age < 29)}\label{thelabel}
+\begin{adjustbox}{center}
+\begin{tabular}{||c | c c c c c c c c c c c c c c | c ||} 
+ \hline
+ & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & | \%\\[0.5ex] 
+ \hline\hline
+Logan Square     & 0.355 & 0.364 & 0.341 & 0.353 & 0.338 & 0.262 & 0.368 & 0.235 & 0.388 & 0.385 & 0.398 & 0.408 & 0.391 & 0.385 & +8.451\% \\
+Little Village   & 0.248 & 0.247 & 0.244 & 0.253 & 0.234 & 0.235 & 0.200 & 0.228 & 0.207 & 0.202 & 0.224 & 0.224 & 0.230 & 0.217 & -12.500\% \\
+Gresham          & 0.194 & 0.201 & 0.215 & 0.197 & 0.190 & 0.209 & 0.219 & 0.227 & 0.164 & 0.173 & 0.174 & 0.158 & 0.187 & 0.209 & +7.732\% \\
+Englewood        & 0.244 & 0.257 & 0.253 & 0.239 & 0.234 & 0.262 & 0.226 & 0.254 & 0.183 & 0.157 & 0.165 & 0.162 & 0.175 & 0.205 & -15.984\% \\
+Archer Heights   & 0.197 & 0.184 & 0.191 & 0.199 & 0.191 & 0.198 & 0.174 & 0.205 & 0.209 & 0.166 & 0.186 & 0.195 & 0.198 & 0.189 & -4.061\% \\
+Lake View        & 0.155 & 0.171 & 0.191 & 0.185 & 0.212 & 0.186 & 0.214 & 0.156 & 0.240 & 0.215 & 0.208 & 0.191 & 0.177 & 0.187 & +20.645\% \\
+Brighton Park    & 0.187 & 0.189 & 0.182 & 0.186 & 0.189 & 0.145 & 0.158 & 0.145 & 0.156 & 0.164 & 0.159 & 0.183 & 0.170 & 0.179 & -4.278\% \\
+West Rogers Park & 0.169 & 0.165 & 0.168 & 0.176 & 0.169 & 0.169 & 0.178 & 0.185 & 0.192 & 0.206 & 0.208 & 0.191 & 0.175 & 0.178 & +5.325\% \\
+Rogers Park      & 0.142 & 0.139 & 0.140 & 0.144 & 0.153 & 0.126 & 0.145 & 0.135 & 0.154 & 0.166 & 0.154 & 0.154 & 0.158 & 0.174 & +22.535\% \\
+Marquette Park   & 0.140 & 0.144 & 0.150 & 0.176 & 0.180 & 0.164 & 0.151 & 0.160 & 0.131 & 0.132 & 0.135 & 0.124 & 0.142 & 0.167 & +19.286\% \\
+Gage Park        & 0.155 & 0.162 & 0.160 & 0.142 & 0.150 & 0.153 & 0.141 & 0.144 & 0.155 & 0.142 & 0.137 & 0.174 & 0.166 & 0.166 & +7.097\% \\
+ \hline
+ \end{tabular}
+
+\end{adjustbox}
+ \end{table}
+ 
+\begin{table}[h]\centering
+\caption{Top Neighborhoods for Old Workers (Age over 55)}\label{thelabel}
+\begin{adjustbox}{center}
+\begin{tabular}{||c | c c c c c c c c c c c c c c | c ||} 
+ \hline
+ & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & | \%\\[0.5ex] 
+ \hline\hline
+West Rogers Park & 0.229 & 0.248 & 0.234 & 0.220 & 0.225 & 0.186 & 0.247 & 0.183 & 0.273 & 0.293 & 0.301 & 0.302 & 0.273 & 0.281 & +22.707\% \\
+Logan Square     & 0.231 & 0.224 & 0.223 & 0.201 & 0.211 & 0.129 & 0.196 & 0.167 & 0.234 & 0.225 & 0.240 & 0.246 & 0.265 & 0.239 & +3.463\% \\
+Portage Park     & 0.183 & 0.202 & 0.213 & 0.204 & 0.189 & 0.220 & 0.219 & 0.239 & 0.216 & 0.240 & 0.225 & 0.215 & 0.242 & 0.235 & +28.415\% \\
+Gresham          & 0.314 & 0.292 & 0.319 & 0.312 & 0.301 & 0.280 & 0.261 & 0.283 & 0.238 & 0.238 & 0.221 & 0.220 & 0.228 & 0.229 & -27.070\% \\
+Jefferson Park   & 0.193 & 0.200 & 0.185 & 0.194 & 0.184 & 0.189 & 0.225 & 0.194 & 0.231 & 0.208 & 0.204 & 0.214 & 0.235 & 0.208 & +7.772\% \\
+Bridgeport       & 0.119 & 0.139 & 0.148 & 0.134 & 0.151 & 0.189 & 0.170 & 0.190 & 0.200 & 0.185 & 0.191 & 0.209 & 0.197 & 0.194 & +63.025\% \\
+Albany Park      & 0.155 & 0.164 & 0.159 & 0.164 & 0.150 & 0.118 & 0.176 & 0.121 & 0.174 & 0.179 & 0.192 & 0.182 & 0.175 & 0.186 & +20.000\% \\
+Archer Heights   & 0.159 & 0.156 & 0.155 & 0.181 & 0.173 & 0.178 & 0.168 & 0.167 & 0.194 & 0.160 & 0.163 & 0.172 & 0.158 & 0.168 & +5.660\% \\
+Little Village   & 0.150 & 0.154 & 0.164 & 0.162 & 0.169 & 0.181 & 0.150 & 0.196 & 0.155 & 0.145 & 0.167 & 0.163 & 0.171 & 0.161 & +7.333\% \\
+West Pullman     & 0.185 & 0.205 & 0.189 & 0.177 & 0.241 & 0.172 & 0.175 & 0.179 & 0.164 & 0.153 & 0.142 & 0.138 & 0.142 & 0.161 & -12.973\% \\
+ \hline
+ \end{tabular}
+
+\end{adjustbox}
+\end{table}
+
+\begin{table}[h]\centering
+\caption{Top Neighborhoods for Low Income Earners}\label{thelabel}
+\begin{adjustbox}{center}
+\begin{tabular}{||c | c c c c c c c c c c c c c c | c ||} 
+ \hline
+ & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & | \%\\[0.5ex] 
+ \hline\hline
+Gresham           & 0.254 & 0.259 & 0.000 & 0.256 & 0.263 & 0.247 & 0.278 & 0.287 & 0.237 & 0.234 & 0.240 & 0.220 & 0.255 & 0.280 & +10.236\% \\
+Englewood         & 0.310 & 0.296 & 0.000 & 0.290 & 0.314 & 0.325 & 0.292 & 0.299 & 0.245 & 0.223 & 0.227 & 0.222 & 0.257 & 0.271 & -12.581\% \\
+Logan Square      & 0.272 & 0.283 & 0.000 & 0.262 & 0.247 & 0.183 & 0.255 & 0.194 & 0.293 & 0.286 & 0.284 & 0.304 & 0.280 & 0.246 & -9.559\% \\
+West Rogers Park  & 0.201 & 0.224 & 0.000 & 0.232 & 0.222 & 0.190 & 0.220 & 0.195 & 0.249 & 0.272 & 0.240 & 0.248 & 0.220 & 0.218 & +8.458\% \\
+Archer Heights    & 0.189 & 0.204 & 0.000 & 0.195 & 0.182 & 0.191 & 0.187 & 0.181 & 0.198 & 0.190 & 0.192 & 0.207 & 0.204 & 0.211 & +11.640\% \\
+Bridgeport        & 0.158 & 0.185 & 0.000 & 0.182 & 0.195 & 0.196 & 0.191 & 0.206 & 0.217 & 0.196 & 0.207 & 0.197 & 0.186 & 0.190 & +20.253\% \\
+Little Village    & 0.212 & 0.208 & 0.000 & 0.199 & 0.200 & 0.201 & 0.180 & 0.184 & 0.172 & 0.164 & 0.192 & 0.206 & 0.199 & 0.183 & -13.679\% \\
+West Pullman      & 0.196 & 0.180 & 0.000 & 0.153 & 0.174 & 0.142 & 0.170 & 0.171 & 0.172 & 0.137 & 0.173 & 0.151 & 0.173 & 0.177 & -9.694\% \\
+South Shore       & 0.172 & 0.153 & 0.000 & 0.166 & 0.174 & 0.184 & 0.190 & 0.203 & 0.144 & 0.161 & 0.155 & 0.152 & 0.158 & 0.176 & +2.326\% \\
+Back of the Yards & 0.183 & 0.172 & 0.000 & 0.185 & 0.188 & 0.164 & 0.182 & 0.164 & 0.194 & 0.171 & 0.169 & 0.171 & 0.166 & 0.172 & -6.011\% \\
+ \hline
+ \end{tabular}
+\end{adjustbox}
+\end{table}
+
+
+\begin{table}[h]\centering
+\caption{Top Neighborhoods for High Income Earners}\label{thelabel}
+\begin{adjustbox}{center}
+\begin{tabular}{||c | c c c c c c c c c c c c c c | c ||} 
+ \hline
+ & 2002 & 2003 & 2004 & 2005 & 2006 & 2007 & 2008 & 2009 & 2010 & 2011 & 2012 & 2013 & 2014 & 2015 & | \%\\[0.5ex] 
+ \hline\hline
+Logan Square     & 0.235 & 0.261 & 0.249 & 0.240 & 0.262 & 0.198 & 0.282 & 0.221 & 0.295 & 0.305 & 0.300 & 0.331 & 0.350 & 0.335 & +42.553\% \\
+Lake View        & 0.331 & 0.342 & 0.307 & 0.332 & 0.331 & 0.263 & 0.319 & 0.289 & 0.345 & 0.323 & 0.359 & 0.330 & 0.312 & 0.321 & -3.021\% \\
+West Rogers Park & 0.291 & 0.273 & 0.293 & 0.272 & 0.290 & 0.262 & 0.268 & 0.302 & 0.284 & 0.281 & 0.270 & 0.265 & 0.266 & 0.264 & -9.278\% \\
+Lake View East   & 0.241 & 0.257 & 0.243 & 0.278 & 0.279 & 0.202 & 0.262 & 0.185 & 0.233 & 0.239 & 0.241 & 0.237 & 0.242 & 0.243 & +0.830\% \\
+Jefferson Park   & 0.248 & 0.257 & 0.267 & 0.246 & 0.235 & 0.251 & 0.259 & 0.237 & 0.207 & 0.214 & 0.228 & 0.237 & 0.247 & 0.226 & -8.871\% \\
+Portage Park     & 0.239 & 0.216 & 0.203 & 0.196 & 0.195 & 0.226 & 0.194 & 0.212 & 0.186 & 0.190 & 0.189 & 0.191 & 0.183 & 0.202 & -15.481\% \\
+Albany Park      & 0.159 & 0.161 & 0.166 & 0.171 & 0.164 & 0.159 & 0.186 & 0.138 & 0.178 & 0.204 & 0.205 & 0.204 & 0.190 & 0.191 & +20.126\% \\
+Rogers Park      & 0.166 & 0.174 & 0.167 & 0.180 & 0.186 & 0.165 & 0.181 & 0.157 & 0.191 & 0.190 & 0.191 & 0.188 & 0.175 & 0.187 & +12.651\% \\
+Ravenswood       & 0.169 & 0.171 & 0.164 & 0.157 & 0.166 & 0.145 & 0.175 & 0.150 & 0.187 & 0.190 & 0.174 & 0.170 & 0.172 & 0.187 & +10.651\% \\
+South Loop       & 0.107 & 0.104 & 0.117 & 0.159 & 0.168 & 0.191 & 0.123 & 0.180 & 0.158 & 0.173 & 0.169 & 0.175 & 0.166 & 0.178 & +66.355\% \\
+ \hline
+ \end{tabular}
+\end{adjustbox}
+\end{table}
+
+Above we can notice a few interesting facts, for example, some neighborhoods becoming a lot more influential for young workers such as Lake View, Rogers Park, and Marquette Park while others becoming more influential for older workers such as West Rogers Park, Portage Park, Bridgeport, and Albany Park. \\
+
+There has also have been some larger shifts in where low income workers are moving such as moving into Gresham and Bridgeport whereas High Income earners have been flocking to Logan Square, Albany Park, and especially the South Loop whose importance has risen 66\% since 2002.
+\subsection{To Do: Centrality for Money Flow}
+I am currently working on the computation for this section.  The idea is outlined in the methods section where I will calculate neighborhood importance based off of the money that flow between neighborhoods (this is based on salary * number of workers).  I will also add outside data from construction permits etc to help with this analysis.\cite{gould1967geographical}
 \section{Conclusion}
-\section{Citations}
-\section{To Do}
-\begin{enumerate}
-\item Section 5.3 (+3 pages)
-\item Abstract (+.5 page)
-\item Conclusion (+.5 page)
-\item Citations in LaTeX (+1 page)
-\item Clean out unreferenced/other data on website
-\item add final jupyter notebooks to github
-\item more on computation \& data processing process? (+.5 page)
-\item describe zillow data (+.75 page)
-\item describe building data (+.75 page)
-\end{enumerate}
+In this paper I presented a novel application of eigenvector centrality to dataset of Chicago's neighborhoods.  After exploring the data through visualizations, I derived the math necessary for this application and outlined three examples where eigenvector centrality can help explore attributes of Chicago neighborhoods.  First, I looked at how jobs were distributed across the city.  In this analysis I found how employment was centralized in the Loop.  While jobs in some industries such as Goods Producing are also located a west of downtown, The Loop neighborhood ranked at .95 while the next closest neighborhood ranked .17.  Even low-income jobs were concentrated in The Loop which was surprising.  While The Loop was a mixing pot of employment across industries, incomes, and ages, Housing centrality was much more segregated and dispersed throughout the city.  For example, I found that 
+\bibliographystyle{unsrt}
+\bibliography{reference}
+
+
 
 \end{document}
 
