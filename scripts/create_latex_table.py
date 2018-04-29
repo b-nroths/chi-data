@@ -1,5 +1,16 @@
 import requests as r
+import sys, os, json
+sys.path.append('/Users/benjamin/Desktop/repos/chi-data/backend') 
+sys.path.append('/Users/benjamin/Desktop/repos/chi-data/backend/aws') 
+from s3 import S3
+from dynamo import DynamoConn
 
+# dataset = 'final-jobs-eigs-chicago-S000'
+# d = DynamoConn()
+# res = json.loads(d.get(dataset)['table'])
+# for row in sorted(res):
+# 	print row, res[row][1]['value']
+# exit(0)
 top_ten = ['The Loop',
 	'Streeterville',
 	'O\'Hare International Airport',
@@ -42,11 +53,12 @@ top_ten = [
 # old age
 
 datasets = [
-	'final-homes-eigs-chicago-S000'
+	# 'final-jobs-eigs-chicago-S000',
+	# 'final-homes-eigs-chicago-S000'
 	# 'final-homes-eigs-chicago-SA01',
 	# 'final-homes-eigs-chicago-SA03',
-	# 'final-homes-eigs-chicago-SE01',
-	# 'final-homes-eigs-chicago-SE03',
+	'final-homes-eigs-chicago-SE01',
+	'final-homes-eigs-chicago-SE03',
 	# 'final-jobs-eigs-chicago-SE01',
 	# 'final-jobs-eigs-chicago-SE02',
 	# 'final-jobs-eigs-chicago-SE03',
@@ -90,7 +102,8 @@ for dataset in datasets:
 			# 
 			datas.append(round(0.001*num, 3))
 		datas.append(100.0 * (1.0*datas[-1]/datas[0] - 1))
-		fdatas = [("%0.3f" % a) for a in datas]
+		fdatas = [("%.3f" % a) for a in datas[:len(datas) - 1]]
+		fdatas.append("%.2f" % datas[-1])
 		line += " & ".join(fdatas)
-		line += "\n"
-	print line + "\\\\ \n"
+		line += "\% \\\\ \n"
+	print line.replace("0.", ".").replace(" International Airport", "") + "\\\\ \n"

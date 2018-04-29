@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  28 APR 2018 18:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  28 APR 2018 22:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1128,6 +1128,9 @@ LaTeX Warning: Label `thelabel' multiply defined.
 
 LaTeX Warning: Label `thelabel' multiply defined.
 
+
+LaTeX Warning: Label `thelabel' multiply defined.
+
 )
 \openout1 = `paper.aux'.
 
@@ -1174,11 +1177,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-
-Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
-ick labels; missing features). Consider writing \pgfplotsset{compat=1.13} into 
-your preamble.
- on input line 43.
+Package pgfplots notification 'compat/show suggested version=true': you might b
+enefit from \pgfplotsset{compat=1.13} (current compat level: 1.12).
 
 \AtBeginShipoutBox=\box45
 Package hyperref Info: Link coloring OFF on input line 43.
@@ -1279,13 +1279,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 125--126
 
  []
 
-<images/arc-1.png, id=109, 216.3282pt x 193.6836pt>
+<images/arc-1.png, id=113, 216.3282pt x 193.6836pt>
 File: images/arc-1.png Graphic file (type png)
  <use images/arc-1.png>
 Package pdftex.def Info: images/arc-1.png used on input line 129.
 (pdftex.def)             Requested size: 241.49895pt x 216.23257pt.
 
-[6] <images/arc-2.png, id=119, 216.3282pt x 193.6836pt>
+[6] <images/arc-2.png, id=123, 216.3282pt x 193.6836pt>
 File: images/arc-2.png Graphic file (type png)
  <use images/arc-2.png>
 Package pdftex.def Info: images/arc-2.png used on input line 136.
@@ -1369,127 +1369,145 @@ Underfull \hbox (badness 10000) in paragraph at lines 364--365
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 384--386
 
- []
+./paper.tex:387: LaTeX Error: There's no line here to end.
 
-<images/Jobs-S000-2002.png, id=170, 536.0025pt x 644.4075pt>
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.387 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+<images/Jobs-S000-2002.png, id=174, 536.0025pt x 644.4075pt>
 File: images/Jobs-S000-2002.png Graphic file (type png)
 
 <use images/Jobs-S000-2002.png>
-Package pdftex.def Info: images/Jobs-S000-2002.png used on input line 389.
+Package pdftex.def Info: images/Jobs-S000-2002.png used on input line 390.
 (pdftex.def)             Requested size: 106.94916pt x 128.57439pt.
 
-<images/Jobs-S000-2008.png, id=171, 538.01pt x 646.415pt>
+<images/Jobs-S000-2008.png, id=175, 538.01pt x 646.415pt>
 File: images/Jobs-S000-2008.png Graphic file (type png)
 
 <use images/Jobs-S000-2008.png>
-Package pdftex.def Info: images/Jobs-S000-2008.png used on input line 390.
+Package pdftex.def Info: images/Jobs-S000-2008.png used on input line 391.
 (pdftex.def)             Requested size: 106.94916pt x 128.49162pt.
 
-<images/Jobs-S000-2015.png, id=172, 530.98375pt x 645.41125pt>
+<images/Jobs-S000-2015.png, id=176, 530.98375pt x 645.41125pt>
 File: images/Jobs-S000-2015.png Graphic file (type png)
 
 <use images/Jobs-S000-2015.png>
-Package pdftex.def Info: images/Jobs-S000-2015.png used on input line 391.
+Package pdftex.def Info: images/Jobs-S000-2015.png used on input line 392.
 (pdftex.def)             Requested size: 106.94916pt x 129.99583pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 398--398
+Underfull \hbox (badness 10000) in paragraph at lines 397--397
 [][][]\OT1/cmr/m/n/8 https://www.builtinchicago.org/2014/09/18/meet-neighbors-4
 -tech-companies-sign-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 398--399
+Underfull \hbox (badness 10000) in paragraph at lines 397--398
 
  []
 
 [12 <./images/Jobs-S000-2002.png> <./images/Jobs-S000-2008.png> <./images/Jobs-
 S000-2015.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 400--401
+Underfull \hbox (badness 10000) in paragraph at lines 399--400
 
  []
 
-[13] <images/Jobs-SI001-2015.png, id=192, 612.2875pt x 807.015pt>
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 441--442
+
+ []
+
+<images/Jobs-SI001-2015.png, id=197, 612.2875pt x 807.015pt>
 File: images/Jobs-SI001-2015.png Graphic file (type png)
 
 <use images/Jobs-SI001-2015.png>
 Package pdftex.def Info: images/Jobs-SI001-2015.png used on input line 445.
 (pdftex.def)             Requested size: 106.94916pt x 140.95883pt.
 
-<images/Jobs-SI002-2015.png, id=193, 613.29124pt x 829.0975pt>
+<images/Jobs-SI002-2015.png, id=198, 613.29124pt x 829.0975pt>
 File: images/Jobs-SI002-2015.png Graphic file (type png)
 
 <use images/Jobs-SI002-2015.png>
 Package pdftex.def Info: images/Jobs-SI002-2015.png used on input line 446.
 (pdftex.def)             Requested size: 106.94916pt x 144.57555pt.
 
-<images/Jobs-SI003-2015.png, id=194, 628.3475pt x 815.045pt>
+<images/Jobs-SI003-2015.png, id=199, 628.3475pt x 815.045pt>
 File: images/Jobs-SI003-2015.png Graphic file (type png)
 
 <use images/Jobs-SI003-2015.png>
 Package pdftex.def Info: images/Jobs-SI003-2015.png used on input line 447.
 (pdftex.def)             Requested size: 106.94916pt x 138.71748pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 452--453
-
- []
-
-[14 <./images/Jobs-SI001-2015.png> <./images/Jobs-SI002-2015.png> <./images/Job
-s-SI003-2015.png>]
-<images/Jobs-SE001-2015.png, id=203, 615.29875pt x 754.82pt>
+<images/Jobs-SE001-2015.png, id=200, 615.29875pt x 754.82pt>
 File: images/Jobs-SE001-2015.png Graphic file (type png)
 
 <use images/Jobs-SE001-2015.png>
-Package pdftex.def Info: images/Jobs-SE001-2015.png used on input line 458.
+Package pdftex.def Info: images/Jobs-SE001-2015.png used on input line 456.
 (pdftex.def)             Requested size: 106.94916pt x 131.1971pt.
 
-<images/Jobs-SE002-2015.png, id=204, 619.31375pt x 749.80125pt>
+<images/Jobs-SE002-2015.png, id=201, 619.31375pt x 749.80125pt>
 File: images/Jobs-SE002-2015.png Graphic file (type png)
 
 <use images/Jobs-SE002-2015.png>
-Package pdftex.def Info: images/Jobs-SE002-2015.png used on input line 459.
+Package pdftex.def Info: images/Jobs-SE002-2015.png used on input line 457.
 (pdftex.def)             Requested size: 106.94916pt x 129.47815pt.
 
-<images/Jobs-SE003-2015.png, id=205, 617.30624pt x 752.8125pt>
+<images/Jobs-SE003-2015.png, id=202, 617.30624pt x 752.8125pt>
 File: images/Jobs-SE003-2015.png Graphic file (type png)
 
 <use images/Jobs-SE003-2015.png>
-Package pdftex.def Info: images/Jobs-SE003-2015.png used on input line 460.
+Package pdftex.def Info: images/Jobs-SE003-2015.png used on input line 458.
 (pdftex.def)             Requested size: 106.94916pt x 130.42316pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 468--469
+ [14 <./images/Jobs-SI001-2015.png> <./images/Jobs-SI002-2015.png> <./images/Jo
+bs-SI003-2015.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 466--467
 
  []
 
+<images/Houses-S000-2015.png, id=212, 627.34375pt x 762.85pt>
+File: images/Houses-S000-2015.png Graphic file (type png)
 
-./paper.tex:492: LaTeX Error: There's no line here to end.
+<use images/Houses-S000-2015.png>
+Package pdftex.def Info: images/Houses-S000-2015.png used on input line 471.
+(pdftex.def)             Requested size: 258.75pt x 314.64459pt.
+
+
+./paper.tex:475: LaTeX Error: There's no line here to end.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.492 
+l.475 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[15 <./images/Jobs-SE001-2015.png> <./images/Jobs-SE002-2015.png> <./images/Job
+s-SE003-2015.png>]
+
+./paper.tex:507: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.507 
       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 493--494
-
- []
-
-[15 <./images/Jobs-SE001-2015.png> <./images/Jobs-SE002-2015.png> <./images/Job
-s-SE003-2015.png>]
-<images/Houses-S000-2015.png, id=215, 627.34375pt x 762.85pt>
-File: images/Houses-S000-2015.png Graphic file (type png)
-
-<use images/Houses-S000-2015.png>
-Package pdftex.def Info: images/Houses-S000-2015.png used on input line 497.
-(pdftex.def)             Requested size: 345.0pt x 419.53387pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 502--503
+Underfull \hbox (badness 10000) in paragraph at lines 508--509
 
  []
 
@@ -1501,17 +1519,71 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 596--597
+Underfull \hbox (badness 10000) in paragraph at lines 600--601
 
  []
 
-[17] (/Users/benjamin/Desktop/repos/chi-data/paper/.texpadtmp/paper.bbl
-[18]) [19]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 608.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 608.
+[17] [18]
+
+./paper.tex:659: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.659 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+./paper.tex:709: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.709 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[19]
+
+./paper.tex:759: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.759 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+./paper.tex:809: LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.809 
+      
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[20] (/Users/benjamin/Desktop/repos/chi-data/paper/.texpadtmp/paper.bbl
+[21]) [22]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 863.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 863.
  (/Users/benjamin/Desktop/repos/chi-data/paper/.texpadtmp/paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 608.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 608.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 863.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 863.
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
@@ -1521,16 +1593,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 608.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 863.
  ) 
 Here is how much of TeX's memory you used:
- 27593 strings out of 493014
- 657497 string characters out of 6133351
- 862984 words of memory out of 5000000
- 30541 multiletter control sequences out of 15000+600000
+ 27894 strings out of 493014
+ 663202 string characters out of 6133351
+ 910310 words of memory out of 5000000
+ 30836 multiletter control sequences out of 15000+600000
  12624 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,9n,77p,2434b,1811s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,17n,83p,2434b,2011s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
@@ -1550,10 +1622,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2016/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2016/texm
 f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
 Output written on /Users/benjamin/Desktop/repos/chi-data/paper/.texpadtmp/paper
-.pdf (20 pages, 2170606 bytes).
+.pdf (23 pages, 2183410 bytes).
 PDF statistics:
- 319 PDF objects out of 1000 (max. 8388607)
- 252 compressed objects within 3 object streams
- 83 named destinations out of 1000 (max. 500000)
- 145 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 339 PDF objects out of 1000 (max. 8388607)
+ 269 compressed objects within 3 object streams
+ 89 named destinations out of 1000 (max. 500000)
+ 153 words of extra memory for PDF output out of 10000 (max. 10000000)
 
