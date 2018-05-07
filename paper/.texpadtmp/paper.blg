@@ -4,45 +4,45 @@ The top-level auxiliary file: paper.aux
 The style file: unsrt.bst
 Database file #1: ../reference.bib
 Warning--empty journal in iacobucci2017eigenvector
-You've used 7 entries,
+You've used 8 entries,
             1791 wiz_defined-function locations,
-            489 strings with 4657 characters,
-and the built_in function-call counts, 1640 in all, are:
-= -- 157
-> -- 59
+            494 strings with 4813 characters,
+and the built_in function-call counts, 1862 in all, are:
+= -- 180
+> -- 63
 < -- 2
-+ -- 23
-- -- 16
-* -- 105
-:= -- 262
-add.period$ -- 21
-call.type$ -- 7
-change.case$ -- 8
++ -- 25
+- -- 17
+* -- 122
+:= -- 296
+add.period$ -- 24
+call.type$ -- 8
+change.case$ -- 9
 chr.to.int$ -- 0
-cite$ -- 8
-duplicate$ -- 73
-empty$ -- 153
-format.name$ -- 16
-if$ -- 362
+cite$ -- 9
+duplicate$ -- 82
+empty$ -- 177
+format.name$ -- 17
+if$ -- 410
 int.to.chr$ -- 0
-int.to.str$ -- 7
-missing$ -- 6
-newline$ -- 38
-num.names$ -- 7
-pop$ -- 16
+int.to.str$ -- 8
+missing$ -- 7
+newline$ -- 43
+num.names$ -- 8
+pop$ -- 17
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 38
+skip$ -- 41
 stack$ -- 0
-substring$ -- 129
-swap$ -- 19
+substring$ -- 154
+swap$ -- 20
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 1
-while$ -- 19
-width$ -- 8
-write$ -- 77
+while$ -- 22
+width$ -- 9
+write$ -- 88
 (There was 1 warning)

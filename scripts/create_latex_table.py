@@ -54,10 +54,12 @@ top_ten = [
 
 datasets = [
 	# 'final-jobs-eigs-chicago-S000',
-	# 'final-homes-eigs-chicago-S000'
-	# 'final-homes-eigs-chicago-SA01',
-	# 'final-homes-eigs-chicago-SA03',
+	'final-homes-eigs-chicago-S000',
+	'final-homes-eigs-chicago-SA01',
+	'final-homes-eigs-chicago-SA02',
+	'final-homes-eigs-chicago-SA03',
 	'final-homes-eigs-chicago-SE01',
+	'final-homes-eigs-chicago-SE02',
 	'final-homes-eigs-chicago-SE03',
 	# 'final-jobs-eigs-chicago-SE01',
 	# 'final-jobs-eigs-chicago-SE02',
